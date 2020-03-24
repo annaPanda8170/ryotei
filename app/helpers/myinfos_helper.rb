@@ -1,0 +1,2 @@
+module MyinfosHelper
+end

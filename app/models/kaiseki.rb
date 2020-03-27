@@ -1,0 +1,2 @@
+class Kaiseki < ApplicationRecord
+end

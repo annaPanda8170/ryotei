@@ -1,9 +1,9 @@
 class ChangeDefaultTrueToFinished < ActiveRecord::Migration[5.2]
-  def up
-    change_column :reservations, :finished, :boolean, default: false
+  def change
+    remove_column :reservations, :finished, :boolean, default: false
   end
   
-  def down
-    change_column :reservations, :finished,  :boolean, delault: 1
+  def change
+    add_column :reservations, :status,  :integer, default: 1
   end
 end

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :reservations
   devise_for :members
   get 'myinfos/index'
   root 'myinfos#index'

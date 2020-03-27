@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_27_132236) do
+ActiveRecord::Schema.define(version: 2020_03_27_155155) do
 
   create_table "clients", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -48,6 +48,22 @@ ActiveRecord::Schema.define(version: 2020_03_27_132236) do
     t.index ["reset_password_token"], name: "index_members_on_reset_password_token", unique: true
   end
 
+  create_table "reservations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "client_id"
+    t.string "guest"
+    t.bigint "member_id"
+    t.bigint "room_id"
+    t.bigint "kaiseki_id"
+    t.integer "number_of_guest"
+    t.integer "start_time", null: false
+    t.text "memo"
+    t.boolean "finished", null: false
+    t.index ["client_id"], name: "index_reservations_on_client_id"
+    t.index ["kaiseki_id"], name: "index_reservations_on_kaiseki_id"
+    t.index ["member_id"], name: "index_reservations_on_member_id"
+    t.index ["room_id"], name: "index_reservations_on_room_id"
+  end
+
   create_table "rooms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
     t.integer "price", null: false
@@ -55,4 +71,8 @@ ActiveRecord::Schema.define(version: 2020_03_27_132236) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "reservations", "clients"
+  add_foreign_key "reservations", "kaisekis"
+  add_foreign_key "reservations", "members"
+  add_foreign_key "reservations", "rooms"
 end

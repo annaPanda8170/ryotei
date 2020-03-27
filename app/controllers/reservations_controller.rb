@@ -12,6 +12,17 @@ class ReservationsController < ApplicationController
       render :new
     end
   end
+  def edit
+    @reservation = Reservation.find(params[:id])
+  end
+  def update
+    @reservation = Reservation.find(params[:id])
+    if @reservation.update(reservation_params)
+      redirect_to root_path
+    else
+      render :edit
+    end
+  end
   private
   def reservation_params
     params.require(:reservation).permit(:guest,:room_id, :kaiseki_id, :number_of_guest, :date, :start_time, :memo).merge(member_id: 1)

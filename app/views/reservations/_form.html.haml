@@ -1,0 +1,15 @@
+= form_with model: @reservation, local: true do |f|
+  %p お客様
+  = f.text_field :guest
+  %p 部屋
+  = f.select :room_id, Room.all.map { |r| [r.name, r.id] }
+  %p 料理
+  = f.select :kaiseki_id, Kaiseki.all.map { |k| [k.name, k.id] }
+  %p 人数
+  = f.select :number_of_guest, [*1..12]
+  %p 日時
+  = f.date_select :date
+  = f.time_select :start_time
+  %p メモ
+  = f.text_area :memo
+  = f.submit "登録"

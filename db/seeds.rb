@@ -54,3 +54,65 @@ Room.create(
     }
   ]
 )
+
+Drink.create(
+  [
+    {
+      name: "アサヒスーパードライ",
+      price: 1200,
+      category: 0
+    },{
+      name: "エビス",
+      price: 1300,
+      category: 0
+    },{
+      name: "シャトーマルゴー",
+      price: 120000,
+      category: 1
+    },{
+      name: "オーパスワン",
+      price: 35000,
+      category: 1
+    },{
+      name: "シャブリ",
+      price: 11500,
+      category: 2
+    },{
+      name: "あさつゆ",
+      price: 16000,
+      category: 2
+    },{
+      name: "魔王",
+      price: 2300,
+      category: 3
+    },{
+      name: "森伊蔵",
+      price: 6100,
+      category: 3
+    },{
+      name: "山崎18年",
+      price: 4100,
+      category: 4
+    },{
+      name: "I.W.ハーパー",
+      price: 2200,
+      category: 4
+    },{
+      name: "烏龍茶",
+      price: 900,
+      category: 5
+    },{
+      name: "オレンジジュース",
+      price: 900,
+      category: 5
+    },{
+      name: "コーラ",
+      price: 900,
+      category: 5
+    },{
+      name: "あらごし梅酒",
+      price: 1000,
+      category: 6
+    }
+  ]
+)

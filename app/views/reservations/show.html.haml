@@ -1,2 +1,11 @@
-%h1 Reservations#show
-%p Find me in app/views/reservations/show.html.haml
+- if @reservation.client_id
+  = @reservation.client
+- else
+  = @reservation.guest
+= @reservation.member.name
+= @reservation.room.name
+= @reservation.kaiseki.name
+= @reservation.number_of_guest
+= @reservation.date
+= @reservation.start_time.strftime('%H:%M')
+= @reservation.memo

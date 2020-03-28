@@ -1,7 +1,4 @@
-- if @reservation.client_id
-  = @reservation.client
-- else
-  = @reservation.guest
+- @reservation.client_id ? @reservation.client : @reservation.guest
 = @reservation.member.name
 = @reservation.room.name
 = @reservation.kaiseki.name

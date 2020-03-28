@@ -1,0 +1,10 @@
+= form_with url: reservations_path, local: true, method: :get do |f|
+  = f.date_select :date
+  = f.submit "検索"
+= form_with url: reservations_path, local: true, method: :get do |f|
+  =f.submit "今日"
+.index__date
+  #{@date}の予約
+- @reservations.each do |r|
+  = link_to reservation_path(r.id) do
+    = r.memo

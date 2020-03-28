@@ -1,4 +1,16 @@
+require 'date'
+
 class ReservationsController < ApplicationController
+  before_action :before_index, only: :index
+
+  def index
+    # フォームの日付を受け取っていればその日(2回目以降)、1回目は今日
+    if params['date(1i)'].nil?
+      @selected_date = Date.today.to_s
+      @date = Date.today.strftime("%Y年%m月%d日")
+    end
+    @reservations = Reservation.where(date: @selected_date)
+  end
   def show
     @reservation = Reservation.find(params[:id])
   end
@@ -27,5 +39,11 @@ class ReservationsController < ApplicationController
   private
   def reservation_params
     params.require(:reservation).permit(:guest,:room_id, :kaiseki_id, :number_of_guest, :date, :start_time, :memo).merge(member_id: 1)
+  end
+  def before_index
+    if params['date(1i)'].present?
+      @selected_date = "#{params['date(1i)']}-#{params['date(2i)']}-#{params['date(3i)']}"
+      @date = "#{params['date(1i)']}年#{params['date(2i)']}月#{params['date(3i)']}日"
+    end
   end
 end

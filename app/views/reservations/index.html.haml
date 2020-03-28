@@ -1,10 +1,17 @@
 = form_with url: reservations_path, local: true, method: :get do |f|
-  = f.date_select :date
-  = f.submit "検索"
+  = f.date_select :date, default: @this_date
+  = f.submit "検索", name: "ボタン"
+  = f.submit "今日"
+  = f.submit "明後日", name: "ボタン"
+  = f.submit "一週間後", name: "ボタン"
 = form_with url: reservations_path, local: true, method: :get do |f|
-  =f.submit "今日"
+  = f.hidden_field :this_date, value: @this_date
+  = f.submit "前の日", name: "ボタン"
 .index__date
   #{@date}の予約
+= form_with url: reservations_path, local: true, method: :get do |f|
+  = f.hidden_field :this_date, value: @this_date
+  = f.submit "次の日", name: "ボタン"
 - @reservations.each do |r|
   = link_to reservation_path(r.id) do
     = r.memo

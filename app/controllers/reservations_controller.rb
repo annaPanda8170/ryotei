@@ -4,11 +4,8 @@ class ReservationsController < ApplicationController
   before_action :before_index, only: :index
 
   def index
+    
     # フォームの日付を受け取っていればその日(2回目以降)、1回目は今日
-    if params['date(1i)'].nil?
-      @selected_date = Date.today.to_s
-      @date = Date.today.strftime("%Y年%m月%d日")
-    end
     @reservations = Reservation.where(date: @selected_date)
   end
   def show
@@ -38,12 +35,32 @@ class ReservationsController < ApplicationController
   end
   private
   def reservation_params
+    
     params.require(:reservation).permit(:guest,:room_id, :kaiseki_id, :number_of_guest, :date, :start_time, :memo).merge(member_id: 1)
   end
   def before_index
-    if params['date(1i)'].present?
+    # binding.pry
+    case params['ボタン']
+    when "検索" then
       @selected_date = "#{params['date(1i)']}-#{params['date(2i)']}-#{params['date(3i)']}"
+      @this_date = @selected_date.to_date
       @date = "#{params['date(1i)']}年#{params['date(2i)']}月#{params['date(3i)']}日"
+    when "明後日" then
+      @this_date = Date.today+1
+      @date = (Date.today+1).strftime("%Y年%m月%d日")
+    when "一週間後" then
+      @this_date = Date.today+7
+      @date = (Date.today+7).strftime("%Y年%m月%d日")
+    when "前の日" then
+      @this_date = params["this_date"].to_date-1
+      @date = (params["this_date"].to_date-1).strftime("%Y年%m月%d日")
+    when "次の日" then
+      @this_date = params["this_date"].to_date+1
+      @date = (params["this_date"].to_date+1).strftime("%Y年%m月%d日")
+    else
+      @this_date = Date.today
+      @date = Date.today.strftime("%Y年%m月%d日")
     end
+    @selected_date = @this_date.to_s if @selected_date.nil?
   end
 end

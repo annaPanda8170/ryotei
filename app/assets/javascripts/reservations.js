@@ -1,0 +1,3 @@
+$(function () {
+  $(".reservationOne").draggable()
+})

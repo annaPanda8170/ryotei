@@ -12,9 +12,7 @@
 = form_with url: reservations_path, local: true, method: :get do |f|
   = f.hidden_field :this_date, value: @this_date
   = f.submit "次の日", name: "ボタン"
-- @reservations.each do |r|
-  = link_to reservation_path(r.id) do
-    = r.memo
+
 %table.reservationTable
   %tr.reservationTable__timeLine
     %th.reservationTable__timeLine__time
@@ -176,3 +174,7 @@
       = link_to "","/", class: "reservationTable__table__link"
     %td.reservationTable__table
       = link_to "","/", class: "reservationTable__table__link"
+- @reservations.each do |r|
+  .reservationOne
+    = link_to reservation_path(r.id) do
+      = r.memo

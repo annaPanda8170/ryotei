@@ -1,0 +1,116 @@
+.rsvTable{
+  font-size: 0;
+  &__timeLine{
+    border: 2px solid black;
+    width: 1200px;
+    height: 50px;
+    white-space:nowrap;
+    &__time{
+      position: relative;
+      width: 100px;
+      display: inline-block;
+      height: 100%;
+      // outline: 1px solid red;
+      &__inner{
+        transform: translateX(-50%) translateY(-50%);
+        position: absolute;
+        left: 0%;
+        top: 50%;
+        font-size: 18px;
+      }
+    }
+  }
+  &__roomName{
+    width: 100px;
+    min-width: 100px;
+    height: 100px;
+    max-height: 100px;
+    vertical-align: top;
+    text-align: center;
+    border: 2px solid black;
+    border-top: none;
+    display: inline-block;
+    font-size: 20px;
+  }
+  &__table{
+    border: 2px solid black;
+    border-top: none;
+    border-left: none;
+    width: 100px;
+    max-width: 100px;
+    min-width: 100px;
+    height: 100px;
+    max-height: 100px;
+    background-color: grey;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    &11{
+      left: 100px;
+    }
+    &12{
+      left: 200px;
+    }
+    &13{
+      left: 300px;
+    }
+    &14{
+      left: 400px;
+    }
+    &15{
+      left: 500px;
+    }
+    &16{
+      left: 600px;
+    }
+    &17{
+      left: 700px;
+    }
+    &18{
+      left: 800px;
+    }
+    &19{
+      left: 900px;
+    }
+    &20{
+      left: 1000px;
+    }
+    &21{
+      left: 1100px;
+    }
+  }
+}
+
+.tr{
+  white-space:nowrap;
+  height: 100px;
+  position: relative;
+}
+.draggable{
+  width: 200px;
+  height: 98px;
+  background-color: blue;
+  background-color: red;
+  display: inline-block;
+  position: relative;
+  top: 0;
+  z-index: 1000;
+}
+
+
+.dropHover{
+  background-color: yellow;
+}
+
+.aaaaaaaaaaa{
+
+  font-size: 10px;
+}
+// .draggable{
+//   width: 195px;
+//   height: 95px;
+//   background-color: red;
+//   display: inline-block;
+//   position: relative;
+//   top: 0;
+// }

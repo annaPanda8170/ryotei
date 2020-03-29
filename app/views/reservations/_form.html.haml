@@ -6,7 +6,7 @@
   %p 料理
   = f.select :kaiseki_id, Kaiseki.all.map { |k| [k.name, k.id] }
   %p 人数
-  = f.select :number_of_guest, [*1..12]
+  = f.select :number_of_guest, [*1..12], selected: 6
   %p 日時
   = f.date_select :date
   = f.time_select :start_time, {discard_minute: true, discard_second: true, start_hour: 11, end_hour: 21}

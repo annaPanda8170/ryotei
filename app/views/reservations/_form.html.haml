@@ -9,7 +9,7 @@
   = f.select :number_of_guest, [*1..12]
   %p 日時
   = f.date_select :date
-  = f.time_select :start_time
+  = f.time_select :start_time, {discard_minute: true, discard_second: true, start_hour: 11, end_hour: 21}
   %p メモ
   = f.text_area :memo
   = f.submit "登録"

@@ -29,7 +29,7 @@ class ReservationsController < ApplicationController
     if @reservation.update(reservation_params)
       respond_to do |format|
         format.json {render json: {room: @reservation.room.name, time:@reservation.start_time.strftime("%H") }}
-        format.html {redirect_to root_path}
+        format.html {redirect_to reservations_path}
       end
       
     else

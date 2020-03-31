@@ -13,11 +13,10 @@ class Reservation < ApplicationRecord
   belongs_to :member
 
   def booked
-    # binding.pry
-    first = Reservation.where(date: date, start_time: start_time, room_id: room_id).length > 0
-    second = Reservation.where(date: date, start_time: start_time - 1, room_id: room_id).length > 0
-    third = Reservation.where(date: date, start_time: start_time + 1, room_id: room_id).length > 0
-    if first || second || third  
+    first = Reservation.find_by(date: date, start_time: start_time, room_id: room_id)
+    second = Reservation.find_by(date: date, start_time: start_time - 1, room_id: room_id)
+    third = Reservation.find_by(date: date, start_time: start_time + 1, room_id: room_id)
+    if first || (second && (id != second.id)) || (third  && (id != third.id))
       errors.add(:date, "すでに予約があります")
     end
   end

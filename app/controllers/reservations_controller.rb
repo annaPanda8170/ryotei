@@ -27,7 +27,7 @@ class ReservationsController < ApplicationController
   end
   def update
     @reservation = Reservation.find(params[:id])
-    if @reservation.update(reservation_params)
+    if @reservation.update!(reservation_params)
       @reservation.client.nil? ? clientGuest = @reservation.guest : clientGuest = @reservation.client.name
       flash[:this_date] = @reservation.date
       respond_to do |format|

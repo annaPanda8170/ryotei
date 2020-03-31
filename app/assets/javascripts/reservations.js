@@ -10,7 +10,7 @@ $(function () {
   // 予約を表に当てはめる
   $(".reservationOne").each(function (index, e) {
     // .draggableのテキストから置くべきtableを取得
-    $table = $("[data-room=" + $(this)[0].dataset.room + "]")[Number($(this)[0].dataset.time) - 11];
+    $table = $("[data-roomname=" + $(this)[0].dataset.room + "]")[Number($(this)[0].dataset.time) - 11];
     $(e).prependTo($table).css({ top: '0', left: '0' });
   })
   allTable()
@@ -23,15 +23,17 @@ $(function () {
       drop = e.target.dataset
       overlap = false;
       $(".rsvTableDroppable").has("div").each(function () {
-        if ($(this)[0].dataset.room == drop.room && Number($(this)[0].dataset.time) + 1 == drop.time) {
+        if ($(this)[0].dataset.roomname == drop.roomname && (Number($(this)[0].dataset.time) + 1 == drop.time || Number($(this)[0].dataset.time) - 1 == drop.time) && $(this).find("div")[0].dataset.id != drag.id) {
           overlap = true;
+          console.log($(this)[0].dataset.time -1)
+          $(this).removeClass("dropHover")
         }
       })
       if (overlap) {
         ui.draggable.animate({ top: '0', left: '0' }, 400);
         return false
-      }else if (drag.room != drop.room && drag.time != drop.time){
-        if (!confirm(`${drop.time}時の${drop.room}に移動しますか？`)) {
+      }else if (drag.room != drop.roomname && drag.time != drop.time){
+        if (!confirm(`${drop.time}時の${drop.roomname}に移動しますか？`)) {
           ui.draggable.css({ top: '0', left: '0' });
           return false
         }
@@ -40,14 +42,15 @@ $(function () {
           ui.draggable.css({ top: '0', left: '0' });
           return false
         }
-      } else if (drag.room != drop.room){
-        if (!confirm(`${drop.room}に移動しますか？`)) {
+      } else if (drag.room != drop.roomname){
+        if (!confirm(`${drop.roomname}に移動しますか？`)) {
           ui.draggable.css({ top: '0', left: '0' });
           return false
         }
       }
       ui.draggable.prependTo(this).css({ top: '0', left: '0' });
       allTable();
+      console.log(drop.time)
       $.ajax({
         url: `/reservations/${drag.id}`,
         type: 'PATCH',
@@ -61,6 +64,9 @@ $(function () {
         // 以下二つ確認用あとで消す
         $id.find(".tttttt").text(data.room);
         $id.find(".uuuuuu").text(data.time);
+      }).fail(function () {
+        ui.draggable.css({ top: '0', left: '0' });
+        return false
       });
     }
   });

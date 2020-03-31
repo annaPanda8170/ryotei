@@ -120,7 +120,21 @@
     .rsvTable__table.rsvTable__table20.rsvTableDroppable{data: {room:"折鶴",roomid: 5, time: 20}}
     .rsvTable__table.rsvTable__table21{data: {room:"折鶴",roomid: 5, time: 21}}
 - @reservations.each do |r|
-  .draggable{data: {id: r.id}}
+  .reservationOne{data: {id: r.id}}
+    .reservationOne__clientGuest
+      - if r.client.present?
+        = r.client.name
+      - else
+        = r.guest+" 様"
+    .reservationOne__numberOfGuest
+      = r.number_of_guest.to_s+" 名"
+    .reservationOne__memo
+      = r.memo if r.memo.present?
+    = link_to reservation_path(r.id), class: "reservationOne__show" do
+      詳細
+
+
+    -# 以下2要素確認用あとで消す
     .tttttt
       = r.room.name
     .uuuuuu

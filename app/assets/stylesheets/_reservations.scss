@@ -86,7 +86,7 @@
   height: 100px;
   position: relative;
 }
-.draggable{
+.reservationOne{
   width: 198px;
   height: 98px;
   background-color: red;
@@ -94,6 +94,12 @@
   position: relative;
   top: 0;
   z-index: 1000;
+  &__clientGuest, &__numberOfGuest, &__memo, &__show{
+    font-size: 10px;
+  }
+  &:hover{
+    cursor: move;
+  }
 }
 
 

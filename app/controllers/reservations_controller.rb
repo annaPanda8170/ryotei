@@ -27,8 +27,16 @@ class ReservationsController < ApplicationController
   def update
     @reservation = Reservation.find(params[:id])
     if @reservation.update(reservation_params)
+      @reservation.client.nil? ? clientGuest = @reservation.guest : clientGuest = @reservation.client.name
       respond_to do |format|
-        format.json {render json: {room: @reservation.room.name, time:@reservation.start_time.strftime("%H") }}
+        format.json {render json: 
+          {id: @reservation.id, 
+          clientGuest: clientGuest,
+          numOfGuest: @reservation.number_of_guest,
+          memo: @reservation.memo,
+          room: @reservation.room.name, 
+          time:@reservation.start_time.strftime("%H"),
+          }}
         format.html {redirect_to reservations_path}
       end
       

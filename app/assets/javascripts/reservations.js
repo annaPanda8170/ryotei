@@ -22,11 +22,6 @@ $(function () {
     drop: function (e, ui) {
       drag = ui.draggable.context.dataset
       drop = e.target.dataset
-      console.log(drag.room)
-      console.log(drop.time)
-      console.log(drop.room)
-      console.log(drag.time)
-      // ui.draggable.css({ zIndex: '1000' });
       overlap = false;
       $(".rsvTableDroppable").has("div").each(function () {
         if ($(this)[0].dataset.room == drop.room && Number($(this)[0].dataset.time) + 1 == drop.time) {

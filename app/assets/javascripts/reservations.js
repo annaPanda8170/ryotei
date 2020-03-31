@@ -7,11 +7,10 @@ function allTable(){
   });
 }
 $(function () {
-  console.log("OK")
   // 予約を表に当てはめる
   $(".reservationOne").each(function (index, e) {
     // .draggableのテキストから置くべきtableを取得
-    $table = $("[data-room="+$(e).find(".tttttt").text()+"]")[Number($(e).find(".uuuuuu").text())-11]
+    $table = $("[data-room="+$(this)[0].dataset.room+"]")[Number($(this)[0].dataset.time)-11]
     $(e).prependTo($table).css({ top: '0', left: '0' });
   })
   allTable()
@@ -48,7 +47,6 @@ $(function () {
         }
       }
       ui.draggable.prependTo(this).css({ top: '0', left: '0' });
-      // aaaaaa = Number(drop.set) + 1;
       allTable();
       $.ajax({
         url: `/reservations/${drag.id}`,

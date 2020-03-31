@@ -120,7 +120,7 @@
     .rsvTable__table.rsvTable__table20.rsvTableDroppable{data: {room:"折鶴",roomid: 5, time: 20}}
     .rsvTable__table.rsvTable__table21{data: {room:"折鶴",roomid: 5, time: 21}}
 - @reservations.each do |r|
-  .reservationOne{data: {id: r.id, room: r.room.name, time: r.start_time.strftime("%H")}}
+  .reservationOne{data: {id: r.id, room: r.room.name, time: r.start_time}}
     .reservationOne__clientGuest
       - if r.client.present?
         = r.client.name
@@ -138,4 +138,4 @@
     .tttttt
       = r.room.name
     .uuuuuu
-      = r.start_time.strftime("%H")
+      = r.start_time

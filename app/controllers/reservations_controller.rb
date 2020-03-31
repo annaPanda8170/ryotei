@@ -37,7 +37,7 @@ class ReservationsController < ApplicationController
           numOfGuest: @reservation.number_of_guest,
           memo: @reservation.memo,
           room: @reservation.room.name, 
-          time:@reservation.start_time.strftime("%H"),
+          time:@reservation.start_time,
           }}
         format.html {redirect_to reservations_path}
       end
@@ -49,7 +49,7 @@ class ReservationsController < ApplicationController
   private
   def reservation_params
     
-    params.require(:reservation).permit(:guest,:room_id, :kaiseki_id, :number_of_guest, :date, :start_time, :memo).merge(member_id: 1)
+    params.require(:reservation).permit(:guest,:room_id, :kaiseki_id, :number_of_guest, :date, :start_time, :memo).merge(member_id: current_member.id)
   end
   def before_index
     @this_date = flash[:this_date].to_time if flash[:this_date].present?

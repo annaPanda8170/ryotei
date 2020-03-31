@@ -14,7 +14,8 @@
   = f.select :number_of_guest, [*1..12], prompt: "選択してください"
   %p 日時
   = f.date_select :date, {default: Date.today + 1}
-  = f.time_select :start_time, {discard_minute: true, discard_second: true, start_hour: 11, end_hour: 21}
+  = f.select :start_time, [*11..21]
+  -# , default: 11
   %p メモ
   = f.text_area :memo
   = f.submit "登録"

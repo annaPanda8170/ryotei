@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_31_115039) do
+ActiveRecord::Schema.define(version: 2020_03_31_164418) do
 
   create_table "clients", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -72,8 +72,31 @@ ActiveRecord::Schema.define(version: 2020_03_31_115039) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "sales", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "reservation_id"
+    t.bigint "member_id", null: false
+    t.integer "status", default: 1
+    t.integer "mean"
+    t.integer "from"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["member_id"], name: "index_sales_on_member_id"
+    t.index ["reservation_id"], name: "index_sales_on_reservation_id"
+  end
+
+  create_table "sales_drinks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "sale_id", null: false
+    t.bigint "drink_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["drink_id"], name: "index_sales_drinks_on_drink_id"
+    t.index ["sale_id"], name: "index_sales_drinks_on_sale_id"
+  end
+
   add_foreign_key "reservations", "clients"
   add_foreign_key "reservations", "kaisekis"
   add_foreign_key "reservations", "members"
   add_foreign_key "reservations", "rooms"
+  add_foreign_key "sales", "members"
+  add_foreign_key "sales", "reservations"
 end

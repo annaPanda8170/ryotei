@@ -16,6 +16,7 @@ class ReservationsController < ApplicationController
   def create
     @reservation = Reservation.new(reservation_params)
     if @reservation.save
+      flash[:this_date] = @reservation.date
       redirect_to reservations_path
     else
       render :new
@@ -28,6 +29,7 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.find(params[:id])
     if @reservation.update(reservation_params)
       @reservation.client.nil? ? clientGuest = @reservation.guest : clientGuest = @reservation.client.name
+      flash[:this_date] = @reservation.date
       respond_to do |format|
         format.json {render json: 
           {id: @reservation.id, 
@@ -50,21 +52,24 @@ class ReservationsController < ApplicationController
     params.require(:reservation).permit(:guest,:room_id, :kaiseki_id, :number_of_guest, :date, :start_time, :memo).merge(member_id: 1)
   end
   def before_index
-    case params['ボタン']
-    when "検索" then
-      @selected_date = "#{params['date(1i)']}-#{params['date(2i)']}-#{params['date(3i)']}"
-      @this_date = @selected_date.to_date
-      @date = "#{params['date(1i)']}年#{params['date(2i)']}月#{params['date(3i)']}日"
-    when "明後日" then
-      @this_date = Date.today+1
-    when "一週間後" then
-      @this_date = Date.today+7
-    when "前の日" then
-      @this_date = params["this_date"].to_date-1
-    when "次の日" then
-      @this_date = params["this_date"].to_date+1
-    else
-      @this_date = Date.today
+    @this_date = flash[:this_date].to_time if flash[:this_date].present?
+    if @this_date.nil?
+      case params['ボタン']
+      when "検索" then
+        @selected_date = "#{params['date(1i)']}-#{params['date(2i)']}-#{params['date(3i)']}"
+        @this_date = @selected_date.to_date
+        @date = "#{params['date(1i)']}年#{params['date(2i)']}月#{params['date(3i)']}日"
+      when "明後日" then
+        @this_date = Date.today+1
+      when "一週間後" then
+        @this_date = Date.today+7
+      when "前の日" then
+        @this_date = params["this_date"].to_date-1
+      when "次の日" then
+        @this_date = params["this_date"].to_date+1
+      else
+        @this_date = Date.today
+      end
     end
     @selected_date = @this_date.to_s if @selected_date.nil?
     @date = @this_date.strftime("%Y年%m月%d日") if @date.nil?

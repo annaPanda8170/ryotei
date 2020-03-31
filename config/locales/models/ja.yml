@@ -1,0 +1,12 @@
+ja:
+  activerecord:
+    models:
+      reservation: 予約
+    attributes:
+      reservation:
+        guest: お客様名
+        room: 部屋名
+        # room_id: 部屋名
+        kaiseki: 会席名
+        # kaiseki_id: 会席名
+        number_of_guest: 人数

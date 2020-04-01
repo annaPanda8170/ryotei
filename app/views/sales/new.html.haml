@@ -5,4 +5,5 @@
 = form_with model: [@sale], local: true do |f|
   = f.hidden_field :reservation_id, value: @reservation.id
   = f.text_field :form
-  = f.submit "保存"
+  = f.submit "保存", name: "ボタン"
+  = f.submit "会計", name: "ボタン"

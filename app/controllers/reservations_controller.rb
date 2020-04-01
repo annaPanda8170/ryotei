@@ -6,6 +6,7 @@ class ReservationsController < ApplicationController
   def index
     # フォームの日付を受け取っていればその日(2回目以降)、1回目は今日
     @reservations = Reservation.where(date: @selected_date)
+    @today = @this_date == Date.today
   end
   def show
     @reservation = Reservation.find(params[:id])

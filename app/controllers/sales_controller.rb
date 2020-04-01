@@ -1,12 +1,11 @@
 class SalesController < ApplicationController
   def index
+    
   end
-
   def new
-    # binding.pry
-    @reservation = Reservation.find(params[:format])
+    redirect_to root_path if params[:format].nil?
+    @reservation = Reservation.find(params[:format]) if params[:format].present?
     @sale = Sale.new
-    # binding.pry
   end
   def create
     @sale = Sale.new(sale_params)

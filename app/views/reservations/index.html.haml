@@ -132,8 +132,13 @@
       = r.memo if r.memo.present?
     = link_to reservation_path(r.id), class: "reservationOne__show" do
       詳細
-
-
+    - if @today
+      - if !Sale.find_by(reservation_id: r.id)
+        = link_to new_sale_path(r.id), class: "reservationOne__sale" do
+          会計(新)
+      - else
+        = link_to edit_sale_path(Sale.find_by(reservation_id: r.id)), class: "reservationOne__sale" do
+          会計(既)
     -# 以下2要素確認用あとで消す
     .tttttt
       = r.room.name

@@ -1,0 +1,8 @@
+-# - if
+= @reservation.guest
+= @reservation.room.name
+= @reservation.kaiseki.name
+= form_with model: [@sale], local: true do |f|
+  = f.hidden_field :reservation_id, value: @reservation.id
+  = f.text_field :form
+  = f.submit "保存"

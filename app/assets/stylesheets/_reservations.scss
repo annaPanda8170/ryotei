@@ -94,7 +94,7 @@
   position: relative;
   top: 0;
   z-index: 100;
-  &__clientGuest, &__numberOfGuest, &__memo, &__show{
+  &__clientGuest, &__numberOfGuest, &__memo, &__show, &__sale{
     font-size: 10px;
   }
   &:hover{

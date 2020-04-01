@@ -11,7 +11,7 @@ class Reservation < ApplicationRecord
   belongs_to :kaiseki
   belongs_to :room
   belongs_to :member
-  has_one :sale, optional: true
+  has_one :sale
 
   def booked
     first = Reservation.find_by(date: date, start_time: start_time, room_id: room_id)

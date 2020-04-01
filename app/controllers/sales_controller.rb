@@ -1,4 +1,5 @@
 class SalesController < ApplicationController
+  before_action :signed_in?
   def index
     
   end
@@ -18,6 +19,9 @@ class SalesController < ApplicationController
   def edit
   end
   private
+  def signed_in?
+    redirect_to root_path unless member_signed_in?
+  end
   def sale_params
     params.require(:sale).permit(:mean, :from, :reservation_id).merge(member_id: current_member.id)
   end

@@ -1,6 +1,7 @@
 require 'date'
 
 class ReservationsController < ApplicationController
+  before_action :signed_in?
   before_action :before_index, only: :index
 
   def index
@@ -49,8 +50,10 @@ class ReservationsController < ApplicationController
   end
   private
   def reservation_params
-    
     params.require(:reservation).permit(:guest,:room_id, :kaiseki_id, :number_of_guest, :date, :start_time, :memo).merge(member_id: current_member.id)
+  end
+  def signed_in?
+    redirect_to root_path unless member_signed_in?
   end
   def before_index
     @this_date = flash[:this_date].to_time if flash[:this_date].present?

@@ -5,7 +5,6 @@ class ReservationsController < ApplicationController
   before_action :before_index, only: :index
 
   def index
-    # フォームの日付を受け取っていればその日(2回目以降)、1回目は今日
     @reservations = Reservation.where(date: @selected_date)
     @today = @this_date.to_date == Date.today
   end
@@ -56,7 +55,12 @@ class ReservationsController < ApplicationController
     redirect_to root_path unless member_signed_in?
   end
   def before_index
+    # createやupdate直後にはその日がflash[:this_date]に入っているのでそれ優先で表示する
     @this_date = flash[:this_date].to_time if flash[:this_date].present?
+    # flash[:this_date]に値がなければindexの日指定リンクか直打ちなので分岐する
+    # @this_dateは純粋な日情報
+    # @selected_dateはwhereデータベース検索用
+    # @dateはビュー表示用
     if @this_date.nil?
       case params['ボタン']
       when "検索" then

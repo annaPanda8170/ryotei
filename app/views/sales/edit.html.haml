@@ -11,4 +11,4 @@
   %div{class: "sales__drink", id: "sales__drink#{i}", data: {name: d.name, id: d.id}}
     = d.name
 - @sales_drinks.each_with_index do |d, i|
-  .saledrink{id: "saledrink#{i}", data:{id: d.id, number: d.number, drinkid: d.drink_id}}
+  .saledrink{id: "saledrink#{i}", data:{id: d.id, number: d.number, drinkid: d.drink_id, name: d.drink.name}}

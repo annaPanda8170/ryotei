@@ -1,0 +1,6 @@
+= @client.name
+= @client.memo
+= link_to edit_client_path(@client.id) do
+  編集
+= link_to client_path(@client.id), method: :delete do
+  削除

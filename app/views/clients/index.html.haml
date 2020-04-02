@@ -1,2 +1,5 @@
 - @clients.each do |c|
-  =c
+  =link_to client_path(c.id) do
+    = c.name 
+= link_to new_client_path do
+  新規登録

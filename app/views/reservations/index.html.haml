@@ -145,3 +145,9 @@
       = r.room.name
     .uuuuuu
       = r.start_time
+%h3
+  削除一覧
+- @deleted_reservations.each do |d|
+  = d
+  = link_to reservation_path(d.id) do
+    詳細

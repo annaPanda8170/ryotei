@@ -1,3 +1,4 @@
+-# ビューの配置の関係で同じform_withを3つ書いている。1つにして、position等で無理やり配置したほうがいいか検討中
 = form_with url: reservations_path, local: true, method: :get do |f|
   = f.date_select :date, default: @this_date
   = f.submit "検索", name: "ボタン"
@@ -8,7 +9,7 @@
   = f.hidden_field :this_date, value: @this_date
   = f.submit "前の日", name: "ボタン"
 .index__date
-  #{@date}の予約
+  = "#{@date}の予約"
 = form_with url: reservations_path, local: true, method: :get do |f|
   = f.hidden_field :this_date, value: @this_date
   = f.submit "次の日", name: "ボタン"

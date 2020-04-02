@@ -35,6 +35,11 @@ class SalesController < ApplicationController
       render :edit
     end
   end
+  def destroy
+    @sale = Sale.find(params[:id])
+    @sale.delete
+    redirect_to reservations_path
+  end
   private
   def signed_in?
     redirect_to new_member_session_path unless member_signed_in?

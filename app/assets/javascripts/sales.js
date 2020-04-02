@@ -6,8 +6,8 @@ function appendForm(drinkIds) {
     if ($.inArray(Number(drinkId), drinkIds) < 0) {
       $(".drink_forms").append(`<div id="drink-wrapper${drinkId}">
           <div>${drinkName}</div>
-          <input type="number" name="sale[sales_drinks_attributes][${length}][drink_id]" id="sale_sales_drinks_attributes_${length}_drink_id" value="${drinkId}">
-          <input type="number" class="drink_number" name="sale[sales_drinks_attributes][${length}][number]" id="sale_sales_drinks_attributes_${length}_number" data-drinkid=${drinkId} value=1>
+          <input type="hidden" name="sale[sales_drinks_attributes][${length}][drink_id]" id="sale_sales_drinks_attributes_${length}_drink_id" value="${drinkId}">
+          <input type="number" class="drink_number" name="sale[sales_drinks_attributes][${length}][number]" id="sale_sales_drinks_attributes_${length}_number" data-drinkid=${drinkId} min=0 value=1>
           <div class="delete_drink" data-deletedrinkid=${drinkId}>削除</div>
         </div>`)
       drinkIds.push(drinkId)
@@ -51,8 +51,8 @@ $(function () {
       drinkName = $(`#saledrink${i}`)[0].dataset.name
       $(".drink_forms").append(`<div id="drink-wrapper${drinkId}">
         <div>${drinkName}</div>
-        <input type="number" name="sale[sales_drinks_attributes][${i}][drink_id]" id="sale_sales_drinks_attributes_${i}_drink_id" value="${drinkId}">
-        <input type="number" class="drink_number" name="sale[sales_drinks_attributes][${i}][number]" id="sale_sales_drinks_attributes_${i}_number" data-drinkid=${drinkId} value=${drinkNumber}>
+        <input type="hidden" name="sale[sales_drinks_attributes][${i}][drink_id]" id="sale_sales_drinks_attributes_${i}_drink_id" value="${drinkId}">
+        <input type="number" class="drink_number" name="sale[sales_drinks_attributes][${i}][number]" id="sale_sales_drinks_attributes_${i}_number" data-drinkid=${drinkId} min=0 value=${drinkNumber}>
         <div class="delete_drink" data-deletedrinkid=${drinkId}>削除</div>
       </div>`)
       drinkIds.push(Number(drinkId))

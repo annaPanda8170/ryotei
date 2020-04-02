@@ -1,9 +1,16 @@
--# - if
 = @reservation.guest
 = @reservation.room.name
 = @reservation.kaiseki.name
 = form_with model: [@sale], local: true do |f|
   = f.hidden_field :reservation_id, value: @reservation.id
-  = f.text_field :form
+  = f.number_field :from
+  .aaa{data: {length: @drinks.length}}
+    = f.fields_for :sales_drinks do |c|
+      .sales__drink{data: {num: 0}, id: "sales__drink0"}
+        = @drinks[0].name
+      = c.hidden_field :drink_id, class: "bbb", value: 1
+      = c.number_field :number, value: 0
   = f.submit "保存", name: "ボタン"
   = f.submit "会計", name: "ボタン"
+- @drinks.each_with_index do |d, i|
+  %div{id: "drink-#{i}", data: {name: d.name}}

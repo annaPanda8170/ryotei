@@ -1,2 +1,15 @@
-%h1 Sales#edit
-%p Find me in app/views/sales/edit.html.haml
+= @reservation.guest
+= @reservation.room.name
+= @reservation.kaiseki.name
+= form_with model: [@sale], local: true do |f|
+  = f.hidden_field :reservation_id, value: @reservation.id
+  = f.number_field :from
+  .edit_aaa{data: {length: @drinks.length}}
+    = f.fields_for :sales_drinks do |c|
+      -# .sales__drink{data: {num: 0}, id: "sales__drink0"}
+      = c.number_field :drink_id
+      = c.number_field :number
+  = f.submit "保存", name: "ボタン"
+  = f.submit "会計", name: "ボタン"
+- @drinks.each_with_index do |d, i|
+  %div{id: "drink-#{i}", data: {name: d.name}}

@@ -12,7 +12,10 @@ $(function () {
     $(".reservationOne").each(function (index, e) {
       // .draggableのテキストから置くべきtableを取得
       $table = $("[data-roomname=" + $(this)[0].dataset.room + "]")[Number($(this)[0].dataset.time) - 11];
+      console.log(e)
+      $table2 = $("[data-roomname=" + $(this)[0].dataset.room + "]")[Number($(this)[0].dataset.time) - 5];
       $(e).prependTo($table).css({ top: '0', left: '0' });
+      $($table2).prepend('<div class="reservationOne">こんにちは</div>')
     })
     allTable()
     $(".reservationOne").draggable({

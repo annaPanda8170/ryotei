@@ -25,6 +25,7 @@ class SalesController < ApplicationController
     @sale.sales_drinks.build
     @reservation = Reservation.find(@sale.reservation_id)
     @drinks = Drink.all
+    @sales_drinks = SalesDrink.where(sale_id: @sale.id)
   end
   def update
     @sale = Sale.find(params[:id])

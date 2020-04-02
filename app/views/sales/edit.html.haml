@@ -4,12 +4,11 @@
 = form_with model: [@sale], local: true do |f|
   = f.hidden_field :reservation_id, value: @reservation.id
   = f.number_field :from
-  .edit_aaa{data: {length: @drinks.length}}
-    = f.fields_for :sales_drinks do |c|
-      -# .sales__drink{data: {num: 0}, id: "sales__drink0"}
-      = c.number_field :drink_id
-      = c.number_field :number
-  = f.submit "保存", name: "ボタン"
+  .drink_forms
+  = f.submit "保存", name: "ボタン", class: "sale_save"
   = f.submit "会計", name: "ボタン"
 - @drinks.each_with_index do |d, i|
-  %div{id: "drink-#{i}", data: {name: d.name}}
+  %div{class: "sales__drink", id: "sales__drink#{i}", data: {name: d.name, id: d.id}}
+    = d.name
+- @sales_drinks.each_with_index do |d, i|
+  .saledrink{id: "saledrink#{i}", data:{id: d.id, number: d.number, drinkid: d.drink_id}}

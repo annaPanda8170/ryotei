@@ -93,8 +93,10 @@ class ReservationsController < ApplicationController
         @selected_date = "#{params['date(1i)']}-#{params['date(2i)']}-#{params['date(3i)']}"
         @this_date = @selected_date.to_date
         @date = "#{params['date(1i)']}年#{params['date(2i)']}月#{params['date(3i)']}日"
-      when "明後日" then
+      when "明日" then
         @this_date = Date.today+1
+      when "明後日" then
+        @this_date = Date.today+2
       when "一週間後" then
         @this_date = Date.today+7
       when "前の日" then

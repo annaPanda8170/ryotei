@@ -3,6 +3,7 @@
   = f.date_select :date, default: @this_date
   = f.submit "検索", name: "ボタン"
   = f.submit "今日"
+  = f.submit "明日", name: "ボタン"
   = f.submit "明後日", name: "ボタン"
   = f.submit "一週間後", name: "ボタン"
 = form_with url: reservations_path, local: true, method: :get do |f|

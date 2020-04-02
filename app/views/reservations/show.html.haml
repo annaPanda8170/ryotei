@@ -8,3 +8,10 @@
 = @reservation.memo
 = link_to edit_reservation_path(@reservation.id) do
   編集
+- if @reservation.date >= Date.today
+  - if @reservation.status != 0
+    = link_to custumDelete_reservation_path(@reservation.id), method: :put do
+      削除
+  - elsif @reservation.status == 0
+    = link_to revival_reservation_path(@reservation.id), method: :put do
+      復活

@@ -5,7 +5,8 @@ class ReservationsController < ApplicationController
   before_action :before_index, only: :index
 
   def index
-    @reservations = Reservation.where(date: @selected_date)
+    @reservations = Reservation.where(date: @selected_date).where.not(status: 0)
+    @deleted_reservations = Reservation.where(date: @selected_date, status: 0)
     # 今日か判定してsaleへのリンクを表示
     @today = @this_date.to_date == Date.today
   end
@@ -43,6 +44,24 @@ class ReservationsController < ApplicationController
           }}
         format.html {redirect_to reservations_path}
       end 
+    else
+      render :edit
+    end
+  end
+  def custumDelete
+    @reservation = Reservation.find(params[:id])
+    if @reservation.update!(status: 0)
+      flash[:this_date] = @reservation.date
+      redirect_to reservations_path
+    else
+      render :edit
+    end
+  end
+  def revival
+    @reservation = Reservation.find(params[:id])
+    if @reservation.update!(status: 1)
+      flash[:this_date] = @reservation.date
+      redirect_to reservations_path
     else
       render :edit
     end

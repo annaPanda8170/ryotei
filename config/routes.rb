@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     end
   end
   resources :sales
+  resources :sales_drinks
   resources :myinfos, only: :index
   devise_for :members
   root 'myinfos#index'

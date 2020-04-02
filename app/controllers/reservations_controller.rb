@@ -12,6 +12,7 @@ class ReservationsController < ApplicationController
   end
   def show
     @reservation = Reservation.find(params[:id])
+    flash[:this_date] = @reservation.date
   end
   def new
     @reservation = Reservation.new

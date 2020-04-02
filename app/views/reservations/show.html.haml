@@ -1,4 +1,6 @@
-- @reservation.client_id ? @reservation.client : @reservation.guest
+= link_to reservations_path do
+  一覧に戻る
+= @reservation.client_id ? @reservation.client : @reservation.guest
 = @reservation.member.name
 = @reservation.room.name
 = @reservation.kaiseki.name

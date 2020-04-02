@@ -9,12 +9,17 @@ class ReservationsController < ApplicationController
     @deleted_reservations = Reservation.where(date: @selected_date, status: 0)
     # 今日か判定してsaleへのリンクを表示
     @today = @this_date.to_date == Date.today
+    flash[:this_date_for_new] = @this_date
   end
   def show
     @reservation = Reservation.find(params[:id])
+    flash[:this_date] = @reservation.date
   end
   def new
     @reservation = Reservation.new
+    flash[:this_date_for_new].present? ? @date = flash[:this_date_for_new] : @date = Date.today + 1
+    flash[:this_date] = flash[:this_date_for_new] if flash[:this_date_for_new].present?
+    
   end
   def create
     @reservation = Reservation.new(reservation_params)
@@ -27,6 +32,8 @@ class ReservationsController < ApplicationController
   end
   def edit
     @reservation = Reservation.find(params[:id])
+    @date = @reservation.date
+    flash[:this_date] = @reservation.date
   end
   def update
     @reservation = Reservation.find(params[:id])

@@ -13,7 +13,8 @@
 = form_with url: reservations_path, local: true, method: :get do |f|
   = f.hidden_field :this_date, value: @this_date
   = f.submit "次の日", name: "ボタン"
-
+= link_to new_reservation_path do
+  新規予約
 .rsvTable
   .rsvTable__timeLine
     .rsvTable__timeLine__time

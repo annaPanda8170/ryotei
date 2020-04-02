@@ -7,7 +7,7 @@ function allTable(){
   });
 }
 $(function () {
-  if (location.pathname == "/reservations") {
+  if (location.pathname.match("/reservations")) {
     // 予約を表に当てはめる
     $(".reservationOne").each(function (index, e) {
       // .draggableのテキストから置くべきtableを取得

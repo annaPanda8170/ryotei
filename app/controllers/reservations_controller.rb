@@ -19,7 +19,6 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.new
     flash[:this_date_for_new].present? ? @date = flash[:this_date_for_new] : @date = Date.today + 1
     flash[:this_date] = flash[:this_date_for_new] if flash[:this_date_for_new].present?
-    
   end
   def create
     @reservation = Reservation.new(reservation_params)
@@ -27,6 +26,7 @@ class ReservationsController < ApplicationController
       flash[:this_date] = @reservation.date
       redirect_to reservations_path
     else
+      flash[:this_date].present? ? @date = flash[:this_date] : @date = Date.today + 1
       render :new
     end
   end
@@ -37,7 +37,7 @@ class ReservationsController < ApplicationController
   end
   def update
     @reservation = Reservation.find(params[:id])
-    if @reservation.update!(reservation_params)
+    if @reservation.update(reservation_params)
       @reservation.client.nil? ? clientGuest = @reservation.guest : clientGuest = @reservation.client.name
       flash[:this_date] = @reservation.date
       respond_to do |format|
@@ -52,6 +52,7 @@ class ReservationsController < ApplicationController
         format.html {redirect_to reservations_path}
       end 
     else
+      flash[:this_date].present? ? @date = flash[:this_date] : @date = Date.today + 1
       render :edit
     end
   end

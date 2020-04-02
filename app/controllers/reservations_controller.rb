@@ -18,6 +18,8 @@ class ReservationsController < ApplicationController
   def new
     @reservation = Reservation.new
     flash[:this_date_for_new].present? ? @date = flash[:this_date_for_new] : @date = Date.today + 1
+    flash[:this_date] = flash[:this_date_for_new] if flash[:this_date_for_new].present?
+    
   end
   def create
     @reservation = Reservation.new(reservation_params)
@@ -30,6 +32,8 @@ class ReservationsController < ApplicationController
   end
   def edit
     @reservation = Reservation.find(params[:id])
+    @date = @reservation.date
+    flash[:this_date] = @reservation.date
   end
   def update
     @reservation = Reservation.find(params[:id])

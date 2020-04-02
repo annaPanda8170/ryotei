@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :clients
   resources :reservations, except: :destroy do
     member do
       put "custumDelete"

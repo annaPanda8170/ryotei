@@ -1,0 +1,9 @@
+- if @client.errors.any?
+  %ul
+    - @client.errors.full_messages.each do |m|
+      %li
+        = m
+= form_with model: @client, local: true do |f|
+  = f.text_field :name
+  = f.text_area :memo
+  = f.submit "保存"

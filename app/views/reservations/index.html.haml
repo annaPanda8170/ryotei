@@ -126,7 +126,7 @@
   .reservationOne{data: {id: r.id, room: r.room.name, time: r.start_time}}
     .reservationOne__clientGuest
       - if r.client.present?
-        = r.client.name
+        = r.client.name+" 様"
       - else
         = r.guest+" 様"
     .reservationOne__numberOfGuest

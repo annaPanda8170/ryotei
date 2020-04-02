@@ -76,7 +76,7 @@ class ReservationsController < ApplicationController
   end
   private
   def reservation_params
-    params.require(:reservation).permit(:guest,:room_id, :kaiseki_id, :number_of_guest, :date, :start_time, :memo).merge(member_id: current_member.id)
+    params.require(:reservation).permit(:client_id, :guest,:room_id, :kaiseki_id, :number_of_guest, :date, :start_time, :memo).merge(member_id: current_member.id)
   end
   def signed_in?
     redirect_to new_member_session_path unless member_signed_in?

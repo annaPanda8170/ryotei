@@ -1,7 +1,11 @@
 = link_to reservations_path do
   一覧に戻る
-= @reservation.client_id ? @reservation.client : @reservation.guest
-= @reservation.member.name
+- if @reservation.client_id
+  = link_to client_path(@reservation.client_id) do
+    = @reservation.client.name+" 様"
+- else
+  = @reservation.guest+" 様"
+-# = @reservation.member.name
 = @reservation.room.name
 = @reservation.kaiseki.name
 = @reservation.number_of_guest

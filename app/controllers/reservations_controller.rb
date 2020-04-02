@@ -52,7 +52,7 @@ class ReservationsController < ApplicationController
     params.require(:reservation).permit(:guest,:room_id, :kaiseki_id, :number_of_guest, :date, :start_time, :memo).merge(member_id: current_member.id)
   end
   def signed_in?
-    redirect_to root_path unless member_signed_in?
+    redirect_to new_member_session_path unless member_signed_in?
   end
   def before_index
     # createやupdate直後にはその日がflash[:this_date]に入っているのでそれ優先で表示する

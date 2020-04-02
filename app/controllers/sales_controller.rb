@@ -22,7 +22,7 @@ class SalesController < ApplicationController
   end
   private
   def signed_in?
-    redirect_to root_path unless member_signed_in?
+    redirect_to new_member_session_path unless member_signed_in?
   end
   def submit_branch
     case params["ボタン"]

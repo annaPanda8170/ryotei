@@ -6,6 +6,7 @@ class ReservationsController < ApplicationController
 
   def index
     @reservations = Reservation.where(date: @selected_date)
+    # 今日か判定してsaleへのリンクを表示
     @today = @this_date.to_date == Date.today
   end
   def show
@@ -41,8 +42,7 @@ class ReservationsController < ApplicationController
           time:@reservation.start_time,
           }}
         format.html {redirect_to reservations_path}
-      end
-      
+      end 
     else
       render :edit
     end

@@ -5,7 +5,8 @@ class SalesController < ApplicationController
     
   end
   def new
-    redirect_to root_path if params[:format].nil?
+    # リンクからのみこれるように
+    redirect_to reservations_path if params[:format].nil?
     @reservation = Reservation.find(params[:format]) if params[:format].present?
     @sale = Sale.new
   end

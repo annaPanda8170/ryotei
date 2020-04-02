@@ -1,18 +1,31 @@
 $(function () {
-  let drink_forms = "";
-  let idLength = $(".aaa")[0].dataset.length
-  for (i = 1; i < idLength; i++){
-    drinkName = $(`#drink-${i}`)[0].dataset.name
-    drink_forms = drink_forms + `<div class="sales__drink" data-num="${i}" id="sales__drink${i}">${drinkName}</div>
-    <input type="hidden" class="bbb", name="sale[sales_drinks_attributes][${i}][drink_id]" id="sale_sales_drinks_attributes_${i}_drink_id", value="${i+1}">
-    <input type="number" name="sale[sales_drinks_attributes][${i}][number]" id="sale_sales_drinks_attributes_${i}_number", value=0>`
-  }
-  $(".aaa").append(drink_forms)
-  for (i = 0; i < idLength; i++) {
-    $(`#sales__drink${i}`).click(function () {
-      dataNum = $(this)[0].dataset.num
-      $(`#sale_sales_drinks_attributes_${dataNum}_number`)[0].value = Number($(`#sale_sales_drinks_attributes_${dataNum}_number`)[0].value) + 1
-      
+  if (location.href.match("sales/new")) {
+    let drinkIds =[]
+    $(".sales__drink").click(function () {
+      length = drinkIds.length
+      drinkId = $(this).data("id")
+      drinkName = $(this).data("name")
+      if ($.inArray(Number(drinkId), drinkIds) < 0) {
+        $(".drink_forms").append(`<div id="drink-wrapper${drinkId}">
+            <div>${drinkName}</div>
+            <input type="number" name="sale[sales_drinks_attributes][${length}][drink_id]" id="sale_sales_drinks_attributes_${length}_drink_id" value="${drinkId}">
+            <input type="number" class="drink_number" name="sale[sales_drinks_attributes][${length}][number]" id="sale_sales_drinks_attributes_${length}_number" data-drinkid=${drinkId} value=1>
+            <div class="delete_drink" data-deletedrinkid=${drinkId}>削除</div>
+          </div>`)
+        drinkIds.push(drinkId)
+      } else {
+        $(`input[data-drinkid=${drinkId}]`).val(Number($(`input[data-drinkid=${drinkId}]`).val()) + 1)
+      }
+    })
+    $(document).on("click", ".delete_drink", function () {
+      $(`#drink-wrapper${$(this).data("deletedrinkid")}`).remove()
+    })
+    $(".sale_save").click(function (e) {
+      $(".drink_number").each(function () {
+        if ($(this).val() == 0) {
+          $(`#drink-wrapper${$(this).data("drinkid")}`).remove()
+        }
+      })
     })
   }
 })

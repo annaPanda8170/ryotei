@@ -4,3 +4,6 @@
   編集
 = link_to client_path(@client.id), method: :delete do
   削除
+- @reservation.each do |r|
+  = link_to reservation_path(r.id) do
+    = r.date

@@ -4,6 +4,7 @@ class ClientsController < ApplicationController
   end
   def show
     @client = Client.find(params[:id])
+    @reservation = Reservation.where(client_id: @client.id)
   end
   def new
     @client = Client.new

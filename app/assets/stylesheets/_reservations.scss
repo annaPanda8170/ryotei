@@ -20,6 +20,11 @@
       }
     }
   }
+  &__tr{
+    white-space:nowrap;
+    height: 100px;
+    position: relative;
+  }
   &__roomName{
     width: 100px;
     min-width: 100px;
@@ -36,56 +41,19 @@
     border: 2px solid black;
     border-top: none;
     border-left: none;
-    width: 100px;
-    max-width: 100px;
-    min-width: 100px;
+    width: 25px;
+    max-width: 25px;
+    min-width: 25px;
     height: 100px;
     max-height: 100px;
     background-color: grey;
     display: inline-block;
     position: absolute;
     top: 0;
-    &11{
-      left: 100px;
-    }
-    &12{
-      left: 200px;
-    }
-    &13{
-      left: 300px;
-    }
-    &14{
-      left: 400px;
-    }
-    &15{
-      left: 500px;
-    }
-    &16{
-      left: 600px;
-    }
-    &17{
-      left: 700px;
-    }
-    &18{
-      left: 800px;
-    }
-    &19{
-      left: 900px;
-    }
-    &20{
-      left: 1000px;
-    }
-    &21{
-      left: 1100px;
-    }
   }
 }
 
-.tr{
-  white-space:nowrap;
-  height: 100px;
-  position: relative;
-}
+
 .reservationOne{
   width: 198px;
   height: 98px;

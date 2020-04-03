@@ -22,12 +22,12 @@ class ReservationsController < ApplicationController
     flash[:this_date] = flash[:this_date_for_new] if flash[:this_date_for_new].present?
   end
   def create
-    @reservation = Reservation.new(reservation_params)
-    if @reservation.save!
-      flash[:this_date] = @reservation.date
+    # @reservation = Reservation.new(reservation_params)
+    if true
+      # flash[:this_date] = @reservation.date
       redirect_to reservations_path
     else
-      flash[:this_date].present? ? @date = flash[:this_date] : @date = Date.today + 1
+      # flash[:this_date].present? ? @date = flash[:this_date] : @date = Date.today + 1
       render :new
     end
   end

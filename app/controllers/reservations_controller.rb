@@ -7,6 +7,7 @@ class ReservationsController < ApplicationController
   def index
     @reservations = Reservation.where(date: @selected_date).where.not(status: 0)
     @deleted_reservations = Reservation.where(date: @selected_date, status: 0)
+    @rooms = Room.all
     # 今日か判定してsaleへのリンクを表示
     @today = @this_date.to_date == Date.today
     flash[:this_date_for_new] = @this_date
@@ -47,7 +48,8 @@ class ReservationsController < ApplicationController
           numOfGuest: @reservation.number_of_guest,
           memo: @reservation.memo,
           room: @reservation.room.name, 
-          time:@reservation.start_time,
+          hour:@reservation.start_hour,
+          minute:@reservation.start_minute
           }}
         format.html {redirect_to reservations_path}
       end 
@@ -76,7 +78,7 @@ class ReservationsController < ApplicationController
   end
   private
   def reservation_params
-    params.require(:reservation).permit(:client_id, :guest,:room_id, :kaiseki_id, :number_of_guest, :date, :start_time, :memo).merge(member_id: current_member.id)
+    params.require(:reservation).permit(:client_id, :guest,:room_id, :kaiseki_id, :number_of_guest, :date, :start_hour, :start_minute, :memo).merge(member_id: current_member.id)
   end
   def signed_in?
     redirect_to new_member_session_path unless member_signed_in?

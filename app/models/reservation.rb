@@ -1,5 +1,6 @@
 class Reservation < ApplicationRecord
   validates :guest, presence: true, unless: :client_id?
+  # 以下なぜか二重にでてしまうのでコメントアウト
   # validates :room, presence: true
   # validates :kaiseki, presence: true
   validates :number_of_guest, presence: true

@@ -6,7 +6,7 @@ class Reservation < ApplicationRecord
   validates :number_of_guest, presence: true
   validates :date, presence: true
   validates :start_hour, presence: true
-  # validate :booked
+  validate :booked
 
   belongs_to :client, optional: true
   belongs_to :kaiseki

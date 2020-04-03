@@ -116,3 +116,19 @@ Drink.create(
     }
   ]
 )
+
+Reservation.create(
+  {
+    client_id: 1,
+    guest: nil,
+    member_id: 1,
+    room_id: 1,
+    kaiseki_id: 1,
+    number_of_guest: 1,
+    memo: nil,
+    date: Date.today,
+    status: 1,
+    start_hour: 11,
+    start_minute: 11
+  }
+)

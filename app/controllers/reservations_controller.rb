@@ -17,14 +17,11 @@ class ReservationsController < ApplicationController
     flash[:this_date] = @reservation.date
   end
   def new
-    logger.debug("NEW")
     @reservation = Reservation.new
     flash[:this_date_for_new].present? ? @date = flash[:this_date_for_new] : @date = Date.today + 1
     flash[:this_date] = flash[:this_date_for_new] if flash[:this_date_for_new].present?
   end
   def create
-    logger.debug(params)
-    logger.debug(reservation_params)
     @reservation = Reservation.new(reservation_params)
     if @reservation.save
       flash[:this_date] = @reservation.date
@@ -81,7 +78,6 @@ class ReservationsController < ApplicationController
   end
   private
   def reservation_params
-    logger.debug(params)
     params.require(:reservation).permit(:client_id, :guest,:room_id, :kaiseki_id, :number_of_guest, :date, :start_hour, :start_minute, :memo).merge(member_id: current_member.id)
   end
   def signed_in?

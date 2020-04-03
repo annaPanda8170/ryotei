@@ -11,7 +11,7 @@ class CreateReservations < ActiveRecord::Migration[5.2]
       t.integer :start_hour, null: false
       t.integer :start_minute, null: false
       t.text :memo
-      t.integer :status, null: false, delault: 1
+      t.integer :status, null: false, default: 1
       t.timestamps
     end
   end

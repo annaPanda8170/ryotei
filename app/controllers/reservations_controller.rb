@@ -22,6 +22,8 @@ class ReservationsController < ApplicationController
     flash[:this_date] = flash[:this_date_for_new] if flash[:this_date_for_new].present?
   end
   def create
+    logger.debug(params)
+    logger.debug(reservation_params)
     @reservation = Reservation.new(reservation_params)
     if @reservation.save
       flash[:this_date] = @reservation.date

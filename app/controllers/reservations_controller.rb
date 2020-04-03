@@ -22,12 +22,12 @@ class ReservationsController < ApplicationController
     flash[:this_date] = flash[:this_date_for_new] if flash[:this_date_for_new].present?
   end
   def create
-    # @reservation = Reservation.new(reservation_params)
-    if true
-      # flash[:this_date] = @reservation.date
+    @reservation = Reservation.new(reservation_params)
+    if @reservation.save
+      flash[:this_date] = @reservation.date
       redirect_to reservations_path
     else
-      # flash[:this_date].present? ? @date = flash[:this_date] : @date = Date.today + 1
+      flash[:this_date].present? ? @date = flash[:this_date] : @date = Date.today + 1
       render :new
     end
   end
@@ -78,7 +78,7 @@ class ReservationsController < ApplicationController
   end
   private
   def reservation_params
-    params.require(:reservation).permit(:client_id, :guest,:room_id, :kaiseki_id, :number_of_guest, :date, :start_hour, :start_minute, :memo).merge(member_id: current_member.id)
+    params.require(:reservation).permit(:client_id, :guest,:room_id, :kaiseki_id, :number_of_guest, :date, :memo).merge(start_hour: 11, start_minute: 22, member_id: current_member.id)
   end
   def signed_in?
     redirect_to new_member_session_path unless member_signed_in?

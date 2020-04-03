@@ -123,7 +123,7 @@
   -#   .rsvTable__table.rsvTable__table20.rsvTableDroppable{data: {roomname:"折鶴",roomid: 5, hour: 20}}
   -#   .rsvTable__table.rsvTable__table21{data: {roomname:"折鶴",roomid: 5, hour: 21}}
 - @reservations.each do |r|
-  .reservationOne{data: {id: r.id, room: r.room.name, hour: r.start_hour}}
+  .reservationOne{data: {id: r.id, room: r.room.name, hour: r.start_hour, minute: r.start_minute}}
     .reservationOne__clientGuest
       - if r.client.present?
         = r.client.name+" 様"
@@ -147,6 +147,8 @@
       = r.room.name
     .uuuuuu
       = r.start_hour
+    .vvvvvv
+      = r.start_minute
 %h3
   削除一覧
 - @deleted_reservations.each do |d|

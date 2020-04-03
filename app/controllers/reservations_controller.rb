@@ -48,7 +48,8 @@ class ReservationsController < ApplicationController
           numOfGuest: @reservation.number_of_guest,
           memo: @reservation.memo,
           room: @reservation.room.name, 
-          time:@reservation.start_hour,
+          hour:@reservation.start_hour,
+          minute:@reservation.start_minute
           }}
         format.html {redirect_to reservations_path}
       end 

@@ -23,7 +23,7 @@ class ReservationsController < ApplicationController
   end
   def create
     @reservation = Reservation.new(reservation_params)
-    if @reservation.save
+    if @reservation.save!
       flash[:this_date] = @reservation.date
       redirect_to reservations_path
     else

@@ -36,9 +36,6 @@ class Reservation < ApplicationRecord
       if second && id != second.id
         book = true
       end
-      puts start_hour_down
-      puts start_minute_down
-      puts "------------------"
       if start_minute_down == 0
         start_minute_down = 60
         start_hour_down -= 1

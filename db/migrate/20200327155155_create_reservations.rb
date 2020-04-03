@@ -6,10 +6,13 @@ class CreateReservations < ActiveRecord::Migration[5.2]
       t.references :member, foreign_key: true
       t.references :room, foreign_key: true
       t.references :kaiseki, foreign_key: true
-      t.integer :number_of_guest
-      t.integer :start_time, null: false
+      t.integer :number_of_guest, null: false
+      t.date :date, null: false
+      t.integer :start_hour, null: false
+      t.integer :start_minute, null: false
       t.text :memo
-      t.boolean :finished, null: false, delault: 1
+      t.integer :status, null: false, delault: 1
+      t.timestamps
     end
   end
 end

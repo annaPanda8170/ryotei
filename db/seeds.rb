@@ -129,6 +129,6 @@ Reservation.create(
     date: Date.today,
     status: 1,
     start_hour: 11,
-    start_minute: 11
+    start_minute: 00
   }
 )

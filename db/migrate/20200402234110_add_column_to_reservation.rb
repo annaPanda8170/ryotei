@@ -1,8 +1,8 @@
 class AddColumnToReservation < ActiveRecord::Migration[5.2]
-  def change
+  def down
     remove_column :reservations, :start_time
   end
-  def change
+  def up
     add_column :reservations, :start_hour, :integer, null: false
     add_column :reservations, :start_minute, :integer, null: false
   end

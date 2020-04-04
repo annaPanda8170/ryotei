@@ -2,28 +2,52 @@ function allTable(){
   $('.rsvTableDroppable').each(function () {
     $(this).droppable({
       hoverClass: function () {
-        $(".rsvTableDroppable").removeClass("dropHover")
+        $(".rsvTableDroppableRemove").removeClass("dropHover")
         for (let i = 0; i < 10; i++) {
           $(`#${Number(this.id) + i}`).addClass("dropHover")
         }
       },
       deactivate: function () {
-        $(".rsvTableDroppable").removeClass("dropHover")
+        $(".rsvTableDroppableRemove").removeClass("dropHover")
       },
       // 一応残し
       // disabled: $(this).find('.reservationOne').length > 0 || $(this).find('.reservationOne__sub').length > 0,
     });
   });
+  $('.rsvTableDroppableHoverRemove').each(function () {
+    $(this).droppable({
+      hoverClass: function () {
+        $(".rsvTableDroppableRemove").removeClass("dropHover")
+      },
+    });
+  });
 }
 
-let minutes = [00, 15, 30, 45]
+let minutes = [0, 15, 30, 45]
 function tables(thisDom, roomName, roomId) {
   // idを常に3桁にしたいので10から
   let serial = 10;
+  let tableChange = true;
   for (i = 11; i <= 21; i++){
     for (j = 0; j < 4; j++) {
-      // idはsub用。連番でなくてはならない
-      thisDom.append(`<div id=${roomId}${serial} class="rsvTable__table rsvTable__table${i}${minutes[j]} rsvTableDroppable ui-droppable" data-hour="${i}" data-minute="${minutes[j]}" data-roomid="${roomId}" data-roomname="${roomName}" style=left:${100*(i-10)+(j*25)}px;></div>`)
+      if (i == 19 && j == 3) {
+        tableChange = false;
+      }
+      if (j == 0) {
+        if (tableChange) {
+          // idはsub用。連番でなくてはならない
+          thisDom.append(`<div id=${roomId}${serial} class="rsvTable__table rsvTable__table${i}${minutes[j]}${minutes[j]} rsvTableDroppable rsvTableDroppableRemove ui-droppable" data-hour="${i}" data-minute="${minutes[j]}" data-roomid="${roomId}" data-roomname="${roomName}" style=left:${100 * (i - 10) + (j * 25)}px;></div>`)
+        }else{
+          thisDom.append(`<div id=${roomId}${serial} class="rsvTable__table rsvTable__table${i}${minutes[j]}${minutes[j]} rsvTableDroppableHoverRemove rsvTableDroppableRemove ui-droppable" data-hour="${i}" data-minute="${minutes[j]}" data-roomid="${roomId}" data-roomname="${roomName}" style=left:${100*(i-10)+(j*25)}px;></div>`)
+        }
+      } else {
+        if (tableChange) {
+          // idはsub用。連番でなくてはならない
+          thisDom.append(`<div id=${roomId}${serial} class="rsvTable__table rsvTable__table${i}${minutes[j]} rsvTableDroppable rsvTableDroppableRemove ui-droppable" data-hour="${i}" data-minute="${minutes[j]}" data-roomid="${roomId}" data-roomname="${roomName}" style=left:${100 * (i - 10) + (j * 25)}px;></div>`)
+        }else{
+          thisDom.append(`<div id=${roomId}${serial} class="rsvTable__table rsvTable__table${i}${minutes[j]} rsvTableDroppableRemove ui-droppable" data-hour="${i}" data-minute="${minutes[j]}" data-roomid="${roomId}" data-roomname="${roomName}" style=left:${100*(i-10)+(j*25)}px;></div>`)
+        }
+      }
       serial++;
     }
   }
@@ -87,7 +111,7 @@ $(function () {
         if (reservation.length > 0 && reservation[0].dataset.subid != drag.id) {
           overlap = true;
         }
-        $(".rsvTableDroppable").removeClass("dropHover");
+        $(".rsvTableDroppableRemove").removeClass("dropHover");
         if (overlap) {
           ui.draggable.animate({ top: '0', left: '0' }, 400);
           return false
@@ -108,7 +132,8 @@ $(function () {
             return false
           }
         }
-        ui.draggable.prependTo(this).css({ top: '0', left: '0' });
+        thisTable = this;
+        ui.draggable.prependTo(thisTable).css({ top: '0', left: '0' });
         // 前の場所のsubを消す
         $(`[data-subid=${drag.id}]`).remove();
         // 移動先にsubを置く
@@ -136,7 +161,7 @@ $(function () {
           $id.find(".vvvvvv").text(data.minute);
 
 
-          
+
         }).fail(function () {
           ui.draggable.css({ top: '0', left: '0' });
           return false

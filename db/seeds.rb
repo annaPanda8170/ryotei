@@ -1,3 +1,12 @@
+Member.create(
+  {
+    name: "manager",
+    email: "a@a",
+    level: 3,
+    password: "123123123"
+  }
+)
+
 Kaiseki.create(
   [
     {

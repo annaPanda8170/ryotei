@@ -10,5 +10,10 @@ Rails.application.routes.draw do
   resources :sales_drinks, only: :destroy
   resources :myinfos, only: :index
   devise_for :members
+  resources :members do
+    member do
+      put "custumDelete"
+    end
+  end
   root 'myinfos#index'
 end

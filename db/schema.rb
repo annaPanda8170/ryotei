@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_02_234110) do
+ActiveRecord::Schema.define(version: 2020_04_01_083506) do
 
   create_table "clients", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 2020_04_02_234110) do
 
   create_table "members", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
-    t.integer "level"
+    t.integer "grade"
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -54,12 +54,14 @@ ActiveRecord::Schema.define(version: 2020_04_02_234110) do
     t.bigint "member_id"
     t.bigint "room_id"
     t.bigint "kaiseki_id"
-    t.integer "number_of_guest"
-    t.text "memo"
-    t.date "date"
-    t.integer "status", default: 1
+    t.integer "number_of_guest", null: false
+    t.date "date", null: false
     t.integer "start_hour", null: false
     t.integer "start_minute", null: false
+    t.text "memo"
+    t.integer "status", default: 1, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["client_id"], name: "index_reservations_on_client_id"
     t.index ["kaiseki_id"], name: "index_reservations_on_kaiseki_id"
     t.index ["member_id"], name: "index_reservations_on_member_id"

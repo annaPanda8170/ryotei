@@ -1,0 +1,11 @@
+- if current_member.grade == 3
+  - if @rrr
+    .aaa
+      = link_to "メンバー一覧", members_path(gradeless: nil)
+  - else
+    .aaa
+      グレード未登録のメンバーがいます
+      = link_to "未登録一覧", members_path(gradeless: 1)
+- @members.each do |m|
+  = link_to member_path(m.id) do
+    = m.name

@@ -1,0 +1,11 @@
+- if @drink.errors.any?
+  %ul
+    - @drink.errors.full_messages.each do |m|
+      %li
+        = m
+= form_with model: drink, local: true do |f|
+  = f.text_field :name
+  = f.number_field :price,  {value: @drink_price, min: 10, max: 99999, style:"text-align: right"}
+  00円
+  = f.select :category, Drink.categories.keys.to_a, prompt: "選択してください"
+  = f.submit "登録"

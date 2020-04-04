@@ -1,0 +1,8 @@
+= link_to new_drink_path do
+  ドリンク登録
+- @drinks.each do |d|
+  = d.name
+  = link_to edit_drink_path(d.id) do
+    編集
+  = link_to drink_path(d.id), method: :delete, data: {confirm: "#{d.name}を\n削除してもよろしいですか？"} do
+    削除

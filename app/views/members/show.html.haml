@@ -1,0 +1,12 @@
+= @member.name
+- if @member.grade == 0
+  退社済
+- else
+  = @member.grade
+- if current_member.grade == 3 && !(@member.grade == 0)
+  = link_to edit_member_path(@member.id) do
+    編集
+  = link_to custumDelete_member_path(@member.id), method: :put, data:{confirm: "#{@member.name}さんを\n退社処理してよろしいですか？"} do
+    退社
+= link_to members_path do
+  一覧へ

@@ -1,16 +1,29 @@
 = @reservation.guest
 = @reservation.room.name
+.roomPrice
+  = @reservation.room.price
 = @reservation.kaiseki.name
+.kaisekiPrice
+  = @reservation.kaiseki.price
+.kaisekiNumber
+  = @reservation.number_of_guest
 = form_with model: [@sale], local: true do |f|
   = f.hidden_field :reservation_id, value: @reservation.id
   = f.number_field :from
   .drink_forms
+  .saleSubTotal
+    = @reservation.room.price + (@reservation.kaiseki.price * @reservation.number_of_guest)
+  .saleTax
+    = (@reservation.room.price + (@reservation.kaiseki.price * @reservation.number_of_guest))/10
+  .saleTotal
+    = @reservation.room.price + (@reservation.kaiseki.price * @reservation.number_of_guest)*11/10
+  .saleChange
   = f.submit "保存", name: "ボタン", class: "sale_save"
   = f.submit "会計", name: "ボタン"
 = link_to sale_path(@sale.id), method: :delete do
   会計削除
 - @drinks.each_with_index do |d, i|
-  %div{class: "sales__drink", id: "sales__drink#{i}", data: {name: d.name, id: d.id}}
+  %div{class: "sales__drink", id: "sales__drink#{i}", data: {name: d.name, id: d.id, price: d.price}}
     = d.name
 - @sales_drinks.each_with_index do |d, i|
-  .saledrink{id: "saledrink#{i}", data:{id: d.id, number: d.number, drinkid: d.drink_id, name: d.drink.name}}
+  .saledrink{id: "saledrink#{i}", data:{id: d.id, number: d.number, drinkid: d.drink_id, name: d.drink.name, price: d.drink.price}}

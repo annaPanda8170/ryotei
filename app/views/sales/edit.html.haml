@@ -12,11 +12,8 @@
   = f.number_field :from
   .drink_forms
   .saleSubTotal
-    = @reservation.room.price + (@reservation.kaiseki.price * @reservation.number_of_guest)
   .saleTax
-    = (@reservation.room.price + (@reservation.kaiseki.price * @reservation.number_of_guest))/10
   .saleTotal
-    = @reservation.room.price + (@reservation.kaiseki.price * @reservation.number_of_guest)*11/10
   .saleChange
   = f.submit "保存", name: "ボタン", class: "sale_save"
   = f.submit "会計", name: "ボタン"

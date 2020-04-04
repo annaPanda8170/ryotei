@@ -8,7 +8,23 @@ function deleteZero() {
   })
 }
 
-function eventSetet(drinkIds, editOnly) {
+function saleTotal(timeIdSet) {
+  let roomPrice = Number($(".roomPrice").text());
+  let kaisekiPrice = Number($(".kaisekiPrice").text());
+  let kaisekiNumber = Number($(".kaisekiNumber").text());
+  let drinkTotal = 0;
+  for(var key in timeIdSet) {
+    let drinkPrice = $(`#sale_sales_drinks_attributes_${timeIdSet[key]}_number`).data("drinkprice")
+    let drinkNumber = Number($(`#sale_sales_drinks_attributes_${timeIdSet[key]}_number`).val())
+    drinkTotal = drinkTotal + (drinkPrice * drinkNumber)
+  }
+  let subTotal = roomPrice + (kaisekiPrice * kaisekiNumber) + drinkTotal;
+  $(".saleSubTotal").text(subTotal)
+  $(".saleTax").text(subTotal*.1)
+  $(".saleTotal").text(Math.round(subTotal * 1.1))
+}
+
+function eventSet(drinkIds, editOnly) {
   let times = 0;
   let timeIdSet = {};
   if (editOnly){
@@ -26,29 +42,7 @@ function eventSetet(drinkIds, editOnly) {
       drinkIds.push(Number(drinkId))
       timeIdSet[Number(drinkId)] = times;
       times++;
-      console.log(timeIdSet);
-      let roomPrice = Number($(".roomPrice").text());
-      // console.log(roomPrice)
-      let kaisekiPrice = Number($(".kaisekiPrice").text());
-      // console.log(kaisekiPrice)
-      let kaisekiNumber = Number($(".kaisekiNumber").text());
-      // console.log(kaisekiNumber)
-      let drinkTotal = 0;
-      // for (let i = 0; i < drinkIds.length; i++){
-      for(var key in timeIdSet) {
-        let drinkPrice = $(`#sale_sales_drinks_attributes_${timeIdSet[key]}_number`).data("drinkprice")
-        let drinkNumber = Number($(`#sale_sales_drinks_attributes_${timeIdSet[key]}_number`).val())
-        console.log(drinkPrice)
-        console.log(drinkNumber)
-        console.log(timeIdSet[key])
-        console.log(key)
-        drinkTotal = drinkTotal + (drinkPrice * drinkNumber)
-      }
-      console.log("------------------")
-      let subTotal = roomPrice + (kaisekiPrice * kaisekiNumber) + drinkTotal;
-      $(".saleSubTotal").text(subTotal)
-      $(".saleTax").text(subTotal*.1)
-      $(".saleTotal").text(Math.round(subTotal * 1.1))
+      saleTotal(timeIdSet)
     }
   }
   $(".sales__drink").click(function () {
@@ -66,103 +60,39 @@ function eventSetet(drinkIds, editOnly) {
       drinkIds.push(drinkId)
       timeIdSet[Number(drinkId)] = times;
       times++;
-      console.log(timeIdSet);
     } else {
       $(`input[data-drinkid=${drinkId}]`).val(Number($(`input[data-drinkid=${drinkId}]`).val()) + 1)
     }
-    // console.log(drinkIds)
-    let roomPrice = Number($(".roomPrice").text());
-    // console.log(roomPrice)
-    let kaisekiPrice = Number($(".kaisekiPrice").text());
-    // console.log(kaisekiPrice)
-    let kaisekiNumber = Number($(".kaisekiNumber").text());
-    // console.log(kaisekiNumber)
-    let drinkTotal = 0;
-    // for (let i = 0; i < drinkIds.length; i++){
-    for(var key in timeIdSet) {
-      let drinkPrice = $(`#sale_sales_drinks_attributes_${timeIdSet[key]}_number`).data("drinkprice")
-      let drinkNumber = Number($(`#sale_sales_drinks_attributes_${timeIdSet[key]}_number`).val())
-      console.log(drinkPrice)
-      console.log(drinkNumber)
-      console.log(timeIdSet[key])
-      console.log(key)
-      drinkTotal = drinkTotal + (drinkPrice * drinkNumber)
-    }
-    console.log("------------------")
-    let subTotal = roomPrice + (kaisekiPrice * kaisekiNumber) + drinkTotal;
-    $(".saleSubTotal").text(subTotal)
-    $(".saleTax").text(subTotal*.1)
-    $(".saleTotal").text(Math.round(subTotal * 1.1))
+    saleTotal(timeIdSet)
   })
-  $(".drink_number").change(function(){
-    let roomPrice = Number($(".roomPrice").text());
-    // console.log(roomPrice)
-    let kaisekiPrice = Number($(".kaisekiPrice").text());
-    // console.log(kaisekiPrice)
-    let kaisekiNumber = Number($(".kaisekiNumber").text());
-    // console.log(kaisekiNumber)
-    let drinkTotal = 0;
-    // for (let i = 0; i < drinkIds.length; i++){
-    for(var key in timeIdSet) {
-      let drinkPrice = $(`#sale_sales_drinks_attributes_${timeIdSet[key]}_number`).data("drinkprice")
-      let drinkNumber = Number($(`#sale_sales_drinks_attributes_${timeIdSet[key]}_number`).val())
-      console.log(drinkPrice)
-      console.log(drinkNumber)
-      console.log(timeIdSet[key])
-      console.log(key)
-      drinkTotal = drinkTotal + (drinkPrice * drinkNumber)
-    }
-    console.log("------------------")
-    let subTotal = roomPrice + (kaisekiPrice * kaisekiNumber) + drinkTotal;
-    $(".saleSubTotal").text(subTotal)
-    $(".saleTax").text(subTotal*.1)
-    $(".saleTotal").text(Math.round(subTotal * 1.1))
+  $(document).on("change", ".drink_number", function () {
+    console.log("OKOKOKOK")
+    saleTotal(timeIdSet)
   })
   $(document).on("click", ".delete_drink", function () {
     $(`#drink-wrapper${$(this).data("deletedrinkid")}`).remove()
     deleteDrinkId = Number($(this).data("deletedrinkid"))
     delete timeIdSet[deleteDrinkId];
-    console.log(timeIdSet)
     drinkIds = drinkIds.filter(function (drinkId) {
       return drinkId !== deleteDrinkId;
     })
-    // console.log(drinkIds)
-    let roomPrice = Number($(".roomPrice").text());
-    // console.log(roomPrice)
-    let kaisekiPrice = Number($(".kaisekiPrice").text());
-    // console.log(kaisekiPrice)
-    let kaisekiNumber = Number($(".kaisekiNumber").text());
-    // console.log(kaisekiNumber)
-    let drinkTotal = 0;
-    // for (let i = 0; i < drinkIds.length; i++){
-    for(var key in timeIdSet) {
-      let drinkPrice = $(`#sale_sales_drinks_attributes_${timeIdSet[key]}_number`).data("drinkprice")
-      let drinkNumber = Number($(`#sale_sales_drinks_attributes_${timeIdSet[key]}_number`).val())
-      console.log(drinkPrice)
-      console.log(drinkNumber)
-      console.log(timeIdSet[key])
-      console.log(key)
-      drinkTotal = drinkTotal + (drinkPrice * drinkNumber)
-    }
-    console.log("------------------")
-    let subTotal = roomPrice + (kaisekiPrice * kaisekiNumber) + drinkTotal;
-    $(".saleSubTotal").text(subTotal)
-    $(".saleTax").text(subTotal*.1)
-    $(".saleTotal").text(Math.round(subTotal * 1.1))
+    console.log("OKOKOKOK")
+    saleTotal(timeIdSet)
   })
   deleteZero();
 }
+
 $(function () {
   if (location.pathname.match("sales/new")) {
     let drinkIds = []
     let editOnly = false;
-    eventSetet(drinkIds, editOnly);
+    eventSet(drinkIds, editOnly);
   }
 
   if (location.pathname.match(/sales\/\d{1,3}\/edit/)) {
     let drinkIds = []
     let editOnly = true;
-    eventSetet(drinkIds, editOnly);
+    eventSet(drinkIds, editOnly);
     $(".sale_save").click(function (e) {
       for (i = 0; i < $(".saledrink").length; i++){
         salesDrinksId = $(`#saledrink${i}`)[0].dataset.id

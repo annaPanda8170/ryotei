@@ -1,6 +1,7 @@
 class SalesController < ApplicationController
   before_action :signed_in?
-  before_action :submit_branch, only: :create
+  before_action :submit_branch_create, only: :create
+  before_action :submit_branch_update, only: :update
   def index
     
   end
@@ -11,6 +12,9 @@ class SalesController < ApplicationController
     @sale = Sale.new
     @sale.sales_drinks.build
     @drinks = Drink.all
+  end
+  def show
+    @sale = Sale.find(params[:id])
   end
   def create
     @sale = Sale.new(sale_params)
@@ -28,8 +32,9 @@ class SalesController < ApplicationController
     @sales_drinks = SalesDrink.where(sale_id: @sale.id)
   end
   def update
+    # binding.pry
     @sale = Sale.find(params[:id])
-    if @sale.update!(edit_sale_params)
+    if @sale.update(edit_sale_params)
       redirect_to reservations_path
     else
       render :edit
@@ -44,7 +49,7 @@ class SalesController < ApplicationController
   def signed_in?
     redirect_to new_member_session_path unless member_signed_in?
   end
-  def submit_branch
+  def submit_branch_create
     case params["ボタン"]
     when "保存" then
       params[:from] == nil
@@ -52,13 +57,22 @@ class SalesController < ApplicationController
         params.require(:sale).permit(:mean, :from, :reservation_id, sales_drinks_attributes: [:drink_id, :number]).merge(member_id: current_member.id)
       end
     when "会計" then
-      params[:status] == 2
       def sale_params
         params.require(:sale).permit(:mean, :from, :reservation_id, sales_drinks_attributes: [:drink_id, :number]).merge(status: 2, member_id: current_member.id)
       end
     end
   end
-  def edit_sale_params
-    params.require(:sale).permit(:mean, :from, :reservation_id, sales_drinks_attributes: [:drink_id, :number]).merge(member_id: current_member.id)
+  def submit_branch_update
+    case params["ボタン"]
+    when "保存" then
+      params[:from] == nil
+      def edit_sale_params
+        params.require(:sale).permit(:mean, :from, :reservation_id, sales_drinks_attributes: [:drink_id, :number]).merge(member_id: current_member.id)
+      end
+    when "会計" then
+      def edit_sale_params
+        params.require(:sale).permit(:mean, :from, :reservation_id, sales_drinks_attributes: [:drink_id, :number]).merge(status: 2, member_id: current_member.id)
+      end
+    end
   end
 end

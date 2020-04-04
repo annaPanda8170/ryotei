@@ -1,3 +1,4 @@
+// 保存前に個数が0のドリンクのフォームを消去する
 function deleteZero() {
   $(".sale_save").click(function (e) {
     $(".drink_number").each(function () {
@@ -8,6 +9,7 @@ function deleteZero() {
   })
 }
 
+// トータルを入れ込む関数。各イベント内に入れる
 function saleTotal(timeIdSet) {
   let roomPrice = Number($(".roomPrice").text());
   let kaisekiPrice = Number($(".kaisekiPrice").text());
@@ -24,9 +26,11 @@ function saleTotal(timeIdSet) {
   $(".saleTotal").text(Math.round(subTotal * 1.1))
 }
 
+// 全イベントのセット
 function eventSet(drinkIds, editOnly) {
   let times = 0;
   let timeIdSet = {};
+  // editに保存されてるドリンクをフォームに入れ込む
   if (editOnly){
     for (i = 0; i < $(".saledrink").length; i++) {
       drinkId = $(`#saledrink${i}`)[0].dataset.drinkid
@@ -45,6 +49,7 @@ function eventSet(drinkIds, editOnly) {
       saleTotal(timeIdSet)
     }
   }
+  // ドリンクのボタンを押した時にフォーム増やすか数を増やすか判断
   $(".sales__drink").click(function () {
     length = drinkIds.length
     drinkId = $(this).data("id")
@@ -65,10 +70,11 @@ function eventSet(drinkIds, editOnly) {
     }
     saleTotal(timeIdSet)
   })
+  // ドリンク数直接数変え用
   $(document).on("change", ".drink_number", function () {
-    console.log("OKOKOKOK")
     saleTotal(timeIdSet)
   })
+  // ドリンクフォーム削除
   $(document).on("click", ".delete_drink", function () {
     $(`#drink-wrapper${$(this).data("deletedrinkid")}`).remove()
     deleteDrinkId = Number($(this).data("deletedrinkid"))
@@ -93,6 +99,7 @@ $(function () {
     let drinkIds = []
     let editOnly = true;
     eventSet(drinkIds, editOnly);
+    // もともと保存されていたものは全て削除
     $(".sale_save").click(function (e) {
       for (i = 0; i < $(".saledrink").length; i++){
         salesDrinksId = $(`#saledrink${i}`)[0].dataset.id

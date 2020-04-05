@@ -1,8 +1,8 @@
 - if current_member.grade == 3
-  - if @rrr
+  - if @gradelessIndex
     .aaa
       = link_to "メンバー一覧", members_path(gradeless: nil)
-  - else
+  - elsif @gradeLess>0
     .aaa
       グレード未登録のメンバーがいます
       = link_to "未登録一覧", members_path(gradeless: 1)

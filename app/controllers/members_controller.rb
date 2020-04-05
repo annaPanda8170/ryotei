@@ -6,9 +6,10 @@ class MembersController < ApplicationController
     # binding.pry
     if params[:gradeless] || flash[:gradeless]
       @members = Member.where(grade: nil)
-      @rrr = true
+      @gradelessIndex = true
     else
       @members = Member.all
+      @gradeLess = Member.where(grade: nil).length
     end
   end
   def show

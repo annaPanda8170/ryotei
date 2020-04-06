@@ -1,9 +1,5 @@
-- if @reservation.errors.any?
-  %ul
-    - @reservation.errors.full_messages.each do |m|
-      %li
-        = m
-= form_with model: @reservation, local: true do |f|
+.error_messages
+= form_with model: reservation, local: true, html: {id: "reservation_new_form"} do |f|
   %p お客様
   = f.select :client_id, Client.all.map{|c| [c.name, c.id]}, prompt: "クライアント"
   = f.text_field :guest
@@ -14,12 +10,10 @@
   %p 人数
   = f.select :number_of_guest, [*1..12], prompt: "選択してください"
   %p 日時
-  = f.date_select :date, {default: @date.to_date}
+  = f.date_select :date, {default: @this_date}
   = f.select :start_hour, [*11..21]
   = f.select :start_minute, ['00', 15, 30, 45]
   -# , default: 11
   %p メモ
   = f.text_area :memo
-  = f.submit "登録"
-= link_to reservations_path do
-  キャンセル
+  = f.submit "登録", class: "form_submit"

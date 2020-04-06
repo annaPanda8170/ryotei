@@ -62,7 +62,7 @@
   position: relative;
   top: 0;
   z-index: 100;
-  &__clientGuest, &__numberOfGuest, &__memo, &__show, &__sale{
+  &__clientGuest, &__numberOfGuest, &__memo, &__showButton, &__sale{
     font-size: 10px;
   }
   &:hover{
@@ -106,4 +106,14 @@
 	// background: url(arrow01.png) right 50% no-repeat, -webkit-linear-gradient(top, #fff 0%,#efebe1 100%);
 	// background: url(arrow01.png) right 50% no-repeat, linear-gradient(to bottom, #fff 0%,#efebe1 100%);
 	background-size: 20px, 100%;
+}
+
+.reservation_new_window, .reservation_show_window, .reservation_edit_window{
+  z-index: 100;
+  position: fixed;
+  right: -450px;
+  top: 50px;
+  width: 450px;
+  background-color: rgba(0,0,0,.5);
+  height: calc(100vh - 50px);
 }

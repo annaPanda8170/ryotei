@@ -2,10 +2,13 @@ Rails.application.routes.draw do
   resources :drinks
   # , only: []
   resources :clients
-  resources :reservations, except: :destroy do
+  resources :reservations, only: [:index, :create, :update, :edit] do
     member do
       put "custumDelete"
       put "revival"
+    end
+    collection do
+      get "takeReservation"
     end
   end
   resources :sales

@@ -14,7 +14,7 @@
 = form_with url: reservations_path, local: true, method: :get do |f|
   = f.hidden_field :this_date, value: @this_date
   = f.submit "次の日", name: "ボタン"
-= link_to new_reservation_path do
+.reservation_new_button
   新規予約
 .rsvTable
   .rsvTable__timeLine
@@ -64,7 +64,7 @@
     .reservationOne__memo
       - if r.memo.present?
         = r.memo 
-    = link_to reservation_path(r.id), class: "reservationOne__show" do
+    .reservationOne__showButton{data: {id: r.id}}
       詳細
     - if @today
       - if !Sale.find_by(reservation_id: r.id)
@@ -91,10 +91,67 @@
   削除一覧
 - @deleted_reservations.each do |d|
   = d
-  = link_to reservation_path(d.id) do
+  .reservationOne__showButton{data: {id: d.id}}
     詳細
 
+.reservation_new_window
+  .error_messages
 
+  -# あとで毎回値をクリアにする処理
+  = form_with model: @reservation_new, local: true, html: {id: "reservation_new_form"} do |f|
+    %p お客様
+    = f.select :client_id, Client.all.map{|c| [c.name, c.id]}, prompt: "クライアント"
+    = f.text_field :guest
+    %p 部屋
+    = f.select :room_id, Room.all.map { |r| [r.name, r.id] }, prompt: "選択してください"
+    %p 料理
+    = f.select :kaiseki_id, Kaiseki.all.map { |k| [k.name, k.id] }, prompt: "選択してください"
+    %p 人数
+    = f.select :number_of_guest, [*1..12], prompt: "選択してください"
+    %p 日時
+    = f.date_select :date, {default: @this_date}
+    = f.select :start_hour, [*11..21]
+    = f.select :start_minute, ['00', 15, 30, 45]
+    -# , default: 11
+    %p メモ
+    = f.text_area :memo
+    = f.submit "登録", class: "form_submit"
+-# .reservation_edit_window
+-#   = render partial: "form", locals: {reservation: @reservation_edit}
+.reservation_show_window
+  .reservation_show_client
+  .reservation_show_guest
+  .reservation_show_room
+  .reservation_show_kaiseki
+  .reservation_show_number_of_guest
+  .reservation_show_date
+  .reservation_show_date_data
+  .reservation_show_start_hour
+  .reservation_show_memo
+  .reservation_show_link
+  .reservation_show_edit
+    編集
+
+.reservation_edit_window
+  .error_messages
+  = form_with model: @reservation_new, local: true, html: {id: "reservation_edit_form"} do |f|
+    %p お客様
+    = f.select :client_id, Client.all.map{|c| [c.name, c.id]},{}, class: "reservation_edit_window_aa"
+    = f.text_field :guest, class: "reservation_edit_window_bb"
+    %p 部屋
+    = f.select :room_id, Room.all.map { |r| [r.name, r.id] },{}, class: "reservation_edit_window_cc"
+    %p 料理
+    = f.select :kaiseki_id, Kaiseki.all.map { |k| [k.name, k.id] },{}, class: "reservation_edit_window_dd"
+    %p 人数
+    = f.select :number_of_guest, [*1..12],{}, class: "reservation_edit_window_ee"
+    %p 日時
+    = f.date_select :date, {default: @this_date}, class: ""
+    = f.select :start_hour, [*11..21],{}, class: "reservation_edit_window_gg"
+    = f.select :start_minute, ['00', 15, 30, 45],{}, class: "reservation_edit_window_hh"
+    -# , default: 11
+    %p メモ
+    = f.text_area :memo, class: "reservation_edit_window_ii"
+    = f.submit "登録", class: "form_submit"
 
 
 - @rooms.each do |r|

@@ -1,159 +1,164 @@
 = javascript_include_tag 'reservations.js'
 = stylesheet_link_tag 'reservations', media: 'all'
 -# ビューの配置の関係で同じform_withを3つ書いている。1つにして、position等で無理やり配置したほうがいいか検討中
-= form_with url: reservations_path, local: true, method: :get do |f|
-  = f.date_select :date, default: @this_date
-  = f.submit "検索", name: "ボタン"
-  = f.submit "今日"
-  = f.submit "明日", name: "ボタン"
-  = f.submit "明後日", name: "ボタン"
-  = f.submit "一週間後", name: "ボタン"
-= form_with url: reservations_path, local: true, method: :get do |f|
-  = f.hidden_field :this_date, value: @this_date
-  = f.submit "前の日", name: "ボタン"
-.index__date
-  = "#{@date}の予約"
-= form_with url: reservations_path, local: true, method: :get do |f|
-  = f.hidden_field :this_date, value: @this_date
-  = f.submit "次の日", name: "ボタン"
-.reservation_new_button
-  新規予約
-.rsvTable
-  .rsvTable__timeLine
-    .rsvTable__timeLine__time
-    .rsvTable__timeLine__time
-      .rsvTable__timeLine__time__inner
-        11:00
-    .rsvTable__timeLine__time
-      .rsvTable__timeLine__time__inner
-        12:00
-    .rsvTable__timeLine__time
-      .rsvTable__timeLine__time__inner
-        13:00
-    .rsvTable__timeLine__time
-      .rsvTable__timeLine__time__inner
-        14:00
-    .rsvTable__timeLine__time
-      .rsvTable__timeLine__time__inner
-        15:00
-    .rsvTable__timeLine__time
-      .rsvTable__timeLine__time__inner
-        16:00
-    .rsvTable__timeLine__time
-      .rsvTable__timeLine__time__inner
-        17:00
-    .rsvTable__timeLine__time
-      .rsvTable__timeLine__time__inner
-        18:00
-    .rsvTable__timeLine__time
-      .rsvTable__timeLine__time__inner
-        19:00
-    .rsvTable__timeLine__time
-      .rsvTable__timeLine__time__inner
-        20:00
-    .rsvTable__timeLine__time
-      .rsvTable__timeLine__time__inner
-        21:00
-- @reservations.each do |r|
-  .reservationOne{data: {id: r.id, room: r.room.name, hour: r.start_hour, minute: r.start_minute}}
-    .reservationOne__clientGuest
-      - if r.client.present?
-        = r.client.name+" 様"
-      - else
-        = r.guest+" 様"
-    .reservationOne__numberOfGuest
-      = r.number_of_guest.to_s+" 名"
-    .reservationOne__memo
-      - if r.memo.present?
-        = r.memo 
-    .reservationOne__showButton{data: {id: r.id}}
+.reservation
+  .reservation__header
+    .rsvControllers
+      = form_with url: reservations_path, local: true, class: "rsvControllers__submitSet1", method: :get do |f|
+        != sprintf(f.date_select(:date, use_month_numbers: true,default: @this_date,date_separator: '%s'), '年 ', '月 ') +'日'
+        -# != sprintf(f.date_select :date, {default: @this_date}, {class: "selects"})
+        -# = f.date_select :date, {default: @this_date}, {class: "selects"}
+        = f.submit "検索", name: "ボタン", class: "submits", id: "submit1"
+        = f.submit "今日", class: "submits", id: "submit2"
+        = f.submit "明日", name: "ボタン", class: "submits", id: "submit3"
+        = f.submit "明後日", name: "ボタン", class: "submits", id: "submit4"
+        = f.submit "一週間後", name: "ボタン", class: "submits", id: "submit5"
+      = form_with url: reservations_path, local: true, class: "rsvControllers__submitSet2", method: :get do |f|
+        = f.hidden_field :this_date, value: @this_date
+        = f.submit "前の日", name: "ボタン", class: "submits", id: "submit6"
+      .rsvControllers__thisDate
+        = "#{@date}の予約"
+      = form_with url: reservations_path, local: true, class: "rsvControllers__submitSet3", method: :get do |f|
+        = f.hidden_field :this_date, value: @this_date
+        = f.submit "次の日", name: "ボタン", class: "submits", id: "submit7"
+      .rsvControllers__newButton.submits#submit8
+        新規予約
+  .rsvTable
+    .rsvTable__timeLine
+      .rsvTable__timeLine__time
+      .rsvTable__timeLine__time
+        .rsvTable__timeLine__time__inner
+          11:00
+      .rsvTable__timeLine__time
+        .rsvTable__timeLine__time__inner
+          12:00
+      .rsvTable__timeLine__time
+        .rsvTable__timeLine__time__inner
+          13:00
+      .rsvTable__timeLine__time
+        .rsvTable__timeLine__time__inner
+          14:00
+      .rsvTable__timeLine__time
+        .rsvTable__timeLine__time__inner
+          15:00
+      .rsvTable__timeLine__time
+        .rsvTable__timeLine__time__inner
+          16:00
+      .rsvTable__timeLine__time
+        .rsvTable__timeLine__time__inner
+          17:00
+      .rsvTable__timeLine__time
+        .rsvTable__timeLine__time__inner
+          18:00
+      .rsvTable__timeLine__time
+        .rsvTable__timeLine__time__inner
+          19:00
+      .rsvTable__timeLine__time
+        .rsvTable__timeLine__time__inner
+          20:00
+      .rsvTable__timeLine__time
+        .rsvTable__timeLine__time__inner
+          21:00
+  - @reservations.each do |r|
+    .reservationOne{data: {id: r.id, room: r.room.name, hour: r.start_hour, minute: r.start_minute}}
+      .reservationOne__clientGuest
+        - if r.client.present?
+          = r.client.name+" 様"
+        - else
+          = r.guest+" 様"
+      .reservationOne__numberOfGuest
+        = r.number_of_guest.to_s+" 名"
+      .reservationOne__memo
+        - if r.memo.present?
+          = r.memo 
+      .reservationOne__showButton{data: {id: r.id}}
+        詳細
+      - if @today
+        - if !Sale.find_by(reservation_id: r.id)
+          = link_to new_sale_path(r.id), class: "reservationOne__sale" do
+            会計(新)
+        - elsif Sale.find_by(reservation_id: r.id).status == 2
+          = link_to sale_path(Sale.find_by(reservation_id: r.id)), class: "reservationOne__sale" do
+            会計済
+        - else
+          = link_to edit_sale_path(Sale.find_by(reservation_id: r.id)), class: "reservationOne__sale" do
+            会計(既)
+
+
+      -# 以下3要素確認用あとで消す
+      .tttttt
+        = r.room.name
+      .uuuuuu
+        = r.start_hour
+      .vvvvvv
+        = r.start_minute
+
+
+  %h3
+    削除一覧
+  - @deleted_reservations.each do |d|
+    = d
+    .reservationOne__showButton{data: {id: d.id}}
       詳細
-    - if @today
-      - if !Sale.find_by(reservation_id: r.id)
-        = link_to new_sale_path(r.id), class: "reservationOne__sale" do
-          会計(新)
-      - elsif Sale.find_by(reservation_id: r.id).status == 2
-        = link_to sale_path(Sale.find_by(reservation_id: r.id)), class: "reservationOne__sale" do
-          会計済
-      - else
-        = link_to edit_sale_path(Sale.find_by(reservation_id: r.id)), class: "reservationOne__sale" do
-          会計(既)
 
+  .reservation_new_window
+    .error_messages
 
-    -# 以下3要素確認用あとで消す
-    .tttttt
-      = r.room.name
-    .uuuuuu
-      = r.start_hour
-    .vvvvvv
-      = r.start_minute
+    -# あとで毎回値をクリアにする処理
+    = form_with model: @reservation_new, local: true, html: {id: "reservation_new_form"} do |f|
+      %p お客様
+      = f.select :client_id, Client.all.map{|c| [c.name, c.id]}, prompt: "クライアント"
+      = f.text_field :guest
+      %p 部屋
+      = f.select :room_id, Room.all.map { |r| [r.name, r.id] }, prompt: "選択してください"
+      %p 料理
+      = f.select :kaiseki_id, Kaiseki.all.map { |k| [k.name, k.id] }, prompt: "選択してください"
+      %p 人数
+      = f.select :number_of_guest, [*1..12], prompt: "選択してください"
+      %p 日時
+      = f.date_select :date, {default: @this_date}
+      = f.select :start_hour, [*11..21]
+      = f.select :start_minute, ['00', 15, 30, 45]
+      -# , default: 11
+      %p メモ
+      = f.text_area :memo
+      = f.submit "登録", class: "form_submit"
+  -# .reservation_edit_window
+  -#   = render partial: "form", locals: {reservation: @reservation_edit}
+  .reservation_show_window
+    .reservation_show_client
+    .reservation_show_guest
+    .reservation_show_room
+    .reservation_show_kaiseki
+    .reservation_show_number_of_guest
+    .reservation_show_date
+    .reservation_show_date_data
+    .reservation_show_start_hour
+    .reservation_show_memo
+    .reservation_show_link
+    .reservation_show_edit
+      編集
 
-
-%h3
-  削除一覧
-- @deleted_reservations.each do |d|
-  = d
-  .reservationOne__showButton{data: {id: d.id}}
-    詳細
-
-.reservation_new_window
-  .error_messages
-
-  -# あとで毎回値をクリアにする処理
-  = form_with model: @reservation_new, local: true, html: {id: "reservation_new_form"} do |f|
-    %p お客様
-    = f.select :client_id, Client.all.map{|c| [c.name, c.id]}, prompt: "クライアント"
-    = f.text_field :guest
-    %p 部屋
-    = f.select :room_id, Room.all.map { |r| [r.name, r.id] }, prompt: "選択してください"
-    %p 料理
-    = f.select :kaiseki_id, Kaiseki.all.map { |k| [k.name, k.id] }, prompt: "選択してください"
-    %p 人数
-    = f.select :number_of_guest, [*1..12], prompt: "選択してください"
-    %p 日時
-    = f.date_select :date, {default: @this_date}
-    = f.select :start_hour, [*11..21]
-    = f.select :start_minute, ['00', 15, 30, 45]
-    -# , default: 11
-    %p メモ
-    = f.text_area :memo
-    = f.submit "登録", class: "form_submit"
--# .reservation_edit_window
--#   = render partial: "form", locals: {reservation: @reservation_edit}
-.reservation_show_window
-  .reservation_show_client
-  .reservation_show_guest
-  .reservation_show_room
-  .reservation_show_kaiseki
-  .reservation_show_number_of_guest
-  .reservation_show_date
-  .reservation_show_date_data
-  .reservation_show_start_hour
-  .reservation_show_memo
-  .reservation_show_link
-  .reservation_show_edit
-    編集
-
-.reservation_edit_window
-  .error_messages
-  = form_with model: @reservation_new, local: true, html: {id: "reservation_edit_form"} do |f|
-    %p お客様
-    = f.select :client_id, Client.all.map{|c| [c.name, c.id]},{}, class: "reservation_edit_window_aa"
-    = f.text_field :guest, class: "reservation_edit_window_bb"
-    %p 部屋
-    = f.select :room_id, Room.all.map { |r| [r.name, r.id] },{}, class: "reservation_edit_window_cc"
-    %p 料理
-    = f.select :kaiseki_id, Kaiseki.all.map { |k| [k.name, k.id] },{}, class: "reservation_edit_window_dd"
-    %p 人数
-    = f.select :number_of_guest, [*1..12],{}, class: "reservation_edit_window_ee"
-    %p 日時
-    = f.date_select :date, {default: @this_date}, class: ""
-    = f.select :start_hour, [*11..21],{}, class: "reservation_edit_window_gg"
-    = f.select :start_minute, ['00', 15, 30, 45],{}, class: "reservation_edit_window_hh"
-    -# , default: 11
-    %p メモ
-    = f.text_area :memo, class: "reservation_edit_window_ii"
-    = f.submit "登録", class: "form_submit"
+  .reservation_edit_window
+    .error_messages
+    = form_with model: @reservation_new, local: true, html: {id: "reservation_edit_form"} do |f|
+      %p お客様
+      = f.select :client_id, Client.all.map{|c| [c.name, c.id]},{}, class: "reservation_edit_window_aa"
+      = f.text_field :guest, class: "reservation_edit_window_bb"
+      %p 部屋
+      = f.select :room_id, Room.all.map { |r| [r.name, r.id] },{}, class: "reservation_edit_window_cc"
+      %p 料理
+      = f.select :kaiseki_id, Kaiseki.all.map { |k| [k.name, k.id] },{}, class: "reservation_edit_window_dd"
+      %p 人数
+      = f.select :number_of_guest, [*1..12],{}, class: "reservation_edit_window_ee"
+      %p 日時
+      = f.date_select :date, {default: @this_date}, class: ""
+      = f.select :start_hour, [*11..21],{}, class: "reservation_edit_window_gg"
+      = f.select :start_minute, ['00', 15, 30, 45],{}, class: "reservation_edit_window_hh"
+      -# , default: 11
+      %p メモ
+      = f.text_area :memo, class: "reservation_edit_window_ii"
+      = f.submit "登録", class: "form_submit"
 
 
 - @rooms.each do |r|

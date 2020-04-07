@@ -3,17 +3,8 @@
 */
 
 
-$color1: rgb(14,72,127);
-$color2: rgb(119,148,190);
-$color3: rgb(28,51,76);
-$color4: rgb(245,243,242);
-$color5: rgb(185,190,186);
-$color6: rgb(132,136,145);
-$color7: rgb(104,109,113);
-$color8: rgb(87,119,125);
-// $color8-1: rgb(92, 92, 92);
-$color90: rgb(0,0,0);
 
+@import "colors";
 
 html{
   // background-color: rgb(104,109,113);
@@ -74,7 +65,7 @@ html{
       background-color: $color5;
     }
     &__hover{
-      position: absolute;
+      // position: absolute;
       top: 0;
       left: 110%;
       display: none;

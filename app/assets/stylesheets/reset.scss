@@ -8,6 +8,7 @@ Twitter: @rich_clark
 
 *, *:before, *:after{
   box-sizing: border-box;
+  color: rgb(28,51,76);
 }
 
 html, body, div, span, object, iframe,
@@ -105,4 +106,9 @@ hr {
 
 input, select {
     vertical-align:middle;
+}
+
+
+*:focus {
+outline: none;
 }

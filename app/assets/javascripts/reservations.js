@@ -23,16 +23,21 @@ function allTable(){
   });
 }
 
+// 最初に表を作る関数
 let minutes = [0, 15, 30, 45]
 function tables(thisDom, roomName, roomId) {
   // idを常に3桁にしたいので10から
   let serial = 10;
   let tableChange = true;
+  // 11時台から21時台
   for (i = 11; i <= 21; i++){
+    // 00・15・30・45分
     for (j = 0; j < 4; j++) {
+      // 19:45以降は予約取らない
       if (i == 19 && j == 3) {
         tableChange = false;
       }
+      // 0分を00分にしたいif文分け
       if (j == 0) {
         if (tableChange) {
           // idはsub用。連番でなくてはならない
@@ -268,7 +273,7 @@ $(function () {
 
 
 
-    $(".reservation_new_button").click(function () {
+    $(".rsvControllers__newButton").click(function () {
       $(".reservation_new_window").animate({ right: 0 }, 300);
       $(".reservation_show_window, .reservation_edit_window").animate({ right: -450 }, 300);
     })

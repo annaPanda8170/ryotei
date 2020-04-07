@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   resources :drinks
   # , only: []
   resources :clients
-  resources :reservations, only: [:index, :create, :update, :edit] do
+  resources :reservations, only: [:index, :create, :update] do
     member do
       put "custumDelete"
       put "revival"

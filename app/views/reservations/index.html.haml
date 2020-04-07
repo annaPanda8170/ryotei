@@ -1,3 +1,5 @@
+= javascript_include_tag 'reservations.js'
+= stylesheet_link_tag 'reservations', media: 'all'
 -# ビューの配置の関係で同じform_withを3つ書いている。1つにして、position等で無理やり配置したほうがいいか検討中
 = form_with url: reservations_path, local: true, method: :get do |f|
   = f.date_select :date, default: @this_date

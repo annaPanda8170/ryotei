@@ -107,6 +107,7 @@ class ReservationsController < ApplicationController
     flash[:this_date] = @reservation.date
   end
   def update
+    # binding.pry
     if params[:id].nil?
       params_id = params[:reservation][:id]
     else
@@ -116,7 +117,7 @@ class ReservationsController < ApplicationController
     past_room_id = @reservation.room.id
     past_hour = @reservation.start_hour
     past_minute = @reservation.start_minute
-    if @reservation.update(reservation_params)
+    if @reservation.update!(reservation_params)
       @reservation.client.nil? ? clientGuest = @reservation.guest : clientGuest = @reservation.client.name
       flash[:this_date] = @reservation.date
       respond_to do |format|
@@ -132,7 +133,7 @@ class ReservationsController < ApplicationController
           past_hour: past_hour,
           past_minute: past_minute
           }}
-        # format.html {redirect_to reservations_path}
+        format.html {redirect_to reservations_path}
       end 
     else
       flash[:this_date].present? ? @date = flash[:this_date] : @date = Date.today + 1

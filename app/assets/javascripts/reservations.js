@@ -235,6 +235,8 @@ $(function () {
           $($tableSub).prepend(`<div class="reservationOne__sub" data-subid="${ui.draggable[0].dataset.id}"></div>`)
         }
         allTable();
+        console.log(drag)
+        console.log(drag.id)
         $.ajax({
           url: `/reservations/${drag.id}`,
           type: 'PATCH',

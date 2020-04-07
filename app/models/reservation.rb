@@ -19,7 +19,7 @@ class Reservation < ApplicationRecord
     start_hour_up = start_hour
     start_minute_up = start_minute
     1.upto(10) do
-      first = Reservation.find_by(date: date, start_hour: start_hour_up, start_minute: start_minute_up, room_id: room_id)
+      first = Reservation.find_by(date: date, start_hour: start_hour_up, start_minute: start_minute_up, room_id: room_id, status: [1, 2])
       if first && id != first.id
         book = true
       end
@@ -32,7 +32,7 @@ class Reservation < ApplicationRecord
     start_hour_down = start_hour
     start_minute_down = start_minute
     1.upto(10) do
-      second = Reservation.find_by(date: date, start_hour: start_hour_down, start_minute: start_minute_down, room_id: room_id)
+      second = Reservation.find_by(date: date, start_hour: start_hour_down, start_minute: start_minute_down, room_id: room_id, status: [1, 2])
       if second && id != second.id
         book = true
       end

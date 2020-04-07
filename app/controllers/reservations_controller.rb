@@ -114,10 +114,16 @@ class ReservationsController < ApplicationController
       params_id = params[:id]
     end
     @reservation = Reservation.find(params_id)
+    past_date = @reservation.date
     past_room_id = @reservation.room.id
     past_hour = @reservation.start_hour
     past_minute = @reservation.start_minute
     if @reservation.update!(reservation_params)
+      now_date = @reservation.date
+      same_date = nil
+      if past_date == now_date
+        same_date = 1
+      end
       @reservation.client.nil? ? clientGuest = @reservation.guest : clientGuest = @reservation.client.name
       flash[:this_date] = @reservation.date
       respond_to do |format|
@@ -131,7 +137,8 @@ class ReservationsController < ApplicationController
           minute:@reservation.start_minute,
           roomid: past_room_id,
           past_hour: past_hour,
-          past_minute: past_minute
+          past_minute: past_minute,
+          same_date: same_date
           }}
         format.html {redirect_to reservations_path}
       end 

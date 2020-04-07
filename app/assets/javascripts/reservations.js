@@ -103,9 +103,6 @@ function createSet(data) {
     <div class="reservationOne__memo">${data.memo}</div>
     <div class="reservationOne__showButton" data-id=${data.id}>詳細</div>
     <a class="reservationOne__sale" href="/sales/new.${data.id}">会計(新)</a>
-    <div class="tttttt">${data.room}</div>
-    <div class="uuuuuu">${data.hour}</div>
-    <div class="vvvvvv">${data.minute}</div>
     </div>`
 
     
@@ -152,6 +149,14 @@ $(function () {
       // .draggableのテキストから置くべきtableを取得
       $table = $(`[data-roomname="${$(this)[0].dataset.room}"]`+`[data-hour="${$(this)[0].dataset.hour}"]`+`[data-minute="${$(this)[0].dataset.minute}"]`);
       $(e).prependTo($table).css({ top: '0', left: '0' });
+      // 会計の状態によって表示を変える
+      if ($(this)[0].dataset.status == 1) {
+        $(e).find(".reservationOne__sale").css({ display: "block" , backgroundColor: "#b3304d", color: "#cda0c5"})
+      } else if ($(this)[0].dataset.status == 2) {
+        $(e).find(".reservationOne__sale").css({ display: "block", backgroundColor: "#b3304d", color: "#cda0c5", borderRadius: "0px", height: "80px", width: "120px", transform: "rotate(-45deg)", bottom: "-32px", right: "-50px" })
+        $(e).find(".reservationOne__sale span").css({ display: "inline-block", color: "#cda0c5", transform: "rotate(45deg)" })
+        $(this).css({backgroundColor: "#686d71", color: "#b9beba"})
+      }
       for (let i = 1; i < 10; i++){
         $tableSub = $(`#${Number($table[0].id) +i}`);
         $($tableSub).prepend(`<div class="reservationOne__sub" data-subid="${$(this)[0].dataset.id}"></div>`)
@@ -240,8 +245,8 @@ $(function () {
           $($tableSub).prepend(`<div class="reservationOne__sub" data-subid="${ui.draggable[0].dataset.id}"></div>`)
         }
         allTable();
-        console.log(drag)
-        console.log(drag.id)
+        // console.log(drag)
+        // console.log(drag.id)
         $.ajax({
           url: `/reservations/${drag.id}`,
           type: 'PATCH',
@@ -270,7 +275,19 @@ $(function () {
         });
       }
     });
-
+    $(".reservationOne").hover(function () {
+      // if ($(this).find(".reservationOne__sale").css("display") == "block") {
+      //   block = true;
+      // } else {
+      //   block = false;
+      // }
+      $(this).find(".reservationOne__showButton, .reservationOne__sale").fadeIn();
+    }, function () {
+      if (!$(this)[0].dataset.status) {
+        $(this).find(".reservationOne__sale").fadeOut();
+      }
+      $(this).find(".reservationOne__showButton").fadeOut();
+    })
 
 
     $(".rsvControllers__newButton").click(function () {
@@ -330,10 +347,10 @@ $(function () {
         // console.log($(".reservation_edit_window_aa").prompt())
 
         
-        console.log(data.clientid)
+        // console.log(data.clientid)
         if (data.clientid) {
           $(".reservation_edit_window_aa").val(data.clientid)
-          console.log("あり")
+          // console.log("あり")
         } else {
           $(".reservation_edit_window_aa").prepend(`<option value="">クライアント</option>`)
           $(".reservation_edit_window_aa").val("")
@@ -397,7 +414,12 @@ $(function () {
         contentType: false
       }).done(function (data) {
         $(`[data-roomid="${data.roomid}"]` + `[data-hour="${data.past_hour}"]` + `[data-minute="${data.past_minute}"]`).empty();
-        createSet(data);
+        console.log(data.same_date)
+        if (data.same_date) {
+          createSet(data);
+        }
+          
+        
         
         
 

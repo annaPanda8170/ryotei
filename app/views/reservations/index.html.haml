@@ -60,7 +60,11 @@
         .rsvTable__timeLine__time__inner
           21:00
   - @reservations.each do |r|
-    .reservationOne{data: {id: r.id, room: r.room.name, hour: r.start_hour, minute: r.start_minute}}
+    - if r.sale.present?
+      - status = r.sale.status
+    - else
+      - status = nil
+    .reservationOne{data: {id: r.id, room: r.room.name, hour: r.start_hour, minute: r.start_minute, status: status}}
       .reservationOne__clientGuest
         - if r.client.present?
           = r.client.name+" 様"
@@ -76,22 +80,23 @@
       - if @today
         - if !Sale.find_by(reservation_id: r.id)
           = link_to new_sale_path(r.id), class: "reservationOne__sale" do
-            会計(新)
+            未会計
         - elsif Sale.find_by(reservation_id: r.id).status == 2
           = link_to sale_path(Sale.find_by(reservation_id: r.id)), class: "reservationOne__sale" do
-            会計済
+            %span
+              会計済
         - else
           = link_to edit_sale_path(Sale.find_by(reservation_id: r.id)), class: "reservationOne__sale" do
-            会計(既)
+            会計中
 
 
       -# 以下3要素確認用あとで消す
-      .tttttt
-        = r.room.name
-      .uuuuuu
-        = r.start_hour
-      .vvvvvv
-        = r.start_minute
+      -# .tttttt
+      -#   = r.room.name
+      -# .uuuuuu
+      -#   = r.start_hour
+      -# .vvvvvv
+      -#   = r.start_minute
 
 
   %h3

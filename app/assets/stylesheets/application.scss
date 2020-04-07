@@ -14,6 +14,7 @@ html{
     position: fixed;
     top: 13px;
     left: 130px;
+    z-index: 10000;
     display: inline-block;
     &__clock{
       display: inline-block;
@@ -42,18 +43,22 @@ html{
         }
         &:nth-of-type(1){
           color: $color4;
-          background-color: $color8;
+          background-color: $color8-1;
           padding: 0 20px;
           line-height: 45px;
           font-size: 19px;
           border-radius: 40px/22.5px;
           margin-left: 18px;
         }
+        &:nth-of-type(2)>a{
+          background-color: $color7;
+        }
       }
     }
     
   }
   &__nav{
+    z-index: 10000;
     position: fixed;
     top: 13px;
     left: 13px;
@@ -84,10 +89,22 @@ html{
           font-size: 19px;
           background-color: $color5;
           color: $color4;
-          
         }
         &:nth-of-type(1)> a{
           margin-top: 30px;
+          background-color: $color5-1;
+        }
+        &:nth-of-type(2)> a{
+          background-color: $color5-2;
+        }
+        &:nth-of-type(3)> a{
+          background-color: $color5-3;
+        }
+        &:nth-of-type(4)> a{
+          background-color: $color5-4;
+        }
+        &:nth-of-type(5)> a{
+          background-color: $color7;
         }
       }
     }

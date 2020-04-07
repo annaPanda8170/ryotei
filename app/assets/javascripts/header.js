@@ -5,19 +5,37 @@ $(function () {
   let m = now.getMonth() + 1;
   let d = now.getDate();
   let w = now.getDay();
-  let wd = ['日', '月', '火', '水', '木', '金', '土'];
+  let wd = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   let h = now.getHours();
   let mi = now.getMinutes();
-  $(".header__clock").text(y + '年' + m + '月' + d + '日' + h + '時' + mi + '分' + '(' + wd[w] + ')')
+  if (mi >= 0 && mi <= 9) {
+    mi = "0" + mi;
+  }
+  $(".header__account__clock").text(y + '/' + m + '/' + d + '\n' + h + ':' + mi + ' (' + wd[w] + ')')
   setInterval(function () {
     let now = new Date();
     let y = now.getFullYear();
     let m = now.getMonth() + 1;
     let d = now.getDate();
     let w = now.getDay();
-    let wd = ['日', '月', '火', '水', '木', '金', '土'];
+    let wd = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     let h = now.getHours();
     let mi = now.getMinutes();
-    $(".header__clock").text(y + '年' + m + '月' + d + '日' + h + '時' + mi + '分' + '(' + wd[w] + ')')
+    if (mi >= 0 && mi <= 9) {
+      mi = "0" + mi;
+    }
+    $(".header__account__clock").text(y + '/' + m + '/' + d + '\n' + h + ':' + mi + ' (' + wd[w] + ')')
   }, 1000)
+
+  $(".header__account").hover(function () {
+    $(".header__account__hover").css({ display: "block" });
+  }, function(){
+    $(".header__account__hover").css({ display: "none" });
+  })
+
+  $(".header__nav").hover(function () {
+    $(".header__nav__hover").css({ display: "flex" });
+  }, function(){
+    $(".header__nav__hover").css({ display: "none" });
+  })
 })

@@ -8,17 +8,43 @@
     = stylesheet_link_tag    'application', media: 'all'
     = javascript_include_tag 'application'
   %body
-    %header
-      = javascript_include_tag "header.js"
-      = stylesheet_link_tag 'reset', media: 'all'
-      = stylesheet_link_tag "application", media: "all"
+    = javascript_include_tag "header.js"
+    = stylesheet_link_tag 'reset', media: 'all'
+    = stylesheet_link_tag "application", media: "all"
+
+    %header.header
+      .header
       - if member_signed_in?
-        = current_member.name
-        = link_to "ログアウト", destroy_member_session_path, method: :delete, class: "a"
+        
+        .header__account
+          .header__account__clock
+          %ul.header__account__hover
+            
+            %li.header__account__hover__li
+              = current_member.name
+            %li.header__account__hover__li
+              = link_to "ログアウト", destroy_member_session_path, method: :delete, class: "header__name__logout"
+        
+        .header__nav
+          .header__nav__menu
+            Menu
+          %ul.header__nav__hover
+            %li.header__nav__hover__li
+              = link_to root_path do
+                TOP
+            %li.header__nav__hover__li
+              = link_to reservations_path do
+                予約
+            %li.header__nav__hover__li
+              = link_to clients_path do
+                クライアント
+            %li.header__nav__hover__li
+              = link_to members_path do
+                メンバー
+            %li.header__nav__hover__li
+              = link_to drinks_path do
+                ドリンク
       - else
         = link_to "ログイン", new_member_session_path
         = link_to "会員登録", new_member_registration_path
-      .header__clock
-      = link_to root_path do
-        TOPへ
     = yield

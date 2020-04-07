@@ -1,13 +1,98 @@
-// @import "reset";
-// @import "myinfos";
-// @import "reservations";
-// @import "sales";
-
-header{
-  height: 50px;
-  background-color: olivedrab;
-}
-
 /*
 *= require jquery-ui 
 */
+
+
+$color1: rgb(14,72,127);
+$color2: rgb(119,148,190);
+$color3: rgb(28,51,76);
+$color4: rgb(245,243,242);
+$color5: rgb(185,190,186);
+$color6: rgb(132,136,145);
+$color7: rgb(104,109,113);
+$color8: rgb(87,119,125);
+// $color8-1: rgb(92, 92, 92);
+$color90: rgb(0,0,0);
+
+
+html{
+  // background-color: rgb(104,109,113);
+}
+
+.header{
+  z-index: 1000;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  &__account__clock{
+    border-radius: 10px;
+    line-height: 45px;
+    padding: 0 24px;
+    font-size: 19px;
+    background-color: $color8;
+    color:  $color4;
+  }
+  &__account__hover__li{
+    line-height: 45px;
+    margin: 10px 0;
+    font-size: 19px;
+    border-radius: 40px/22.5px;
+    color: $color4;
+    &>a{
+      color: $color4;
+    }
+  }
+  &__account{
+    display: inline-block;
+    position: relative;
+    &__hover{
+      position: absolute;
+      transform: translateX(-50%);
+      left: 50%;
+      width: 200px;
+      text-align: center;
+      display: none;
+      &__li{
+        background-color: $color8;
+      }
+    }
+    
+  }
+  &__nav{
+    vertical-align: top;
+    display: inline-block;
+    margin-left: 10px;
+    position: relative;
+    &__menu{
+      display: inline-block;
+      background-color: $color5;
+      color:  white;
+      border-radius: 10px;
+      line-height: 45px;
+      padding: 0 24px;
+      font-size: 19px;
+      background-color: $color5;
+    }
+    &__hover{
+      position: absolute;
+      top: 0;
+      left: 110%;
+      display: none;
+      flex-direction: row;
+
+      &__li{
+        display: inline-block;
+        & > a{
+          text-align: center;
+          display: inline-block;
+          border-radius: 10px;
+          line-height: 45px;
+          padding: 0 24px;
+          font-size: 19px;
+          background-color: $color5;
+        }
+      }
+    }
+    
+  }
+}

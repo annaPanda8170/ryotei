@@ -28,14 +28,16 @@ $(function () {
   }, 1000)
 
   $(".header__account").hover(function () {
-    $(".header__account__hover").css({ display: "block" });
+    $(".header__account__hover").fadeIn();
+    $(".header__account__hover").css({display: "inline-block"});
   }, function(){
-    $(".header__account__hover").css({ display: "none" });
+    $(".header__account__hover").fadeOut();
   })
 
   $(".header__nav").hover(function () {
-    $(".header__nav__hover").css({ display: "flex" });
+    $(".header__nav__hover").fadeIn();
+    // $(".header__nav__hover__li").animate({top: "0px"})
   }, function(){
-    $(".header__nav__hover").css({ display: "none" });
+    $(".header__nav__hover").fadeOut();
   })
 })

@@ -2,8 +2,6 @@
 *= require jquery-ui 
 */
 
-
-
 @import "colors";
 
 html{
@@ -12,78 +10,86 @@ html{
 
 .header{
   z-index: 1000;
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  &__account__clock{
-    border-radius: 10px;
-    line-height: 45px;
-    padding: 0 24px;
-    font-size: 19px;
-    background-color: $color8;
-    color:  $color4;
-  }
-  &__account__hover__li{
-    line-height: 45px;
-    margin: 10px 0;
-    font-size: 19px;
-    border-radius: 40px/22.5px;
-    color: $color4;
-    &>a{
-      color: $color4;
-    }
-  }
   &__account{
+    position: fixed;
+    top: 13px;
+    left: 130px;
     display: inline-block;
-    position: relative;
+    &__clock{
+      display: inline-block;
+      border-radius: 10px;
+      line-height: 45px;
+      padding: 0 24px;
+      font-size: 19px;
+      background-color: $color8;
+      color:  $color4;
+    }
     &__hover{
-      position: absolute;
-      transform: translateX(-50%);
-      left: 50%;
-      width: 200px;
       text-align: center;
       display: none;
       &__li{
-        background-color: $color8;
+        display: inline-block;
+        margin: 0 4px;
+        &>a{
+          display: inline-block;
+          color: $color4;
+          background-color: $color8;
+          padding: 0 20px;
+          line-height: 45px;
+          font-size: 19px;
+          border-radius: 40px/22.5px;
+          color: $color4;
+        }
+        &:nth-of-type(1){
+          color: $color4;
+          background-color: $color8;
+          padding: 0 20px;
+          line-height: 45px;
+          font-size: 19px;
+          border-radius: 40px/22.5px;
+          margin-left: 18px;
+        }
       }
     }
     
   }
   &__nav{
-    vertical-align: top;
+    position: fixed;
+    top: 13px;
+    left: 13px;
     display: inline-block;
-    margin-left: 10px;
-    position: relative;
+    margin-right: 10px;
+    text-align: left;
     &__menu{
-      display: inline-block;
       background-color: $color5;
       color:  white;
       border-radius: 10px;
       line-height: 45px;
       padding: 0 24px;
       font-size: 19px;
+      width: 100px;
       background-color: $color5;
     }
     &__hover{
-      // position: absolute;
-      top: 0;
-      left: 110%;
       display: none;
-      flex-direction: row;
-
       &__li{
-        display: inline-block;
+        margin: 0 5px;
         & > a{
+          margin: 8px 0;
           text-align: center;
           display: inline-block;
-          border-radius: 10px;
+          border-radius: 40px/22.5px;
           line-height: 45px;
           padding: 0 24px;
           font-size: 19px;
           background-color: $color5;
+          color: $color4;
+          
+        }
+        &:nth-of-type(1)> a{
+          margin-top: 30px;
         }
       }
     }
-    
   }
 }

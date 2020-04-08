@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   resources :sales_drinks, only: :destroy
   resources :myinfos, only: :index
   devise_for :members
-  resources :members, except: [:new, :create, :destory] do
+  resources :members, only: [:index, :edit, :update] do
     member do
       put "custumDelete"
     end

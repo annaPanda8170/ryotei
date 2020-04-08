@@ -1,11 +1,27 @@
-- if current_member.grade == 3
-  - if @gradelessIndex
-    .aaa
-      = link_to "メンバー一覧", members_path(gradeless: nil)
-  - elsif @gradeLess>0
-    .aaa
-      グレード未登録のメンバーがいます
-      = link_to "未登録一覧", members_path(gradeless: 1)
-- @members.each do |m|
-  = link_to member_path(m.id) do
-    = m.name
+= stylesheet_link_tag 'members_index', media: 'all'
+.membersIndex
+  - if current_member.grade == 3
+    - if @gradelessIndex
+      .membersIndex__title
+        = link_to "メンバー一覧へ戻る", members_path(gradeless: nil)
+        %h2
+          未登録一覧
+    - elsif @gradeLess>0
+      .membersIndex__title.membersIndex__untreated
+        グレード未登録のメンバーがいます
+        = link_to "未登録一覧", members_path(gradeless: 1)
+        %h2
+          メンバー一覧
+  - else
+    %h2
+      メンバー一覧
+  - @members.each do |m|
+    = link_to edit_member_path(m.id), class: "member" do
+      .member__content
+        = m.name
+      .member__content
+        = m.email
+      .member__content
+        = m.grade
+      .member__show
+        編集

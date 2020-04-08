@@ -3,7 +3,6 @@ class MembersController < ApplicationController
   before_action :set_member, except: :index
   before_action :change_grade, only: [:edit, :update, :destory]
   def index
-    # binding.pry
     if params[:gradeless] || flash[:gradeless]
       @members = Member.where(grade: nil)
       @gradelessIndex = true
@@ -12,9 +11,6 @@ class MembersController < ApplicationController
       @gradeLess = Member.where(grade: nil).length
     end
   end
-  def show
-  end
-  def edit
   end
   def update
     if @member.update(member_params)

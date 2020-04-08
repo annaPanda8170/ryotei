@@ -48,6 +48,12 @@ class ReservationsController < ApplicationController
     else
       minute = @reservation_show.start_minute
     end
+    start_minute = ""
+    if @reservation_show.start_minute == 0
+      start_minute = "00"
+    else
+      start_minute = @reservation_show.start_minute
+    end
     render json: {
       id: @reservation_show.id,
       client: client,
@@ -57,6 +63,7 @@ class ReservationsController < ApplicationController
       number_of_guest: @reservation_show.number_of_guest,
       date: @reservation_show.date.strftime("%Y年%m月%d日"),
       start_hour: @reservation_show.start_hour,
+      start_minute: start_minute,
       memo: @reservation_show.memo,
       which: which,
       clientid: clientid,
@@ -97,7 +104,7 @@ class ReservationsController < ApplicationController
         format.json {render json: 
           {message: @reservation.errors.full_messages, 
           }}
-        format.html {redirect_to reservations_path}
+        # format.html {redirect_to reservations_path}
       end 
     end
   end
@@ -118,7 +125,7 @@ class ReservationsController < ApplicationController
     past_room_id = @reservation.room.id
     past_hour = @reservation.start_hour
     past_minute = @reservation.start_minute
-    if @reservation.update!(reservation_params)
+    if @reservation.update(reservation_params)
       now_date = @reservation.date
       same_date = nil
       if past_date == now_date
@@ -144,7 +151,12 @@ class ReservationsController < ApplicationController
       end 
     else
       flash[:this_date].present? ? @date = flash[:this_date] : @date = Date.today + 1
-      # render :index
+      respond_to do |format|
+        format.json {render json: 
+          {message: @reservation.errors.full_messages, 
+          }}
+        # format.html {redirect_to reservations_path}
+      end 
     end
   end
   def custumDelete

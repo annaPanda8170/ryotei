@@ -60,8 +60,9 @@ function tables(thisDom, roomName, roomId) {
 
 function show() {
   $(".reservationOne__showButton").click(function () {
-    $(".reservation_show_window").animate({ right: 0 }, 300);
-    $(".reservation_new_window, .reservation_edit_window").animate({ right: -450 }, 300);
+    $(".rsvShow").animate({ right: 0 }, 300);
+    $(".rsvShow .rsvNew, .rsvEdit").animate({ right: "-100vw" }, 300);
+    $(".reservation").css({ marginBottom: "300px" })
     $.ajax({
       url: "/reservations/takeReservation",
       type: "GET",
@@ -69,14 +70,14 @@ function show() {
       dataType: 'json'
     }).done(function (data) {
       for (let key in data) {
-        $(`.reservation_show_${key}`).text(data[key])
+        $(`.rsvShow__${key}`).text(data[key])
       }
       if (data.which == "custumDelete") {
-        $(".reservation_show_link").html(`<div class="reservation_delete" data-id=${data.id} >削除</div>`)
+        $(".rsvShow__link").html(`<div class="reservation_delete" data-id=${data.id} >削除</div>`)
       } else if(data.which == "revival"){
-        $(".reservation_show_link").html(`<a rel="nofollow" data-method="put" href="/reservations/${data.id}/revival">復活</a>`)
+        $(".rsvShow__link").html(`<a rel="nofollow" data-method="put" href="/reservations/${data.id}/revival">復活</a>`)
       }
-      $(".reservation_show_edit").attr("data-id", `${data.id}`)
+      $(".rsvShow__edit").attr("data-id", `${data.id}`)
     }).fail(function () {
       
     })
@@ -85,9 +86,11 @@ function show() {
 
 function createSet(data) {
   if (data.message) {
-    $(".error_messages").text("")
+    $(".rsvNewEdit__errorMessages").text("")
+    // $(".rsvEdit__errorMessages").text("")
     for (let key in data.message) {
-      $(".error_messages").append(`<div>${data.message[key]}</div>`)
+      $(".rsvNewEdit__errorMessages").append(`<div>${data.message[key]}</div>`)
+      // $(".rsvEdit__errorMessages").append(`<div>${data.message[key]}</div>`)
     }
     $('.form_submit').prop('disabled', false);
   } else {
@@ -132,6 +135,12 @@ function createSet(data) {
 
 $(function () {
   if (location.pathname.match("/reservations")) {
+    
+    // let resultWidth = $(".reservation").innerWidth() - $(".reservation")[0].clientWidth;
+
+    // console.log(resultWidth)
+    // $(".rsvNew, .rsvShow, .rsvEdit, .reservation").css({width: resultWidth})
+    
     for (let i = 0; i < $(".data--room").length; i++){
       $(".rsvTable").append(`<div class="rsvTable__tr"></div>`)
     }
@@ -291,13 +300,28 @@ $(function () {
 
 
     $(".rsvControllers__newButton").click(function () {
-      $(".reservation_new_window").animate({ right: 0 }, 300);
-      $(".reservation_show_window, .reservation_edit_window").animate({ right: -450 }, 300);
+      $(".rsvNew").animate({ right: 0 }, 300);
+      $(".rsvShow, .rsvEdit").animate({ right: "-100vw" }, 300);
+      $(".reservation").css({ marginBottom: "300px" })
     })
     show()
 
 
-
+    $(document).click(function (e) {
+      // console.log($(e.target))
+      // console.log($(e.target)[0].classList[0])
+      if ($(e.target).closest('.rsvNew').length == 0
+        && $(e.target).closest('.rsvShow').length == 0
+        && $(e.target).closest('.rsvEdit').length == 0
+        && $(e.target)[0].className != "reservationOne__showButton"
+        && $(e.target)[0].classList[0] != "rsvControllers__newButton"
+        && $(e.target)[0].classList[0] != "rsvShow__edit") {
+        $(".rsvNew, .rsvShow, .rsvEdit").animate({ right: "-100vw" }, 300);
+        $(".reservation").animate({ marginBottom: "0" }, 500)
+        
+      }
+      // console.log($(e.target).closest('.rsvNew').length)
+    })
 
 
     
@@ -317,7 +341,14 @@ $(function () {
         processData: false,
         contentType: false
       }).done(function (data) {
+        $(".rsvNew__form__left > select:not(.rsvNew__form__left > select:nth-of-type(2)):not(.rsvNew__form__left > select:nth-of-type(3)):not(.rsvNew__form__left > select:nth-of-type(4))").val("");
+        $(".rsvNew__form__left > select:nth-of-type(5)").val("11")
+        $(".rsvNew__form__left > select:nth-of-type(6)").val("00")
+        $(".rsvNew__form__right > select").val("");
+        $(".rsvNew").animate({ right: "-100vw" }, 300);
         createSet(data);
+        console.log($(".rsvNew"))
+        
         
 
 
@@ -331,40 +362,41 @@ $(function () {
       })
     })
 
-    $(".reservation_show_edit").click(function () {
-      $(".reservation_edit_window").animate({ right: 0 }, 300);
-      $(".reservation_new_window, .reservation_show_window").animate({ right: -450 }, 300);
+    $(".rsvShow__edit").click(function () {
+      $(".rsvEdit").animate({ right: 0 }, 300);
+      $(".rsvNew, .rsvShow").animate({ right: "-100vw" }, 300);
+      $(".reservation").css({ marginBottom: "300px" })
       $.ajax({
         url: "/reservations/takeReservation",
         type: "GET",
         data: { id: $(this)[0].dataset.id },
         dataType: 'json'
       }).done(function (data) {
-        // $("#reservation_edit_form").addClass("iiiiiiiiii")
-        $("#reservation_edit_form").attr("action", `/reservations/${data.id}`)
+        // $("#rsvEdit_form").addClass("iiiiiiiiii")
+        $("#rsvEdit_form").attr("action", `/reservations/${data.id}`)
         // 以下１行、今回は不要だが今後ヒントになるのでメモ
-        // $("#reservation_edit_form").append(`<input type="hidden" name="_method" value="patch">`)
-        // console.log($(".reservation_edit_window_aa").prompt())
+        // $("#rsvEdit_form").append(`<input type="hidden" name="_method" value="patch">`)
+        // console.log($(".rsvEdit_aa").prompt())
 
         
         // console.log(data.clientid)
         if (data.clientid) {
-          $(".reservation_edit_window_aa").val(data.clientid)
+          $("#rsvEdit_client").val(data.clientid)
           // console.log("あり")
         } else {
-          $(".reservation_edit_window_aa").prepend(`<option value="">クライアント</option>`)
-          $(".reservation_edit_window_aa").val("")
+          $("#rsvEdit_client").prepend(`<option value="">クライアント</option>`)
+          $("#rsvEdit_client").val("")
         }
           
-        $(".reservation_edit_window_bb").val(data.guest)
+        $("#rsvEdit_guest").val(data.guest)
         
-        $(".reservation_edit_window_cc").val(data.roomid)
-        $(".reservation_edit_window_dd").val(data.kaisekiid)
-        $(".reservation_edit_window_ee").val(data.number_of_guest)
+        $("#rsvEdit_room").val(data.roomid)
+        $("#rsvEdit_kaiseki").val(data.kaisekiid)
+        $("#rsvEdit_number").val(data.number_of_guest)
         // console.log(data.minute)
-        $(".reservation_edit_window_gg").val(data.start_hour)
-        $(".reservation_edit_window_hh").val(data.minute)
-        $(".reservation_edit_window_ii").val(data.memo)
+        $("#rsvEdit_hour").val(data.start_hour)
+        $("#rsvEdit_minute").val(data.minute)
+        $("#rsvEdit_memo").val(data.memo)
         // createSet();
         // $("#reservation_new_form").attr("action", "/fjfjfjf/")
         // $("#reservation_new_form").on("submit", function (e) {
@@ -398,7 +430,7 @@ $(function () {
     })
 
     
-    $("#reservation_edit_form").on("submit", function (e) {
+    $("#rsvEdit_form").on("submit", function (e) {
       e.preventDefault();
       if (!confirm(`変更してよろしいですか？`)) {
         return false
@@ -414,10 +446,10 @@ $(function () {
         contentType: false
       }).done(function (data) {
         $(`[data-roomid="${data.roomid}"]` + `[data-hour="${data.past_hour}"]` + `[data-minute="${data.past_minute}"]`).empty();
-        console.log(data.same_date)
-        if (data.same_date) {
+        if (data.same_date || data.message) {
           createSet(data);
         }
+        $(".rsvEdit").animate({ right: "-100vw" }, 300);
           
         
         

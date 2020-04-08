@@ -62,7 +62,7 @@ function show() {
   $(".reservationOne__showButton").click(function () {
     $(".rsvShow").animate({ right: 0 }, 300);
     $(".rsvShow .rsvNew, .rsvEdit").animate({ right: "-100vw" }, 300);
-    $(".reservation").css({ marginBottom: "300px" })
+    $(".reservationsDeleted").css({ marginBottom: "300px" })
     $.ajax({
       url: "/reservations/takeReservation",
       type: "GET",
@@ -314,7 +314,7 @@ $(function () {
     $(".rsvControllers__newButton").click(function () {
       $(".rsvNew").animate({ right: 0 }, 300);
       $(".rsvShow, .rsvEdit").animate({ right: "-100vw" }, 300);
-      $(".reservation").css({ marginBottom: "300px" })
+      $(".reservationsDeleted").css({ marginBottom: "300px" })
     })
     show()
 
@@ -326,13 +326,14 @@ $(function () {
         && $(e.target).closest('.rsvShow').length == 0
         && $(e.target).closest('.rsvEdit').length == 0
         && $(e.target)[0].className != "reservationOne__showButton"
+        && $(e.target)[0].classList[0] != "reservationOne__showButton"
         && $(e.target)[0].classList[0] != "rsvControllers__newButton"
         && $(e.target)[0].classList[0] != "rsvShow__edit") {
         $(".rsvNew, .rsvShow, .rsvEdit").animate({ right: "-100vw" }, 300);
-        $(".reservation").animate({ marginBottom: "0" }, 500)
+        $(".reservationsDeleted").animate({ marginBottom: "30" }, 500)
         
       }
-      // console.log($(e.target).closest('.rsvNew').length)
+      console.log($(e.target))
     })
 
 
@@ -358,7 +359,7 @@ $(function () {
         $(".rsvNew__form__left > select:nth-of-type(6)").val("00")
         $(".rsvNew__form__right > select").val("");
         $(".rsvNew").animate({ right: "-100vw" }, 300);
-        $(".reservation").animate({ marginBottom: "0" }, 500)
+        $(".reservationsDeleted").animate({ marginBottom: "30" }, 500)
         createSet(data);
         console.log($(".rsvNew"))
         
@@ -378,7 +379,7 @@ $(function () {
     $(".rsvShow__edit").click(function () {
       $(".rsvEdit").animate({ right: 0 }, 300);
       $(".rsvNew, .rsvShow").animate({ right: "-100vw" }, 300);
-      $(".reservation").css({ marginBottom: "300px" })
+      $(".reservationsDeleted").css({ marginBottom: "300px" })
       $.ajax({
         url: "/reservations/takeReservation",
         type: "GET",
@@ -463,7 +464,7 @@ $(function () {
           createSet(data);
         }
         $(".rsvEdit").animate({ right: "-100vw" }, 300);
-        $(".reservation").animate({ marginBottom: "0" }, 500)
+        $(".reservationsDeleted").animate({ marginBottom: "30" }, 500)
         
         
         

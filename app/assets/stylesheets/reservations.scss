@@ -339,7 +339,6 @@
 }
 
 .rsvShow{
-  
   & h3{
     color: $color5;
     padding: 5px 0;
@@ -386,6 +385,66 @@
       &:hover{
         cursor: pointer;
       }
+    }
+  }
+}
+
+.reservationsDeleted{
+  width: 68vw;
+  margin: 10px auto 30px;
+  
+  & h2{
+    font-size: 21px;
+    margin: 0 20px 20px;
+  }
+}
+.rsvDeleted{
+  padding: 4px 10px;
+  border-radius: 3px;
+  position: relative;
+  height: 42px;
+  // width: 360px;
+  &:nth-of-type(odd){
+    background-color: $color2;
+
+  }
+  &__content{
+    display: inline-block;
+    line-height: 34px;
+    vertical-align: middle;
+    &:nth-of-type(1){
+      width: 100px;
+    }
+    &:nth-of-type(2){
+      width: 80px;
+    }
+    &:nth-of-type(3){
+      width: 100px;
+    }
+    &:nth-of-type(4){
+      // outline: 1px solid red;
+      white-space: nowrap;
+      overflow: hidden;
+      max-width: calc(68vw - 400px);
+    }
+  }
+  &__show{
+    // float: right;
+    width: 60px;
+    height: 32px;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    display: inline-block;
+    padding: 7px 16px;
+    line-height: 1.3em;
+    border-radius: 13px;
+    font-size: 14px;
+    background-color: $color1;
+    color: $color4;
+    &:hover{
+      cursor: pointer;
     }
   }
 }

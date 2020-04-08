@@ -98,89 +98,108 @@
       -# .vvvvvv
       -#   = r.start_minute
 
-
-  %h3
+.reservationsDeleted
+  %h2
     削除一覧
   - @deleted_reservations.each do |d|
-    = d
-    .reservationOne__showButton{data: {id: d.id}}
-      詳細
+    .rsvDeleted{data: {id: d.id}}
+      .rsvDeleted__content
+        -if d.client
+          = d.client.name+" 様"
+        -else
+          = d.guest+" 様"
+      .rsvDeleted__content
+        = "#{d.number_of_guest} 名"
+      .rsvDeleted__content
+        = "#{d.start_hour} :"
+        - if d.start_minute == 0
+          = "00"
+        -else
+          = d.start_minute
+      .rsvDeleted__content
+        = d.memo
+      .reservationOne__showButton.rsvDeleted__show{data: {id: d.id}}
+        詳細
 
-  .rsvNew.rsvNewEdit
-    = form_with model: @reservation_new, local: true, html: {class: "rsvNewEdit__form rsvNew__form", id: "reservation_new_form"} do |f|
-      .rsvNew__form__left.rsvNewEdit__form__left
-        %h3 お客様
-        = f.select :client_id, Client.all.map{|c| [c.name, c.id]}, prompt: "クライアント"
-        = f.text_field :guest
-        %h3 日時
-        != sprintf(f.date_select(:date, use_month_numbers: true,default: @this_date,date_separator: '%s'), '年 ', '月 ') +'日'
-        -# = f.date_select :date, {default: @this_date}
-        = f.select :start_hour, [*11..19]
-        ：
-        = f.select :start_minute, ['00', 15, 30, 45]
-        %h3 部屋
-        = f.select :room_id, Room.all.map { |r| [r.name, r.id] }, prompt: "選択してください"
-        %h3 料理
-        = f.select :kaiseki_id, Kaiseki.all.map { |k| [k.name, k.id] }, prompt: "選択してください"
-        %h3 人数
-        = f.select :number_of_guest, [*1..12], prompt: "選択してください"
-      .rsvNew__form__right.rsvNewEdit__form__right
-        %h3 メモ
-        = f.text_area :memo
-        = f.submit "登録", class: "form_submit rsvNewEdit__form__right__submit"
-      .rsvNew__errorMessages.rsvNewEdit__errorMessages
-  -# .rsvNewEdit
-  -#   = render partial: "form", locals: {reservation: @reservation_edit}
-  .rsvShow
-    .rsvShow__left
+.rsvNew.rsvNewEdit
+  = form_with model: @reservation_new, local: true, html: {class: "rsvNewEdit__form rsvNew__form", id: "reservation_new_form"} do |f|
+    .rsvNew__form__left.rsvNewEdit__form__left
       %h3 お客様
-      .rsvShow__client.rsvShow__content
-      .rsvShow__guest.rsvShow__content
+      = f.select :client_id, Client.all.map{|c| [c.name, c.id]}, prompt: "クライアント"
+      様
+      = f.text_field :guest
+      様
       %h3 日時
-      .rsvShow__date.rsvShow__content
-      -# .rsvShow__date_data.rsvShow__content
-      .rsvShow__start_hour.rsvShow__content
-      = ":"
-      .rsvShow__start_minute.rsvShow__content
+      != sprintf(f.date_select(:date, use_month_numbers: true,default: @this_date,date_separator: '%s'), '年 ', '月 ') +'日'
+      -# = f.date_select :date, {default: @this_date}
+      = f.select :start_hour, [*11..19]
+      ：
+      = f.select :start_minute, ['00', 15, 30, 45]
       %h3 部屋
-      .rsvShow__room.rsvShow__content
+      = f.select :room_id, Room.all.map { |r| [r.name, r.id] }, prompt: "選択してください"
       %h3 料理
-      .rsvShow__kaiseki.rsvShow__content
+      = f.select :kaiseki_id, Kaiseki.all.map { |k| [k.name, k.id] }, prompt: "選択してください"
       %h3 人数
-      .rsvShow__number_of_guest.rsvShow__content
-      = "人"
-    .rsvShow__right
+      = f.select :number_of_guest, [*1..12], prompt: "選択してください"
+    .rsvNew__form__right.rsvNewEdit__form__right
       %h3 メモ
-      .rsvShow__memo.rsvShow__content
-    .rsvShow__submits
-      .rsvShow__edit.rsvShow__submits__submit
-        編集
-      .rsvShow__link.rsvShow__submits__submit
-      
+      = f.text_area :memo
+      = f.submit "登録", class: "form_submit rsvNewEdit__form__right__submit"
+    .rsvNew__errorMessages.rsvNewEdit__errorMessages
+-# .rsvNewEdit
+-#   = render partial: "form", locals: {reservation: @reservation_edit}
+.rsvShow
+  .rsvShow__left
+    %h3 お客様
+    .rsvShow__client.rsvShow__content
+    .rsvShow__guest.rsvShow__content
+    %h3 日時
+    .rsvShow__date.rsvShow__content
+    -# .rsvShow__date_data.rsvShow__content
+    .rsvShow__start_hour.rsvShow__content
+    = ":"
+    .rsvShow__start_minute.rsvShow__content
+    %h3 部屋
+    .rsvShow__room.rsvShow__content
+    %h3 料理
+    .rsvShow__kaiseki.rsvShow__content
+    %h3 人数
+    .rsvShow__number_of_guest.rsvShow__content
+    = "人"
+  .rsvShow__right
+    %h3 メモ
+    .rsvShow__memo.rsvShow__content
+  .rsvShow__submits
+    .rsvShow__edit.rsvShow__submits__submit
+      編集
+    .rsvShow__link.rsvShow__submits__submit
+    
 
-  .rsvEdit.rsvNewEdit
-    = form_with model: @reservation_new, local: true, html: {class: "rsvNewEdit__form rsvEdit__form", id: "rsvEdit_form"} do |f|
-      .rsvEdit__form__left.rsvNewEdit__form__left
-        %h3 お客様
-        = f.select :client_id, Client.all.map{|c| [c.name, c.id]},{}, id: "rsvEdit_client"
-        = f.text_field :guest, id: "rsvEdit_guest"
-        %h3 日時
-        != sprintf(f.date_select(:date, use_month_numbers: true,default: @this_date,date_separator: '%s'), '年 ', '月 ') +'日'
-        -# = f.date_select :date, {default: @this_date}, class: ""
-        = f.select :start_hour, [*11..21],{}, id: "rsvEdit_hour"
-        ：
-        = f.select :start_minute, ['00', 15, 30, 45],{}, id: "rsvEdit_minute"
-        %h3 部屋
-        = f.select :room_id, Room.all.map { |r| [r.name, r.id] },{}, id: "rsvEdit_room"
-        %h3 料理
-        = f.select :kaiseki_id, Kaiseki.all.map { |k| [k.name, k.id] },{}, id: "rsvEdit_kaiseki"
-        %h3 人数
-        = f.select :number_of_guest, [*1..12],{}, id: "rsvEdit_number"
-      .rsvEdit__form__right.rsvNewEdit__form__right
-        %h3 メモ
-        = f.text_area :memo, id: "rsvEdit_memo"
-        = f.submit "登録", class: "form_submit rsvNewEdit__form__right__submit"
-      .rsvEdit__errorMessages.rsvNewEdit__errorMessages
+.rsvEdit.rsvNewEdit
+  = form_with model: @reservation_new, local: true, html: {class: "rsvNewEdit__form rsvEdit__form", id: "rsvEdit_form"} do |f|
+    .rsvEdit__form__left.rsvNewEdit__form__left
+      %h3 お客様
+      = f.select :client_id, Client.all.map{|c| [c.name, c.id]},{}, id: "rsvEdit_client"
+      様
+      = f.text_field :guest, id: "rsvEdit_guest"
+      様
+      %h3 日時
+      != sprintf(f.date_select(:date, use_month_numbers: true,default: @this_date,date_separator: '%s'), '年 ', '月 ') +'日'
+      -# = f.date_select :date, {default: @this_date}, class: ""
+      = f.select :start_hour, [*11..21],{}, id: "rsvEdit_hour"
+      ：
+      = f.select :start_minute, ['00', 15, 30, 45],{}, id: "rsvEdit_minute"
+      %h3 部屋
+      = f.select :room_id, Room.all.map { |r| [r.name, r.id] },{}, id: "rsvEdit_room"
+      %h3 料理
+      = f.select :kaiseki_id, Kaiseki.all.map { |k| [k.name, k.id] },{}, id: "rsvEdit_kaiseki"
+      %h3 人数
+      = f.select :number_of_guest, [*1..12],{}, id: "rsvEdit_number"
+    .rsvEdit__form__right.rsvNewEdit__form__right
+      %h3 メモ
+      = f.text_area :memo, id: "rsvEdit_memo"
+      = f.submit "登録", class: "form_submit rsvNewEdit__form__right__submit"
+    .rsvEdit__errorMessages.rsvNewEdit__errorMessages
 
 
 - @rooms.each do |r|

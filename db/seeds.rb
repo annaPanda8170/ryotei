@@ -1,18 +1,24 @@
 Member.create(
-  [
+  {
+    name: "annaPanda",
+    email: "a@a",
+    grade: 3,
+    password: "123123123"
+  }
+)
+
+grades = [nil, 1, 2, 3]
+
+15.times do
+  Member.create(
     {
-      name: "manager",
-      email: "a@a",
-      grade: 3,
-      password: "123123123"
-    },{
-      name: "newer",
-      email: "b@b",
-      grade: nil,
+      name: Faker::Name.name,
+      email: Faker::Internet.email,
+      grade: grades[rand(0..3)],
       password: "123123123"
     }
-  ]
-)
+  )
+end
 
 Kaiseki.create(
   [
@@ -35,37 +41,41 @@ Kaiseki.create(
   ]
 )
 
-Client.create(
-  [
+15.times do
+  Client.create(
     {
-      name: "田中",
-      memo: "アレルギー：甲殻類
-      せっかち"
-    },{
-      name: "鈴木",
-      memo: "毎年正月のみご利用"
-    },{
-      name: "佐藤",
+      name: Faker::Company.name,
+      memo: Faker::Food.description,
     }
-  ]
-)
+  )
+end
+
+5.times do
+  Client.create(
+    {
+      name: Faker::Name.name,
+      memo: Faker::Food.description,
+    }
+  )
+end
+
 
 Room.create(
   [
     {
-      name: "春日",
+      name: "鳳凰",
       price: 10000
     },{
-      name: "音羽",
+      name: "悠久",
       price: 20000
     },{
-      name: "羽衣",
+      name: "麒麟",
       price: 20000
     },{
-      name: "浮舟",
+      name: "高砂",
       price: 25000
     },{
-      name: "折鶴",
+      name: "夕霧",
       price: 100000
     }
   ]
@@ -133,18 +143,110 @@ Drink.create(
   ]
 )
 
-Reservation.create(
-  {
-    client_id: 1,
-    guest: nil,
-    member_id: 1,
-    room_id: 1,
-    kaiseki_id: 1,
-    number_of_guest: 1,
-    memo: nil,
-    date: Date.today,
-    status: 1,
-    start_hour: 11,
-    start_minute: 00
-  }
-)
+
+
+member_length = Member.all.length
+grade3_member = []
+Member.all.each do |m| 
+  if m.grade == 3
+    grade3_member << m.id
+  end
+end
+room_length = Room.all.length
+kaiseki_length = Kaiseki.all.length
+minute = [0, 15, 30, 45]
+addDeleted = [1,1,1,0]
+
+
+20.times do
+  Reservation.create(
+    {
+      client_id: nil,
+      guest: Faker::Company.name,
+      member_id: grade3_member[rand(0..((grade3_member.length) -1))],
+      room_id: rand(room_length),
+      kaiseki_id: rand(kaiseki_length),
+      number_of_guest: rand(2..10),
+      memo: Faker::Food.description,
+      date: Date.today + rand(0..4) - rand(0..2),
+      status: addDeleted[rand(0..1)],
+      start_hour: rand(16..19),
+      start_minute: minute[rand(0..2)]
+    }
+  )
+end
+
+20.times do
+  Reservation.create(
+    {
+      client_id: nil,
+      guest: Faker::Name.name,
+      member_id: grade3_member[rand(0..((grade3_member.length) -1))],
+      room_id: rand(room_length),
+      kaiseki_id: rand(kaiseki_length),
+      number_of_guest: rand(2..10),
+      memo: Faker::Food.description,
+      date: Date.today + rand(0..4) - rand(0..2),
+      status: addDeleted[rand(0..1)],
+      start_hour: rand(11..18),
+      start_minute: minute[rand(0..3)]
+    }
+  )
+end
+
+45.times do
+  Reservation.create(
+    {
+      client_id: nil,
+      guest: Faker::Name.name,
+      member_id: grade3_member[rand(0..((grade3_member.length) -1))],
+      room_id: rand(room_length),
+      kaiseki_id: rand(kaiseki_length),
+      number_of_guest: rand(2..10),
+      memo: Faker::Food.description,
+      date: Date.today + rand(0..20) - rand(0..10),
+      status: addDeleted[rand(0..1)],
+      start_hour: rand(11..18),
+      start_minute: minute[rand(0..3)]
+    }
+  )
+end
+
+14.times do
+  Reservation.create(
+    {
+      client_id: nil,
+      guest: Faker::Games::Pokemon.name,
+      member_id: grade3_member[rand(0..((grade3_member.length) -1))],
+      room_id: rand(room_length),
+      kaiseki_id: rand(kaiseki_length),
+      number_of_guest: rand(2..10),
+      memo: Faker::Food.description,
+      date: Date.today + rand(0..20) - rand(0..10),
+      status: rand(0..1),
+      start_hour: rand(11..18),
+      start_minute: minute[rand(0..3)]
+    }
+  )
+end
+
+client_length = Client.all.length
+
+45.times do
+  Reservation.create(
+    {
+      client_id: rand(client_length),
+      guest: nil,
+      member_id: grade3_member[rand(0..((grade3_member.length) -1))],
+      room_id: rand(room_length),
+      kaiseki_id: rand(kaiseki_length),
+      number_of_guest: rand(2..10),
+      memo: Faker::Food.description,
+      date: Date.today + rand(0..20) - rand(0..10),
+      status: addDeleted[rand(0..1)],
+      start_hour: rand(11..18),
+      start_minute: minute[rand(0..3)]
+    }
+  )
+end
+

@@ -491,7 +491,7 @@ $(function () {
       }).done(function (data) {
         $(`[data-roomid="${data.roomid}"]` + `[data-hour="${data.hour}"]` + `[data-minute="${data.minute}"]`).empty();
         $(".rsvShow").animate({ right: "-100vw" }, 300);
-        $(".reservation").animate({ marginBottom: "0" }, 500)
+        $(".reservationsDeleted").animate({ marginBottom: "30" }, 500)
         // デリート情報のアペンドまだ
       })
     })

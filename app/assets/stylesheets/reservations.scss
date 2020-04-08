@@ -412,8 +412,10 @@
     display: inline-block;
     line-height: 34px;
     vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
     &:nth-of-type(1){
-      width: 100px;
+      width: 200px;
     }
     &:nth-of-type(2){
       width: 80px;
@@ -423,9 +425,7 @@
     }
     &:nth-of-type(4){
       // outline: 1px solid red;
-      white-space: nowrap;
-      overflow: hidden;
-      max-width: calc(68vw - 400px);
+      max-width: calc(68vw - 500px);
     }
   }
   &__show{

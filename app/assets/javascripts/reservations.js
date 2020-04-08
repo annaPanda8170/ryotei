@@ -105,7 +105,7 @@ function createSet(data) {
     <div class="reservationOne__numberOfGuest">${data.numOfGuest} 名</div>
     <div class="reservationOne__memo">${data.memo}</div>
     <div class="reservationOne__showButton" data-id=${data.id}>詳細</div>
-    <a class="reservationOne__sale" href="/sales/new.${data.id}">会計(新)</a>
+    <a class="reservationOne__sale" href="/sales/new.${data.id}">未会計</a>
     </div>`
 
     
@@ -124,7 +124,19 @@ function createSet(data) {
     $(".reservationOne").draggable({
       revert: "invalid",
     });
-
+    $(".reservationOne").hover(function () {
+      // if ($(this).find(".reservationOne__sale").css("display") == "block") {
+      //   block = true;
+      // } else {
+      //   block = false;
+      // }
+      $(this).find(".reservationOne__showButton, .reservationOne__sale").fadeIn();
+    }, function () {
+      if (!$(this)[0].dataset.status) {
+        $(this).find(".reservationOne__sale").fadeOut();
+      }
+      $(this).find(".reservationOne__showButton").fadeOut();
+    })
     // リセットあとで実装!!!!!!!!!!!!!!!
     // $('.new_message')[0].reset();
     $('.form_submit').prop('disabled', false);
@@ -346,6 +358,7 @@ $(function () {
         $(".rsvNew__form__left > select:nth-of-type(6)").val("00")
         $(".rsvNew__form__right > select").val("");
         $(".rsvNew").animate({ right: "-100vw" }, 300);
+        $(".reservation").animate({ marginBottom: "0" }, 500)
         createSet(data);
         console.log($(".rsvNew"))
         
@@ -450,7 +463,7 @@ $(function () {
           createSet(data);
         }
         $(".rsvEdit").animate({ right: "-100vw" }, 300);
-          
+        $(".reservation").animate({ marginBottom: "0" }, 500)
         
         
         
@@ -476,6 +489,8 @@ $(function () {
         dataType: 'json'
       }).done(function (data) {
         $(`[data-roomid="${data.roomid}"]` + `[data-hour="${data.hour}"]` + `[data-minute="${data.minute}"]`).empty();
+        $(".rsvShow").animate({ right: "-100vw" }, 300);
+        $(".reservation").animate({ marginBottom: "0" }, 500)
         // デリート情報のアペンドまだ
       })
     })

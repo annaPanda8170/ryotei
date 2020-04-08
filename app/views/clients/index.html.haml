@@ -8,10 +8,13 @@
     = link_to client_path(c.id), class: "client" do
       .client__content
         = c.name 
-      -if c.reservations
+      -if @clients_dates[c.id].length > 0
         .client__content
-          - ccc = c.reservations.sort_by_date
-          - ccc.each do |r|
-            = r.date.strftime("%Y年%m月%d日　")
+          - @clients_dates[c.id].each do |r|
+            - if r < Date.today
+              = r.strftime("%Y年%m月%d日　")
+            - else
+              %span
+                = r.strftime("%Y年%m月%d日　")
       .client__show
         詳細

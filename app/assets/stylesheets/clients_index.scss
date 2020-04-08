@@ -35,6 +35,9 @@
     &:nth-of-type(2){
       max-width: calc(80vw - 300px);
     }
+    & > span{
+      color: $color11;
+    }
   }
   &__show{
     width: 60px;

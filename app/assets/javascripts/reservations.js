@@ -120,7 +120,12 @@ function createSet(data) {
     }
     
 
-
+    $(".rsvNew__form__left > select:not(.rsvNew__form__left > select:nth-of-type(2)):not(.rsvNew__form__left > select:nth-of-type(3)):not(.rsvNew__form__left > select:nth-of-type(4))").val("");
+    $(".rsvNew__form__left > select:nth-of-type(5)").val("11")
+    $(".rsvNew__form__left > select:nth-of-type(6)").val("00")
+    $(".rsvNew__form__right > select").val("");
+    $(".rsvNew .rsvEdit").animate({ right: "-100vw" }, 300);
+    $(".reservationsDeleted").animate({ marginBottom: "30" }, 500)
     $(".reservationOne").draggable({
       revert: "invalid",
     });
@@ -331,13 +336,23 @@ $(function () {
         && $(e.target)[0].classList[0] != "rsvShow__edit") {
         $(".rsvNew, .rsvShow, .rsvEdit").animate({ right: "-100vw" }, 300);
         $(".reservationsDeleted").animate({ marginBottom: "30" }, 500)
-        
+        $(".rsvNewEdit__errorMessages").html("");
       }
       console.log($(e.target))
     })
 
 
-    
+    $(".rsvNewEdit__form__right__clear").click(function () {
+      $(".rsvNew__form__left > select:not(.rsvNew__form__left > select:nth-of-type(2)):not(.rsvNew__form__left > select:nth-of-type(3)):not(.rsvNew__form__left > select:nth-of-type(4))").val("");
+      $("#reservation_date_1i").val($("#_date_1i").val())
+      $("#reservation_date_2i").val($("#_date_2i").val())
+      $("#reservation_date_3i").val($("#_date_3i").val())
+      $(".rsvNew__form__left > select:nth-of-type(5)").val("11")
+      $(".rsvNew__form__left > select:nth-of-type(6)").val("00")
+      $(".rsvNew__form__left > input").val("")
+      $(".rsvNew__form__right > textarea").val("")
+      $(".rsvNew__form__right > select").val("");
+    })
 
     $("#reservation_new_form").on("submit", function (e) {
       e.preventDefault();
@@ -354,12 +369,7 @@ $(function () {
         processData: false,
         contentType: false
       }).done(function (data) {
-        $(".rsvNew__form__left > select:not(.rsvNew__form__left > select:nth-of-type(2)):not(.rsvNew__form__left > select:nth-of-type(3)):not(.rsvNew__form__left > select:nth-of-type(4))").val("");
-        $(".rsvNew__form__left > select:nth-of-type(5)").val("11")
-        $(".rsvNew__form__left > select:nth-of-type(6)").val("00")
-        $(".rsvNew__form__right > select").val("");
-        $(".rsvNew").animate({ right: "-100vw" }, 300);
-        $(".reservationsDeleted").animate({ marginBottom: "30" }, 500)
+        
         createSet(data);
         console.log($(".rsvNew"))
         
@@ -463,8 +473,8 @@ $(function () {
         if (data.same_date || data.message) {
           createSet(data);
         }
-        $(".rsvEdit").animate({ right: "-100vw" }, 300);
-        $(".reservationsDeleted").animate({ marginBottom: "30" }, 500)
+        // $(".rsvEdit").animate({ right: "-100vw" }, 300);
+        // $(".reservationsDeleted").animate({ marginBottom: "30" }, 500)
         
         
         

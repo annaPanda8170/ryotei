@@ -1,7 +1,8 @@
 class ClientsController < ApplicationController
   def index
     @clients = Client.all
-    binding.pry
+    # 各クライアントに対する予約の日々を新しい順に並べ替えしたものとidのセット
+    @clients_dates = Client.dates_set(@clients)
   end
   def show
     @client = Client.find(params[:id])

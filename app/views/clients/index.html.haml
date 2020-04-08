@@ -1,5 +1,17 @@
-- @clients.each do |c|
-  =link_to client_path(c.id) do
-    = c.name 
-= link_to new_client_path do
-  新規登録
+= stylesheet_link_tag 'clients_index', media: 'all'
+.clientsIndex
+  %h2
+    クライアント一覧
+  = link_to new_client_path, class: "clientsIndex__new" do
+    新規登録
+  - @clients.each do |c|
+    = link_to client_path(c.id), class: "client" do
+      .client__content
+        = c.name 
+      -if c.reservations
+        .client__content
+          - ccc = c.reservations.sort_by_date
+          - ccc.each do |r|
+            = r.date.strftime("%Y年%m月%d日　")
+      .client__show
+        詳細

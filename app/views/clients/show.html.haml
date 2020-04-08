@@ -1,11 +1,13 @@
-= link_to clients_path do
-  一覧に戻る
-= @client.name
-= @client.memo
-= link_to edit_client_path(@client.id) do
-  編集
-= link_to client_path(@client.id), method: :delete do
-  削除
-- @reservation.each do |r|
-  = link_to reservation_path(r.id) do
-    = r.date
+= stylesheet_link_tag 'clients_show', media: 'all'
+.clientsShow
+  = link_to clients_path do
+    一覧に戻る
+  = @client.name
+  = @client.memo
+  = link_to edit_client_path(@client.id) do
+    編集
+  = link_to client_path(@client.id), method: :delete do
+    削除
+  - @reservation.each do |r|
+    = link_to reservation_path(r.id) do
+      = r.date

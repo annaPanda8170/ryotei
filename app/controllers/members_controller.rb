@@ -11,7 +11,6 @@ class MembersController < ApplicationController
       @gradeLess = Member.where(grade: nil).length
     end
   end
-  end
   def update
     if @member.update(member_params)
       redirect_to members_path

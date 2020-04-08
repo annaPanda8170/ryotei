@@ -1,42 +1,27 @@
 @import "colors";
 
-.membersIndex{
-  width: 72vw;
+.clientsIndex{
+  width: 80vw;
   margin: 100px auto 30px;
   & h2{
     font-size: 21px;
     margin: 20px 0;
-  }
-  &__title a{
     display: inline-block;
-    margin-left: 40px;
   }
-  &__untreated{
-    color: $color10;
-    & a{
-      padding: 7px 16px;
-      line-height: 1.3em;
-      border-radius: 13px;
-      font-size: 14px;
-      background-color: rgb(251, 220, 224);
-      animation: untreated 1s ease 0s infinite alternate;
-    }
+  &__new{
+    font-size: 21px;
+    margin: 20px 0 20px 30px;
   }
 }
 
-@keyframes untreated {
-  0% {color: red;}
-  100% {color: rgb(173, 2, 2);}
-}
-
-.member{
+.client{
   display: block;
   padding: 4px 10px;
   border-radius: 3px;
   position: relative;
   height: 42px;
   &:nth-of-type(odd){
-    background-color: $color2;
+    background-color: $color5;
   }
   &__content{
     display: inline-block;
@@ -48,17 +33,10 @@
       width: 200px;
     }
     &:nth-of-type(2){
-      width: 550px;
-    }
-    &:nth-of-type(3){
-      width: 40px;
-    }
-    &:nth-of-type(4){
-      // outline: 1px solid red;
-      max-width: calc(68vw - 500px);
+      max-width: calc(80vw - 300px);
     }
   }
-  &__edit{
+  &__show{
     width: 60px;
     height: 32px;
     position: absolute;
@@ -70,11 +48,10 @@
     line-height: 1.3em;
     border-radius: 13px;
     font-size: 14px;
-    background-color: $color1;
+    background-color: $color8;
     color: $color4;
     &:hover{
       cursor: pointer;
     }
   }
 }
-

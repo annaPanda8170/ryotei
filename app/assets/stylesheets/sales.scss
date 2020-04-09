@@ -73,6 +73,9 @@
       }
       &__drinks{
         font-size: 16px;
+        &>div{
+          font-size: 0;
+        }
       }
       &__subTotal{
         margin-top: 20px;
@@ -82,7 +85,11 @@
       }
       &__submit{
         margin: 30px 25px 10px 0;
-        
+        display: inline-block;
+        // なんでここが1なのかわからない
+        &:nth-of-type(1){
+          background-color: $color11;
+        }
       }
     }
   }

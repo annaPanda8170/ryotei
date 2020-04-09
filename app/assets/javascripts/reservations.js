@@ -356,6 +356,8 @@ $(function () {
     newOpen()
     showOpen()
     editOpen()
+
+    // ウインドウクローズイベント 
     $(document).click(function (e) {
       if ($(e.target).closest('.rsvNew').length == 0
         && $(e.target).closest('.rsvShow').length == 0

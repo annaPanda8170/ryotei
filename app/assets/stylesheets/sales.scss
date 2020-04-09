@@ -1,6 +1,137 @@
-.sales__drink{
-  outline: 1px solid green;
-  width: 200px;
-  font-size: 20px;
+@import "colors";
+
+.submits{
+  padding: 7px 16px;
+  line-height: 1.3em;
+  border: none;
+  border-radius: 13px;
+  font-size: 14px;
+  background-color: $color8;
+  color: $color4;
+  &:hover{
+    cursor: pointer;
+    opacity: .7;
+  }
 }
 
+
+
+.saleNewEdit{
+  width: 80vw;
+  margin: 100px auto 30px;
+  white-space: nowrap;
+  &__result{
+    width: 540px;
+    float: left;
+    &__content{
+      font-size: 0;
+      &:nth-of-type(1){
+        font-size: 20px;
+        padding: 18px 10px;
+      }
+      &:nth-of-type(2){
+        text-align: center;
+        & div{
+          font-size: 14px;
+          border: 3px solid $color2;
+          border-right: none;
+          &:nth-of-type(3){
+            border-right: 3px solid $color2;
+          }
+        }
+      }
+      &__name, &__price, &__number{
+        font-size: 16px;
+        display: inline-block;
+        padding: 10px 4px;
+        border-bottom: 3px solid $color2;
+        border-left: 3px solid $color2;
+        vertical-align: top;
+        height: 40px;
+        background-color: $color4;
+      }
+      &__name{
+        width: 230px;
+      }
+      &__price{
+        width: 140px;
+      }
+      &__number{
+        width: 170px;
+        border-right: 3px solid $color2;
+        outline: none;
+      }
+      &__subTotal, &__tax, &__total{
+        font-size: 18px;
+        padding: 4px 0;
+        &__title, &__price{
+          display: inline-block;
+        }
+        &__title{
+          width: 110px;
+        }
+      }
+      &__drinks{
+        font-size: 16px;
+      }
+      &__subTotal{
+        margin-top: 20px;
+      }
+      &__total{
+        margin-bottom: 20px;
+      }
+      &__submit{
+        margin: 30px 25px 10px 0;
+        
+      }
+    }
+  }
+  &__drinkButtons{
+    float: right;
+    width: 500px;
+    text-align: center;
+    &__categorys{
+      white-space: normal;
+      padding: 14px 0 32px;
+      &__category{
+        display: inline-block;
+        background-color: $color5;
+        margin: 4px;
+        color: $color4;
+        &:nth-of-type(1){
+          background-color: $color3;
+        }
+      }
+    }
+    &__drink{
+      text-align: center;
+      &__name{
+        margin: 4px auto;
+        background-color: $color2;
+        color: $color4;
+        font-size: 20px;
+        text-align: center;
+        display: inline-block;
+      }
+    }
+  }
+}
+
+.delete_drink{
+  line-height: 30px;
+  display: inline-block;
+  padding: 0 16px;
+  font-size: 16px;
+  margin: 5px 15px;
+  border-radius: 13px;
+  background-color: $color7;
+  color: $color4;
+  &:hover{
+    cursor: pointer;
+    opacity: .7;
+  }
+}
+
+.drink-wrapper{
+  font-size: 0;
+}

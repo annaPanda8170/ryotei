@@ -63,19 +63,19 @@ end
 Room.create(
   [
     {
-      name: "鳳凰",
+      name: "鳳凰の間",
       price: 10000
     },{
-      name: "悠久",
+      name: "悠久の間",
       price: 20000
     },{
-      name: "麒麟",
+      name: "麒麟の間",
       price: 20000
     },{
-      name: "高砂",
+      name: "高砂の間",
       price: 25000
     },{
-      name: "夕霧",
+      name: "夕霧の間",
       price: 100000
     }
   ]

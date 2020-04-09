@@ -44,7 +44,7 @@
             合計
           .saleNewEdit__result__content__total__price
             = @reservation.room.price + (@reservation.kaiseki.price * @reservation.number_of_guest)*11/10
-        = f.select :mean, Sale.means, prompt: "会計方法", id: "sale_mean"
+        = f.select :mean, Sale.means.keys.to_a, prompt: "会計方法", id: "sale_mean"
         = f.number_field :from,  {min: @reservation.room.price + (@reservation.kaiseki.price * @reservation.number_of_guest)*11/10, max: 999999,id: "sale_cash"}
         .saleChange
         .saleNewEdit__result__content__change

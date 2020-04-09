@@ -44,12 +44,13 @@ function saleTotal(timeIdSet) {
 
 function saleFinish() {
   $("#sale_mean").change(function () {
+    console.log($(this).val())
     $("#sale_finish").css({ display: "none" })
     $("#sale_cash").css({ display: "none" })
     $(".saleNewEdit__result__content__change").css({display: "none"})
-    if ($(this).val() === "0") {
+    if ($(this).val() === "クレジット") {
       $("#sale_finish").css({display: "inline-block"})
-    } else if ($(this).val() == 1) {
+    } else if ($(this).val() == "現金") {
       $("#sale_finish").css({ display: "inline-block" })
       $("#sale_cash").css({ display: "inline-block" })
       $(".saleNewEdit__result__content__change").css({display: "block"})

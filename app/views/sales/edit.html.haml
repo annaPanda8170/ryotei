@@ -3,8 +3,5 @@
 = render partial: "form",locals: {edit: true}
 
 
-
-
-
 - @sales_drinks.each_with_index do |d, i|
   .saledrink{id: "saledrink#{i}", data:{id: d.id, number: d.number, drinkid: d.drink_id, name: d.drink.name, price: d.drink.price}}

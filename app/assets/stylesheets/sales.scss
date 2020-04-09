@@ -61,7 +61,7 @@
         border-right: 3px solid $color2;
         outline: none;
       }
-      &__subTotal, &__tax, &__total{
+      &__subTotal, &__tax, &__total, &__change{
         font-size: 18px;
         padding: 4px 0;
         &__title, &__price{
@@ -90,6 +90,9 @@
         &:nth-of-type(1){
           background-color: $color11;
         }
+      }
+      &__change{
+        display: none;
       }
     }
   }
@@ -124,6 +127,26 @@
   }
 }
 
+#sale_mean, #sale_cash{
+  vertical-align: middle;
+  padding-right: 1em;
+  cursor: pointer;
+  padding: 0 15px;
+  -webkit-appearance: none;
+  appearance: none;
+  font-size: 22px;
+  border: 2px solid $color3;
+  margin: 0 60px 30px 0;
+  border-radius: 4px;
+  height: 37px;
+  background-color: $color4;
+}
+
+#sale_cash{
+  width: 200px;
+  text-align: left;
+}
+
 .delete_drink{
   line-height: 30px;
   display: inline-block;
@@ -141,4 +164,8 @@
 
 .drink-wrapper{
   font-size: 0;
+}
+
+#sale_finish, #sale_cash{
+  display: none;
 }

@@ -58,6 +58,8 @@ class SalesController < ApplicationController
       end
     when "会計" then
       def sale_params
+        params[:sale][:mean] = params[:sale][:mean].to_i
+        params[:sale][:from] = params[:sale][:from].to_i
         params.require(:sale).permit(:mean, :from, :reservation_id, sales_drinks_attributes: [:drink_id, :number]).merge(status: 2, member_id: current_member.id)
       end
     end
@@ -71,6 +73,8 @@ class SalesController < ApplicationController
       end
     when "会計" then
       def edit_sale_params
+        params[:sale][:mean] = params[:sale][:mean].to_i
+        params[:sale][:from] = params[:sale][:from].to_i
         params.require(:sale).permit(:mean, :from, :reservation_id, sales_drinks_attributes: [:drink_id, :number]).merge(status: 2, member_id: current_member.id)
       end
     end

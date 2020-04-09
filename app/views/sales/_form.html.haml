@@ -44,10 +44,16 @@
             合計
           .saleNewEdit__result__content__total__price
             = @reservation.room.price + (@reservation.kaiseki.price * @reservation.number_of_guest)*11/10
-        = f.number_field :from
+        = f.select :mean, Sale.means, prompt: "会計方法", id: "sale_mean"
+        = f.number_field :from,  {min: @reservation.room.price + (@reservation.kaiseki.price * @reservation.number_of_guest)*11/10, max: 999999,id: "sale_cash"}
         .saleChange
+        .saleNewEdit__result__content__change
+          .saleNewEdit__result__content__change__title
+            お釣り
+          .saleNewEdit__result__content__change__price
+            0
         = f.submit "保存", name: "ボタン", class: "sale_save saleNewEdit__result__content__submit submits"
-        = f.submit "会計", name: "ボタン", class: "sale_save saleNewEdit__result__content__submit submits"
+        = f.submit "会計", name: "ボタン", class: "sale_save saleNewEdit__result__content__submit submits", id: "sale_finish"
         %div
         - if edit
           = link_to sale_path(@sale.id), method: :delete, class: "sale_save saleNewEdit__result__content__submit submits" do

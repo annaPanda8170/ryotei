@@ -38,6 +38,37 @@ function saleTotal(timeIdSet) {
   $(".saleNewEdit__result__content__subTotal__price").text(subTotal)
   $(".saleNewEdit__result__content__tax__price").text(subTotal*.1)
   $(".saleNewEdit__result__content__total__price").text(Math.round(subTotal * 1.1))
+  $("#sale_cash").attr("min", Math.round(subTotal * 1.1))
+  $("#sale_cash").val(Math.round(subTotal * 1.1))
+}
+
+function saleFinish() {
+  $("#sale_mean").change(function () {
+    $("#sale_finish").css({ display: "none" })
+    $("#sale_cash").css({ display: "none" })
+    $(".saleNewEdit__result__content__change").css({display: "none"})
+    if ($(this).val() === "0") {
+      $("#sale_finish").css({display: "inline-block"})
+    } else if ($(this).val() == 1) {
+      $("#sale_finish").css({ display: "inline-block" })
+      $("#sale_cash").css({ display: "inline-block" })
+      $(".saleNewEdit__result__content__change").css({display: "block"})
+    } 
+  })
+}
+
+function change() {
+  $("#sale_cash").change(function () {
+    let change = $(this).val() - $(".saleNewEdit__result__content__total__price").text()
+    $(".saleNewEdit__result__content__change__price").text(change)
+  })
+}
+
+function keypress() {
+  $("#sale_cash").keypress(function () {
+    let change = $(this).val() - $(".saleNewEdit__result__content__total__price").text()
+    $(".saleNewEdit__result__content__change__price").text(change)
+  })
 }
 
 // 全イベントのセット
@@ -63,7 +94,10 @@ function eventSet(drinkIds, editOnly) {
       saleTotal(timeIdSet)
     }
   }
-  drinkCategory()
+  drinkCategory();
+  saleFinish();
+  change();
+  keypress();
   // ドリンクのボタンを押した時にフォーム増やすか数を増やすか判断
   $(".sales__drink").click(function () {
     length = drinkIds.length
@@ -111,7 +145,6 @@ function setFirstDrinkCategory() {
     }
   })
 }
-
 
 $(function () {
   if (location.pathname.match("sales/new")) {

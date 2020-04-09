@@ -2,8 +2,8 @@
 .drinksIndex
   %h2
     ドリンク一覧
-  = link_to new_drink_path do
-    ドリンク登録
+  = link_to new_drink_path, class: "drinksIndex__new" do
+    新規登録
   - @drinks.each do |d|
     = link_to drink_path(d.id), class: "drink" do
       .drink__content
@@ -15,6 +15,4 @@
       %object
         = link_to edit_drink_path(d.id), class: "drink__edit" do
           編集
-      %object
-        = link_to drink_path(d.id), method: :delete, class: "drink__destroy", data: {confirm: "#{d.name}を\n削除してもよろしいですか？"} do
-          削除
+      

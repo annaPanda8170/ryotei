@@ -1,1 +1,4 @@
 = @drink
+
+= link_to drink_path(@drink.id), method: :delete, class: "drink__destroy", data: {confirm: "#{@drink.name}を\n削除してもよろしいですか？"} do
+  削除

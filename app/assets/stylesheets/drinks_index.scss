@@ -41,12 +41,12 @@
       color: $color11;
     }
   }
-  &__show, &__edit, &__destroy{
+  &__show, &__edit{
     width: 60px;
     height: 32px;
     position: absolute;
     top: 50%;
-    right: 150px;
+    right: 80px;
     transform: translateY(-50%);
     display: inline-block;
     padding: 7px 16px;
@@ -60,10 +60,6 @@
     }
   }
   &__edit{
-    right: 80px;
-    top: 50%;
-  }
-  &__destroy{
     right: 10px;
     top: 50%;
   }

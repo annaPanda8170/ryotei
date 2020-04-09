@@ -1,0 +1,70 @@
+@import "colors";
+
+.drinksIndex{
+  width: 80vw;
+  margin: 100px auto 30px;
+  & h2{
+    font-size: 21px;
+    margin: 20px 0;
+    display: inline-block;
+  }
+  &__new{
+    font-size: 21px;
+    margin: 20px 0 20px 30px;
+  }
+}
+
+.drink{
+  display: block;
+  padding: 4px 10px;
+  border-radius: 3px;
+  position: relative;
+  height: 42px;
+  &:nth-of-type(odd){
+    background-color: $color8-5;
+    // color: $color4;
+  }
+  &__content{
+    display: inline-block;
+    line-height: 34px;
+    vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+    &:nth-of-type(1){
+      width: 500px;
+    }
+    &:nth-of-type(2){
+      width: 100px;
+      text-align: right;
+    }
+    & > span{
+      color: $color11;
+    }
+  }
+  &__show, &__edit, &__destroy{
+    width: 60px;
+    height: 32px;
+    position: absolute;
+    top: 50%;
+    right: 150px;
+    transform: translateY(-50%);
+    display: inline-block;
+    padding: 7px 16px;
+    line-height: 1.3em;
+    border-radius: 13px;
+    font-size: 14px;
+    background-color: $color8;
+    color: $color4;
+    &:hover{
+      cursor: pointer;
+    }
+  }
+  &__edit{
+    right: 80px;
+    top: 50%;
+  }
+  &__destroy{
+    right: 10px;
+    top: 50%;
+  }
+}

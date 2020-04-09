@@ -183,17 +183,10 @@ class ReservationsController < ApplicationController
   end
   def revival
     @reservation = Reservation.find(params[:id])
-
-
-
-
     past_date = @reservation.date
     past_room_id = @reservation.room.id
     past_hour = @reservation.start_hour
     past_minute = @reservation.start_minute
-
-
-
     if @reservation.update(status: 1)
       flash[:this_date] = @reservation.date
       now_date = @reservation.date
@@ -228,11 +221,6 @@ class ReservationsController < ApplicationController
         # format.html {redirect_to reservations_path}
       end 
     end
-
-
-
-
-    
   end
   private
   def reservation_params

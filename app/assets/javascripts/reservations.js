@@ -246,6 +246,9 @@ function revival() {
       if (data.same_date || data.message) {
         createSet(data);
       }
+      if (!data.message) {
+        $(`div.rsvDeleted[data-id=${data.id}]`).remove();
+      }
     })
   })
 }
@@ -445,10 +448,16 @@ $(function () {
         $(`[data-roomid="${data.roomid}"]` + `[data-hour="${data.hour}"]` + `[data-minute="${data.minute}"]`).empty();
         $(".rsvShow").animate({ right: "-100vw" }, 300);
         $(".reservationsDeleted").animate({ marginBottom: "30" }, 500)
+        let minute = 0;
+        if (data.minute == 0){
+          minute = "00"
+        } else {
+          minute = data.minute
+        }
         $(".reservationsDeleted>h2").after(`<div class="rsvDeleted" data-id=${data.id}>
         <div class="rsvDeleted__content">${data.clientGuest} 様</div>
         <div class="rsvDeleted__content">${data.numOfGuest} 名</div>
-        <div class="rsvDeleted__content">${data.hour} :${data.minute}</div>
+        <div class="rsvDeleted__content">${data.hour} : ${minute}</div>
         <div class="rsvDeleted__content">${data.memo}</div>
         <div class="reservationOne__showButton rsvDeleted__show" data-id=${data.id}>詳細</div>
         </div>`)

@@ -150,6 +150,7 @@ class ReservationsController < ApplicationController
         format.html {redirect_to reservations_path}
       end 
     else
+
       flash[:this_date].present? ? @date = flash[:this_date] : @date = Date.today + 1
       respond_to do |format|
         format.json {render json: 
@@ -161,21 +162,20 @@ class ReservationsController < ApplicationController
   end
   def custumDelete
     @reservation = Reservation.find(params[:id])
-    room_id = @reservation.room.id
-    hour = @reservation.start_hour
-    minute = @reservation.start_minute
     if @reservation.update!(status: 0)
+      @reservation.client.nil? ? clientGuest = @reservation.guest : clientGuest = @reservation.client.name
       flash[:this_date] = @reservation.date
-      # redirect_to reservations_path
       respond_to do |format|
         format.json {render json: 
-          {id: @reservation.id,
-          roomid: room_id,
-          hour: hour,
-          minute: minute
-          }
-        }
-        # format.html {redirect_to reservations_path}
+          {id: @reservation.id, 
+          clientGuest: clientGuest,
+          numOfGuest: @reservation.number_of_guest,
+          roomid: @reservation.room.id, 
+          hour:@reservation.start_hour,
+          minute:@reservation.start_minute,
+          memo: @reservation.memo
+          }}
+        format.html {redirect_to reservations_path}
       end 
     else
       render :edit
@@ -183,12 +183,56 @@ class ReservationsController < ApplicationController
   end
   def revival
     @reservation = Reservation.find(params[:id])
-    if @reservation.update!(status: 1)
+
+
+
+
+    past_date = @reservation.date
+    past_room_id = @reservation.room.id
+    past_hour = @reservation.start_hour
+    past_minute = @reservation.start_minute
+
+
+
+    if @reservation.update(status: 1)
       flash[:this_date] = @reservation.date
-      redirect_to reservations_path
+      now_date = @reservation.date
+      same_date = nil
+      if past_date == now_date
+        same_date = 1
+      end
+      @reservation.client.nil? ? clientGuest = @reservation.guest : clientGuest = @reservation.client.name
+      flash[:this_date] = @reservation.date
+      respond_to do |format|
+        format.json {render json: 
+          {id: @reservation.id, 
+          clientGuest: clientGuest,
+          numOfGuest: @reservation.number_of_guest,
+          memo: @reservation.memo,
+          room: @reservation.room.name, 
+          hour:@reservation.start_hour,
+          minute:@reservation.start_minute,
+          roomid: past_room_id,
+          past_hour: past_hour,
+          past_minute: past_minute,
+          same_date: same_date
+          }}
+        format.html {redirect_to reservations_path}
+      end 
     else
-      render :edit
+      flash[:this_date].present? ? @date = flash[:this_date] : @date = Date.today + 1
+      respond_to do |format|
+        format.json {render json: 
+          {message: @reservation.errors.full_messages, 
+          }}
+        # format.html {redirect_to reservations_path}
+      end 
     end
+
+
+
+
+    
   end
   private
   def reservation_params

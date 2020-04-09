@@ -1,9 +1,4 @@
 @import "colors";
-.reservation{
-  // margin-top: 60px;
-  padding: 20px;
-}
-
 
 .submits{
   margin: 10px 5px;
@@ -19,6 +14,12 @@
     opacity: .7;
   }
 }
+
+.reservation{
+  padding: 20px;
+}
+
+// ##########予約表############################################
 
 .rsvTable{
   margin: 30px auto 20px;
@@ -85,6 +86,8 @@
   }
 }
 
+// ##########冒頭のコントローラ################################################
+
 .reservation__header{
   &::after{
     display: block;
@@ -126,41 +129,7 @@
   }
 }
 
-// #submit1{
-//   background-color: $color3;
-//   color: $color4;
-//   margin-right: 30px;
-// }
-// #submit2{
-//   background-color: $color7 ;
-//   color: $color4;
-// }
-// #submit3{
-//   background-color: $color7 ;
-//   color: $color4;
-// }
-// #submit4{
-//   background-color: $color7 ;
-//   color: $color4;
-// }
-// #submit5{
-//   background-color: $color7 ;
-//   color: $color4;
-// }
-// #submit6{
-//   background-color: $color6;
-//   color: $color4;
-// }
-// #submit7{
-//   background-color: $color6;
-//   color: $color4;
-// }
-// #submit8{
-//   background-color: $color9;
-//   color: $color4;
-// }
-
-
+// ##########表に当てはめる予約###############################################
 
 .reservationOne{
   width: 248px;
@@ -227,36 +196,12 @@
   background-color: $color2;
 }
 
-.aaaaaaaaaaa{
+// 以下デバック用あとで消す
+// .tttttt, .uuuuuu, .vvvvvv{
+//   font-size: 10px;
+// }
 
-  font-size: 10px;
-}
-// .draggable{
-//   width: 195px;
-//   height: 95px;
-//   background-color: red;
-//   display: inline-block;
-//   position: relative;
-//   top: 0;
-// }
-.tttttt{
-  font-size: 10px;
-}
-.uuuuuu, .vvvvvv{
-  font-size: 10px;
-}
-// #reservation_number_of_guest{
-  // width: 100%;
-	// padding: 10px;
-	// -webkit-appearance: none;
-	// -moz-appearance: none;
-	// appearance: none;
-	// border: 1px solid #999;
-	// background: #eee;
-	// // background: url(arrow01.png) right 50% no-repeat, -webkit-linear-gradient(top, #fff 0%,#efebe1 100%);
-	// // background: url(arrow01.png) right 50% no-repeat, linear-gradient(to bottom, #fff 0%,#efebe1 100%);
-	// background-size: 20px, 100%;
-// }
+// ##########新規予約・SHOW・予約編集ウインドウ#######################################################
 
 .rsvNew, .rsvShow, .rsvEdit{
   z-index: 100;
@@ -271,9 +216,7 @@
 
 .rsvNewEdit{
   &__form{
-    // outline: 1px solid red;
     & select{
-      // vertical-align: middle;
       padding-right: 1em;
       cursor: pointer;
       padding: 0 15px;
@@ -283,7 +226,6 @@
       border: 2px solid $color3;
     }
     & textarea{
-      // vertical-align: middle;
       font-size: 15px;
       border: 2px solid $color3;
       height: 234px;
@@ -298,7 +240,6 @@
         padding: 5px 0;
       }
       &>input{
-        // vertical-align: middle;
         height: 27px;
         font-size: 15px;
         border: 2px solid $color3;
@@ -346,7 +287,7 @@
   }
   &__content{
     color: $color4;
-    font-size: 12px;
+    font-size: 14px;
     padding: 5px 0;
     text-indent: 1em;
   }
@@ -354,7 +295,7 @@
     float: left;
     padding: 0 25px;
     color: $color4;
-    font-size: 12px;
+    font-size: 14px;
   }
   &__right{
     float: left;
@@ -367,7 +308,7 @@
     text-indent: 0;
   }
   &__memo{
-    max-width: 400px;
+    width: 40vw;
     word-wrap: break-word;
     line-height: 1.3em;
   }
@@ -389,6 +330,8 @@
     }
   }
 }
+
+// ##########削除一覧#######################################################
 
 .reservationsDeleted{
   width: 68vw;
@@ -430,7 +373,6 @@
     }
   }
   &__show{
-    // float: right;
     width: 60px;
     height: 32px;
     position: absolute;

@@ -1,7 +1,11 @@
 = javascript_include_tag 'reservations.js'
 = stylesheet_link_tag 'reservations', media: 'all'
--# ビューの配置の関係で同じform_withを3つ書いている。1つにして、position等で無理やり配置したほうがいいか検討中
+
 .reservation
+
+  -# ##########冒頭のコントローラ部################################################################
+  -# ビューの配置の関係で同じform_withを3つ書いている。1つにして、position等で無理やり配置したほうがいいか検討中
+
   .reservation__header
     .rsvControllers
       = form_with url: reservations_path, local: true, class: "rsvControllers__submitSet1", method: :get do |f|
@@ -23,6 +27,9 @@
         = f.submit "次の日", name: "ボタン", class: "submits", id: "submit7"
       .rsvControllers__newButton.submits#submit8
         新規予約
+
+  -# ##########予約表###############################################################################
+
   .rsvTable
     .rsvTable__timeLine
       .rsvTable__timeLine__time
@@ -59,6 +66,9 @@
       .rsvTable__timeLine__time
         .rsvTable__timeLine__time__inner
           21:00
+
+  -# ##########表に当てはめる予約###############################################################################
+
   - @reservations.each do |r|
     - if r.sale.present?
       - status = r.sale.status
@@ -89,14 +99,15 @@
           = link_to edit_sale_path(Sale.find_by(reservation_id: r.id)), class: "reservationOne__sale" do
             会計中
 
-
-      -# 以下3要素確認用あとで消す
+      -# 以下3要素デバック用あとで消す
       -# .tttttt
       -#   = r.room.name
       -# .uuuuuu
       -#   = r.start_hour
       -# .vvvvvv
       -#   = r.start_minute
+
+-# ##########削除一覧#################################################################################
 
 .reservationsDeleted
   %h2
@@ -120,6 +131,8 @@
         = d.memo
       .reservationOne__showButton.rsvDeleted__show{data: {id: d.id}}
         詳細
+
+-# ##########新規予約スライドウインドウ####################################################################
 
 .rsvNew.rsvNewEdit
   = form_with model: @reservation_new, local: true, html: {class: "rsvNewEdit__form rsvNew__form", id: "reservation_new_form"} do |f|
@@ -148,8 +161,9 @@
         クリア
       = f.submit "登録", class: "form_submit rsvNewEdit__form__right__submit"
     .rsvNew__errorMessages.rsvNewEdit__errorMessages
--# .rsvNewEdit
--#   = render partial: "form", locals: {reservation: @reservation_edit}
+
+-# ##########SHOWスライドウインドウ####################################################################
+
 .rsvShow
   .rsvShow__left
     %h3 お客様
@@ -157,7 +171,6 @@
     .rsvShow__guest.rsvShow__content
     %h3 日時
     .rsvShow__date.rsvShow__content
-    -# .rsvShow__date_data.rsvShow__content
     .rsvShow__start_hour.rsvShow__content
     = ":"
     .rsvShow__start_minute.rsvShow__content
@@ -175,7 +188,9 @@
     .rsvShow__edit.rsvShow__submits__submit
       編集
     .rsvShow__link.rsvShow__submits__submit
+  .rsvNewEdit__errorMessages
     
+-# ##########予約編集スライドウインドウ####################################################################
 
 .rsvEdit.rsvNewEdit
   = form_with model: @reservation_new, local: true, html: {class: "rsvNewEdit__form rsvEdit__form", id: "rsvEdit_form"} do |f|
@@ -187,7 +202,6 @@
       様
       %h3 日時
       != sprintf(f.date_select(:date, use_month_numbers: true,default: @this_date,date_separator: '%s'), '年 ', '月 ') +'日'
-      -# = f.date_select :date, {default: @this_date}, class: ""
       = f.select :start_hour, [*11..21],{}, id: "rsvEdit_hour"
       ：
       = f.select :start_minute, ['00', 15, 30, 45],{}, id: "rsvEdit_minute"
@@ -203,6 +217,12 @@
       = f.submit "登録", class: "form_submit rsvNewEdit__form__right__submit"
     .rsvEdit__errorMessages.rsvNewEdit__errorMessages
 
+-# ##########roomデータ送信用hidden####################################################################
 
 - @rooms.each do |r|
   .data--room{data: {name: r.name, id: r.id}}
+
+
+
+
+

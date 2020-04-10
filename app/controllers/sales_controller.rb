@@ -1,5 +1,4 @@
 class SalesController < ApplicationController
-  before_action :signed_in?
   before_action :submit_branch_create, only: :create
   before_action :submit_branch_update, only: :update
   def index
@@ -46,9 +45,6 @@ class SalesController < ApplicationController
     redirect_to reservations_path
   end
   private
-  def signed_in?
-    redirect_to new_member_session_path unless member_signed_in?
-  end
   def submit_branch_create
     case params["ボタン"]
     when "保存" then

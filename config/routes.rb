@@ -13,12 +13,15 @@ Rails.application.routes.draw do
   end
   resources :sales
   resources :sales_drinks, only: :destroy
-  resources :myinfos, only: :index
+  # シフト機能実装後用
+  # resources :myinfos, only: :index
   devise_for :members
   resources :members, only: [:index, :edit, :update] do
     member do
       put "custumDelete"
     end
   end
-  root 'myinfos#index'
+  root 'reservationss#index'
+  # シフト機能実装後用
+  # root 'myinfos#index'
 end

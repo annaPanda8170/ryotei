@@ -1,7 +1,6 @@
 require 'date'
 
 class ReservationsController < ApplicationController
-  before_action :signed_in?
   before_action :before_index, only: :index
 
   def index
@@ -224,11 +223,7 @@ class ReservationsController < ApplicationController
   end
   private
   def reservation_params
-    # binding.pry
     params.require(:reservation).permit(:client_id, :guest,:room_id, :kaiseki_id, :number_of_guest, :date, :start_hour, :start_minute, :memo).merge(member_id: current_member.id)
-  end
-  def signed_in?
-    redirect_to new_member_session_path unless member_signed_in?
   end
   def before_index
     # createやupdate直後にはその日がflash[:this_date]に入っているのでそれ優先で表示する

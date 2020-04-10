@@ -1,5 +1,4 @@
 class MembersController < ApplicationController
-  before_action :signed_in?
   before_action :set_member, except: :index
   before_action :change_grade, only: [:edit, :update, :destory]
   def index
@@ -32,9 +31,6 @@ class MembersController < ApplicationController
   end
   def member_params
     params.require(:member).permit(:grade)
-  end
-  def signed_in?
-    redirect_to new_member_session_path unless member_signed_in?
   end
   def change_grade
     if current_member.grade != 3

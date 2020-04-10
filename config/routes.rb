@@ -21,7 +21,7 @@ Rails.application.routes.draw do
       put "custumDelete"
     end
   end
-  root 'reservationss#index'
+  root 'reservations#index'
   # シフト機能実装後用
   # root 'myinfos#index'
 end

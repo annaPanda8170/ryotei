@@ -41,6 +41,6 @@ class DrinksController < ApplicationController
   end
   def drink_params
     params[:drink][:price] = params[:drink][:price].to_i*100
-    params.require(:drink).permit(:name, :price, :category)
+    params.require(:drink).permit(:name, :price, :category, :discription, :memo)
   end
 end

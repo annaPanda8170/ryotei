@@ -19,6 +19,12 @@
   padding: 20px;
 }
 
+@media screen and (max-width: 1300px) {
+  .reservation {
+  margin-top: 100px; 
+  }
+}
+
 // ##########予約表############################################
 
 .rsvTable{

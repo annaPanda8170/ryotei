@@ -1,0 +1,53 @@
+@import "colors";
+
+.membersEdit{
+  width: 500px;
+  margin: 100px auto 80px;
+  &__title{
+    font-size: 22px;
+    margin: 20px 0;
+  }
+  &__form{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    &__content{
+      & h3{
+        margin: 6px 0;
+      }
+      & input, & select{
+        padding: 0 20px;
+        height: 37px;
+        border-radius: 5px;
+        -webkit-appearance: none;
+        appearance: none;
+        font-size: 22px;
+        border: 2px solid $color3;
+        background-color: $color4;
+      }
+      & input{
+        width: 600px;
+      }
+    }
+    &__submits{
+      &__submit{
+        margin-left: 23px;
+        padding: 7px 16px;
+        line-height: 1.3em;
+        border: none;
+        border-radius: 13px;
+        font-size: 14px;
+        background-color: $color7;
+        color: $color4;
+        float: right;
+        &:hover{
+          cursor: pointer;
+          opacity: .7;
+        }
+      }
+    }
+    &__resignation{
+      background-color: $color10;
+    }
+  }
+}

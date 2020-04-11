@@ -232,7 +232,6 @@ function showOpen() {
 
 function revival() {
   $(".reservation_revival").click(function () {
-    console.log("ok")
     if (!confirm(`予約を復活してよろしいですか？`)) {
       return false
     }

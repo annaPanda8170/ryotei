@@ -162,7 +162,7 @@ shochu.each_with_index do |b, i|
   )
 end
 
-whisky = ["山崎12年,竹鶴17年,カナディアンクラブ20年,レッドブレスト21年,ブラントンゴールド,ブッカーズ2019,ジョニーウォーカー青ラベル,スプリングバンク18年,ロイヤルサルート21年ダイヤモンドジュビリー,ザ・マッカラン18年"]
+whisky = ["山崎12年,竹鶴17年","カナディアンクラブ20年","レッドブレスト21年","ブラントンゴールド","ブッカーズ2019","ジョニーウォーカー青ラベル","スプリングバンク18年","ロイヤルサルート21年ダイヤモンドジュビリー","ザ・マッカラン18年"]
 whisky.each_with_index do |b, i|
   Drink.create(
     {
@@ -179,7 +179,7 @@ soft.each_with_index do |b, i|
   Drink.create(
     {
       name: soft[i],
-      price: 85,
+      price: rand(85..11)*100,
       category: 6,
       discription: Faker::Food.description
     }
@@ -335,6 +335,7 @@ today_reservations = Reservation.where(date: Date.today, status: 1)
 mean = [100, nil, nil, 0, 1]
 mean_length = mean.length
 which = 0
+drink_length = Drink.all.length
 today_reservations.each do |r|
   # 会計中でないのも欲しい
   if mean[which] != 100
@@ -350,7 +351,7 @@ today_reservations.each do |r|
     rand(0..10).times do
       sale.sales_drinks.build(
         {
-          drink_id: Drink.find(1).id,
+          drink_id: Drink.find(rand(drink_length)).id,
           number: rand(1..12)
         }
       )

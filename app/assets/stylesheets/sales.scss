@@ -16,8 +16,13 @@
 
 .saleNewEdit{
   width: 80vw;
-  margin: 100px auto 30px;
+  margin: 100px auto 60px;
   white-space: nowrap;
+  &:after{
+    content: "";
+    display: block;
+    clear: both;
+  }
   &__result{
     width: 540px;
     float: left;
@@ -47,9 +52,22 @@
         vertical-align: top;
         height: 40px;
         background-color: $color4;
+        overflow: hidden;
       }
       &__name{
         width: 230px;
+        position: relative;
+        &__mask{
+          width: 12px;
+          height: 34px;
+          transform: translateY(-50%);
+          position: absolute;
+          top: 50%;
+          right: 0;
+          background: -moz-linear-gradient(to right, transparent, $color4 60%);
+          background: -webkit-linear-gradient(to right, transparent, $color4 60%);
+          background: linear-gradient(to right, transparent, $color4 60%); 
+        }
       }
       &__price{
         width: 140px;
@@ -84,8 +102,9 @@
       &__submit{
         margin: 30px 25px 10px 0;
         display: inline-block;
-        // なんでここが1なのかわからない
-        &:nth-of-type(1){
+        vertical-align: middle;
+        // なんでここが2なのかわからない
+        &:nth-of-type(2){
           background-color: $color11;
         }
       }
@@ -95,6 +114,7 @@
     }
   }
   &__drinkButtons{
+    overflow: hidden;
     float: right;
     width: 500px;
     text-align: center;

@@ -13,13 +13,6 @@ class ReservationsController < ApplicationController
 
     # new
     @reservation_new = Reservation.new
-
-    #edit
-    
-
-
-    #show
-
   end
   def takeReservation
     @reservation_show = Reservation.find(params[:id])

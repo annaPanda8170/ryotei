@@ -61,34 +61,44 @@ function saleFinish() {
 function change() {
   $("#sale_cash").change(function () {
     let change = $(this).val() - $(".saleNewEdit__result__content__total__price").text()
+    console.log($(this).val())
+    console.log($(".saleNewEdit__result__content__total__price").text())
     $(".saleNewEdit__result__content__change__price").text(change)
   })
 }
 
-function keypress() {
-  $("#sale_cash").keypress(function () {
+function keyup() {
+  $("#sale_cash").keyup(function () {
     let change = $(this).val() - $(".saleNewEdit__result__content__total__price").text()
     $(".saleNewEdit__result__content__change__price").text(change)
   })
 }
 
 // 全イベントのセット
-function eventSet(drinkIds, editOnly) {
+function eventSet(drinkIds, editShowOnly, showOnly) {
   let times = 0;
   let timeIdSet = {};
   // editに保存されてるドリンクをフォームに入れ込む
-  if (editOnly){
+  if (editShowOnly){
     for (i = 0; i < $(".saledrink").length; i++) {
       drinkId = $(`#saledrink${i}`)[0].dataset.drinkid
       drinkNumber = $(`#saledrink${i}`)[0].dataset.number
       drinkName = $(`#saledrink${i}`)[0].dataset.name
       drinkPrice = $(`#saledrink${i}`)[0].dataset.price
-      $(".saleNewEdit__result__content__drinks").append(`<div id="drink-wrapper${drinkId}">
+      if (showOnly) {
+        $(".saleNewEdit__result__content__drinks").append(`<div id="drink-wrapper${drinkId}">
+        <div class="saleNewEdit__result__content__name">${drinkName}</div> <div class="saleNewEdit__result__content__price">${drinkPrice}</div>
+        <input type="hidden" name="sale[sales_drinks_attributes][${times}][drink_id]" id="sale_sales_drinks_attributes_${times}_drink_id" value="${drinkId}">
+        <div" class="drink_number saleNewEdit__result__content__number" id="sale_sales_drinks_attributes_${times}_number" data-drinkid=${drinkId} data-drinkprice=${drinkPrice}>${drinkNumber}</div>
+        </div>`)
+      } else {
+        $(".saleNewEdit__result__content__drinks").append(`<div id="drink-wrapper${drinkId}">
         <div class="saleNewEdit__result__content__name">${drinkName}</div> <div class="saleNewEdit__result__content__price">${drinkPrice}</div>
         <input type="hidden" name="sale[sales_drinks_attributes][${times}][drink_id]" id="sale_sales_drinks_attributes_${times}_drink_id" value="${drinkId}">
         <input type="number" class="drink_number saleNewEdit__result__content__number" name="sale[sales_drinks_attributes][${times}][number]" id="sale_sales_drinks_attributes_${times}_number" data-drinkid=${drinkId} data-drinkprice=${drinkPrice} min=0 value=${drinkNumber}>
         <div class="delete_drink" data-deletedrinkid=${drinkId}>削除</div>
-      </div>`)
+        </div>`)
+      }
       drinkIds.push(Number(drinkId))
       timeIdSet[Number(drinkId)] = times;
       times++;
@@ -98,7 +108,7 @@ function eventSet(drinkIds, editOnly) {
   drinkCategory();
   saleFinish();
   change();
-  keypress();
+  keyup();
   // ドリンクのボタンを押した時にフォーム増やすか数を増やすか判断
   $(".sales__drink").click(function () {
     length = drinkIds.length
@@ -150,15 +160,15 @@ function setFirstDrinkCategory() {
 $(function () {
   if (location.pathname.match("sales/new")) {
     let drinkIds = []
-    let editOnly = false;
-    eventSet(drinkIds, editOnly);
+    let editShowOnly = false;
+    eventSet(drinkIds, editShowOnly, showOnly);
     setFirstDrinkCategory();
   }
 
   if (location.pathname.match(/sales\/\d{1,3}\/edit/)) {
     let drinkIds = []
-    let editOnly = true;
-    eventSet(drinkIds, editOnly);
+    let editShowOnly = true;
+    eventSet(drinkIds, editShowOnly, showOnly);
     setFirstDrinkCategory()
     // もともと保存されていたものは全て削除
     $(".sale_save").click(function (e) {
@@ -171,5 +181,13 @@ $(function () {
         })
       }
     })
+  }
+
+  if (location.pathname.match(/sales\/\d{1,3}/) && !(location.pathname.match(/sales\/\d{1,3}\/edit/))) {
+    let drinkIds = []
+    let editShowOnly = true;
+    let showOnly = true;
+    eventSet(drinkIds, editShowOnly, showOnly);
+    console.log("ok")
   }
 })

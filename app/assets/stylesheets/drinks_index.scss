@@ -26,7 +26,7 @@
   position: relative;
   height: 42px;
   &:nth-of-type(odd){
-    background-color: $color8-5;
+    background-color: $color8-7;
     & div:nth-of-type(2){
       padding-left: 30px;
       transform: translateY(-50%);
@@ -35,9 +35,9 @@
       top: 50%;
       right: 100px;
       z-index: 1000;
-      background: -moz-linear-gradient(to right, transparent, $color8-5 10%);
-      background: -webkit-linear-gradient(to right, transparent, $color8-5 10%);
-      background: linear-gradient(to right, transparent, $color8-5 10%); 
+      background: -moz-linear-gradient(to right, transparent, $color8-7 10%);
+      background: -webkit-linear-gradient(to right, transparent, $color8-7 10%);
+      background: linear-gradient(to right, transparent, $color8-7 10%); 
     }
   }
   &:nth-of-type(even){
@@ -76,7 +76,7 @@
     line-height: 1.3em;
     border-radius: 13px;
     font-size: 14px;
-    background-color: $color1;
+    background-color: $color8;
     color: $color4;
     &:hover{
       cursor: pointer;

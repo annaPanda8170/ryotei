@@ -50,7 +50,7 @@ class SalesController < ApplicationController
     when "保存" then
       params[:from] == nil
       def sale_params
-        params.require(:sale).permit(:mean, :from, :reservation_id, sales_drinks_attributes: [:drink_id, :number]).merge(member_id: current_member.id)
+        params.require(:sale).permit(:reservation_id, sales_drinks_attributes: [:drink_id, :number]).merge(member_id: current_member.id)
       end
     when "会計" then
       def sale_params
@@ -63,7 +63,7 @@ class SalesController < ApplicationController
     when "保存" then
       params[:from] == nil
       def edit_sale_params
-        params.require(:sale).permit(:mean, :from, :reservation_id, sales_drinks_attributes: [:drink_id, :number]).merge(member_id: current_member.id)
+        params.require(:sale).permit(:reservation_id, sales_drinks_attributes: [:drink_id, :number]).merge(member_id: current_member.id)
       end
     when "会計" then
       def edit_sale_params

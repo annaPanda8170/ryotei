@@ -139,8 +139,7 @@
   position: relative;
   top: 0;
   z-index: 100;
-  padding: 6px;
-  position: relative;
+  padding: 8px;
   border-top: 1px solid $color9;
   border-bottom: 1px solid $color9;
   border-left: 3px solid $color9;
@@ -149,16 +148,18 @@
   &__clientGuest, &__numberOfGuest, &__memo{
     font-size: 15px;
     overflow: hidden;
-    margin: 5px 0;
+    margin-bottom: 6px;
   }
   &__clientGuest{
     margin-top: 0;
   }
   &__numberOfGuest{
-
   }
   &__memo{
+    line-height: 1.3em;
+    height: 38px;
     margin-bottom: 0;
+    white-space: normal;
   }
   &__showButton, &__sale{
     text-align: center;

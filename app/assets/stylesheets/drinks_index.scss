@@ -46,12 +46,12 @@
       color: $color11;
     }
   }
-  &__show, &__edit{
+  &__show{
     width: 60px;
     height: 32px;
     position: absolute;
     top: 50%;
-    right: 80px;
+    right: 10px;
     transform: translateY(-50%);
     display: inline-block;
     padding: 7px 16px;
@@ -63,9 +63,5 @@
     &:hover{
       cursor: pointer;
     }
-  }
-  &__edit{
-    right: 10px;
-    top: 50%;
   }
 }

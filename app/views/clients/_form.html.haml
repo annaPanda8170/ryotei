@@ -1,0 +1,22 @@
+.clientsNewEdit
+  = link_to clients_path do
+    クライアント一覧へ戻る
+  %h2.clientsNewEdit__title
+    クライアント新規登録
+  = form_with model: @client, local: true, class: "clientsNewEdit__form" do |f|
+    .clientsNewEdit__form__content
+      %h3
+        お客様名
+      = f.text_field :name
+    .clientsNewEdit__form__content
+      %h3
+        お客様情報
+      = f.text_area :memo
+    .clientsNewEdit__form__submit
+      = f.submit "保存"
+
+  -# - if @client.errors.any?
+  -# %ul
+  -#   - @client.errors.full_messages.each do |m|
+  -#     %li
+  -#       = m

@@ -1,4 +1,27 @@
-= @drink
-
-= link_to drink_path(@drink.id), method: :delete, class: "drink__destroy", data: {confirm: "#{@drink.name}を\n削除してもよろしいですか？"} do
-  削除
+= javascript_include_tag 'drinks.js'
+= stylesheet_link_tag 'drinks_show', media: 'all'
+.drinksShow
+  = link_to drinks_path do
+    ドリンク一覧へ戻る
+  %h2.drinksShow__title
+    = "#{@drink.name}の情報"
+  .drinksShow__content
+    %h3
+      単価
+    .drinksShow__content__info
+      = "#{@drink.price} 円"
+  .drinksShow__content
+    %h3
+      メニューブック用ドリンク解説
+    .drinksShow__content__info
+      = @drink.discription
+  .drinksShow__content
+    %h3
+      その他メモ
+    .drinksShow__content__info
+      = @drink.memo
+  .drinksShow__content
+    = link_to edit_drink_path(@drink.id) do
+      編集
+    = link_to drink_path(@drink.id), method: :delete, id: "drink_delete" do
+      削除

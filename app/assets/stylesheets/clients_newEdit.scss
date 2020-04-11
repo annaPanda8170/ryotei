@@ -1,6 +1,6 @@
 @import "colors";
 
-.drinksNewEdit{
+.clientsNewEdit{
   width: 72vw;
   margin: 100px auto 80px;
   &__title{
@@ -8,6 +8,9 @@
     margin: 20px 0;
   }
   &__form{
+    // display: flex;
+    // justify-content: space-between;
+    // align-items: flex-end;
     &__content{
       font-size: 16px;
       margin: 40px 0;

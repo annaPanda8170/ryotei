@@ -277,7 +277,6 @@ today_reservations.each do |r|
     # いくつか会計済みにする
     mean = [nil, 0, 1]
     which = rand(0..2)
-    puts mean[which]
     if mean[which] != nil
       sale.update(mean: mean[which], status: 2)
       if mean[which] == 1

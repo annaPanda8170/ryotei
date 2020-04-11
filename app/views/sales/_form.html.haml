@@ -54,7 +54,7 @@
             .saleNewEdit__result__content__change__price
               0
           - if !show
-            = link_to :back, class: "sale_save saleNewEdit__result__content__submit submits" do
+            = link_to reservations_path, class: "sale_save saleNewEdit__result__content__submit submits" do
               -# 本当は確認を入れたいがなぜか二回入ってしまうので中止
               -# , data: {confirm: "保存されていません。\n戻ってよろしいですか？"} do
               キャンセル
@@ -64,6 +64,11 @@
           - if edit
             = link_to sale_path(@sale.id), method: :delete, class: "sale_save saleNewEdit__result__content__submit submits", data: {confirm: "削除してもよろしいですか？"} do
               会計削除
+      -if show
+        = link_to reservations_path, class: "sale_save saleNewEdit__result__content__submit submits" do
+          戻る
+        = link_to sale_path(@sale.id), method: :delete, class: "sale_save saleNewEdit__result__content__submit submits", data: {confirm: "削除してもよろしいですか？"} do
+          会計削除
   - if !show
     .saleNewEdit__drinkButtons
       .saleNewEdit__drinkButtons__categorys

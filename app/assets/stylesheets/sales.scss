@@ -14,8 +14,6 @@
   }
 }
 
-
-
 .saleNewEdit{
   width: 80vw;
   margin: 100px auto 30px;
@@ -122,6 +120,19 @@
         font-size: 20px;
         text-align: center;
         display: inline-block;
+        max-width: 100%;
+        position: relative;
+        &__mask{
+          position: absolute;
+          right: 0;
+          top: 50%;
+          height: 20px;
+          width: 16px;
+          background: -moz-linear-gradient(to right, transparent, $color2 40%);
+          background: -webkit-linear-gradient(to right, transparent, $color2 40%);
+          background: linear-gradient(to right, transparent, $color2 40%); 
+          transform: translateY(-50%);
+        }
       }
     }
   }

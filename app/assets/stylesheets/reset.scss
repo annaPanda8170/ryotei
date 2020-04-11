@@ -111,5 +111,9 @@ input, select {
 
 
 *:focus {
-outline: none;
+  outline: none;
+}
+
+html{
+  overflow: hidden;
 }

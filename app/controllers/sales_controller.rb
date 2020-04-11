@@ -14,6 +14,9 @@ class SalesController < ApplicationController
   end
   def show
     @sale = Sale.find(params[:id])
+    @reservation = Reservation.find(@sale.reservation.id)
+    @drinks = Drink.all
+    @sales_drinks = SalesDrink.where(sale_id: @sale.id)
   end
   def create
     @sale = Sale.new(sale_params)

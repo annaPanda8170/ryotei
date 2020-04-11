@@ -1,6 +1,6 @@
 = javascript_include_tag 'sales.js'
 = stylesheet_link_tag 'sales', media: 'all'
-= render partial: "form",locals: {edit: true}
+= render partial: "form",locals: {edit: true, show: false}
 
 
 - @sales_drinks.each_with_index do |d, i|

@@ -25,49 +25,48 @@
         = @reservation.kaiseki.price
       .saleNewEdit__result__content__number.kaisekiNumber
         = @reservation.number_of_guest
-    .saleNewEdit__result__content
-      = form_with model: [@sale], local: true do |f|
-        = f.hidden_field :reservation_id, value: @reservation.id
-        .saleNewEdit__result__content__drinks
-        .saleNewEdit__result__content__subTotal
-          .saleNewEdit__result__content__subTotal__title
-            小計
-          .saleNewEdit__result__content__subTotal__price
-            = @reservation.room.price + (@reservation.kaiseki.price * @reservation.number_of_guest)
-        .saleNewEdit__result__content__tax
-          .saleNewEdit__result__content__tax__title
-            消費税
-          .saleNewEdit__result__content__tax__price
-            = (@reservation.room.price + (@reservation.kaiseki.price * @reservation.number_of_guest))/10
-        .saleNewEdit__result__content__total
-          .saleNewEdit__result__content__total__title
-            合計
-          .saleNewEdit__result__content__total__price
-            = @reservation.room.price + (@reservation.kaiseki.price * @reservation.number_of_guest)*11/10
-        = f.select :mean, Sale.means.keys.to_a, prompt: "会計方法", id: "sale_mean"
-        = f.number_field :from,  {min: @reservation.room.price + (@reservation.kaiseki.price * @reservation.number_of_guest)*11/10, max: 999999,id: "sale_cash"}
-        .saleChange
-        .saleNewEdit__result__content__change
-          .saleNewEdit__result__content__change__title
-            お釣り
-          .saleNewEdit__result__content__change__price
-            0
-        = f.submit "保存", name: "ボタン", class: "sale_save saleNewEdit__result__content__submit submits"
-        = f.submit "会計", name: "ボタン", class: "sale_save saleNewEdit__result__content__submit submits", id: "sale_finish"
-        %div
-        - if edit
-          = link_to sale_path(@sale.id), method: :delete, class: "sale_save saleNewEdit__result__content__submit submits" do
-            会計削除
-  
-  
-
-  .saleNewEdit__drinkButtons
-    .saleNewEdit__drinkButtons__categorys
-      - Drink.categories.keys.to_a.each do |c|
-        .saleNewEdit__drinkButtons__categorys__category.submits{data: {category: c}}
-          = c
-    - @drinks.each_with_index do |d, i|
-      %div{class: "sales__drink saleNewEdit__drinkButtons__drink", id: "sales__drink#{i}", data: {name: d.name, id: d.id, price: d.price, category: d.category}}
-        .saleNewEdit__drinkButtons__drink__name.submits
-          = d.name
-          .saleNewEdit__drinkButtons__drink__name__mask
+      .saleNewEdit__result__content
+        = form_with model: [@sale], local: true do |f|
+          = f.hidden_field :reservation_id, value: @reservation.id
+          .saleNewEdit__result__content__drinks
+          .saleNewEdit__result__content__subTotal
+            .saleNewEdit__result__content__subTotal__title
+              小計
+            .saleNewEdit__result__content__subTotal__price
+              = @reservation.room.price + (@reservation.kaiseki.price * @reservation.number_of_guest)
+          .saleNewEdit__result__content__tax
+            .saleNewEdit__result__content__tax__title
+              消費税
+            .saleNewEdit__result__content__tax__price
+              = (@reservation.room.price + (@reservation.kaiseki.price * @reservation.number_of_guest))/10
+          .saleNewEdit__result__content__total
+            .saleNewEdit__result__content__total__title
+              合計
+            .saleNewEdit__result__content__total__price
+              = @reservation.room.price + (@reservation.kaiseki.price * @reservation.number_of_guest)*11/10
+          - if !show
+            = f.select :mean, Sale.means.keys.to_a, prompt: "会計方法", id: "sale_mean"
+            = f.number_field :from,  {min: @reservation.room.price + (@reservation.kaiseki.price * @reservation.number_of_guest)*11/10, max: 999999,id: "sale_cash"}
+            .saleChange
+            .saleNewEdit__result__content__change
+              .saleNewEdit__result__content__change__title
+                お釣り
+              .saleNewEdit__result__content__change__price
+                0
+            = f.submit "保存", name: "ボタン", class: "sale_save saleNewEdit__result__content__submit submits"
+            = f.submit "会計", name: "ボタン", class: "sale_save saleNewEdit__result__content__submit submits", id: "sale_finish"
+            %div
+            - if edit
+              = link_to sale_path(@sale.id), method: :delete, class: "sale_save saleNewEdit__result__content__submit submits", data: {confirm: "削除してもよろしいですか？"} do
+                会計削除
+  - if !show
+    .saleNewEdit__drinkButtons
+      .saleNewEdit__drinkButtons__categorys
+        - Drink.categories.keys.to_a.each do |c|
+          .saleNewEdit__drinkButtons__categorys__category.submits{data: {category: c}}
+            = c
+      - @drinks.each_with_index do |d, i|
+        %div{class: "sales__drink saleNewEdit__drinkButtons__drink", id: "sales__drink#{i}", data: {name: d.name, id: d.id, price: d.price, category: d.category}}
+          .saleNewEdit__drinkButtons__drink__name.submits
+            = d.name
+            .saleNewEdit__drinkButtons__drink__name__mask

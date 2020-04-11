@@ -314,7 +314,8 @@ function createSet(data) {
 // #####################################################################################################
 
 $(function () {
-  if (location.pathname.match("/reservations")) {
+  // ここをrootにしたので一時廃止
+  // if (location.pathname.match("/reservations")) {
     // まず行を作る
     for (let i = 0; i < $(".data--room").length; i++){
       $(".rsvTable").append(`<div class="rsvTable__tr"></div>`)
@@ -465,5 +466,6 @@ $(function () {
         // デリート情報順序まだ!!!!!!!!!!!!!!!!!!
       })
     })
-  }
+  // ここをrootにしたので一時廃止
+  // }
 });

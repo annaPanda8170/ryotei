@@ -12,6 +12,9 @@
         = link_to "未登録一覧", members_path(gradeless: 1)
         %h2
           メンバー一覧
+    - else
+      %h2
+        メンバー一覧
   - else
     %h2
       メンバー一覧

@@ -25,14 +25,16 @@ function drinkCategory() {
 
 // トータルを入れ込む関数。各イベント内に入れる
 function saleTotal(timeIdSet) {
+  console.log(timeIdSet)
   let roomPrice = Number($(".roomPrice").text());
   let kaisekiPrice = Number($(".kaisekiPrice").text());
   let kaisekiNumber = Number($(".kaisekiNumber").text());
   let drinkTotal = 0;
   for(var key in timeIdSet) {
     let drinkPrice = $(`#sale_sales_drinks_attributes_${timeIdSet[key]}_number`).data("drinkprice")
-    let drinkNumber = Number($(`#sale_sales_drinks_attributes_${timeIdSet[key]}_number`).val())
-    drinkTotal = drinkTotal + (drinkPrice * drinkNumber)
+    let drinkNumber1 = Number($(`#sale_sales_drinks_attributes_${timeIdSet[key]}_number`).val())
+    let drinkNumber2 = Number($(`#sale_sales_drinks_attributes_${timeIdSet[key]}_number`).text())
+    drinkTotal = drinkTotal + (drinkPrice * (drinkNumber1 + drinkNumber2))
   }
   let subTotal = roomPrice + (kaisekiPrice * kaisekiNumber) + drinkTotal;
   $(".saleNewEdit__result__content__subTotal__price").text(subTotal)
@@ -102,8 +104,9 @@ function eventSet(drinkIds, editShowOnly, showOnly) {
       drinkIds.push(Number(drinkId))
       timeIdSet[Number(drinkId)] = times;
       times++;
-      saleTotal(timeIdSet)
+      
     }
+    saleTotal(timeIdSet)
   }
   drinkCategory();
   saleFinish();
@@ -142,7 +145,6 @@ function eventSet(drinkIds, editShowOnly, showOnly) {
     drinkIds = drinkIds.filter(function (drinkId) {
       return drinkId !== deleteDrinkId;
     })
-    console.log("OKOKOKOK")
     saleTotal(timeIdSet)
   })
   deleteZero();
@@ -190,6 +192,5 @@ $(function () {
     let editShowOnly = true;
     let showOnly = true;
     eventSet(drinkIds, editShowOnly, showOnly);
-    console.log("ok")
   }
 })

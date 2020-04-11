@@ -76,6 +76,22 @@ function keyup() {
   })
 }
 
+function saleDelete() {
+  $(".sale_delete").click(function () {
+    if (!confirm(`削除してよろしいですか？`)) {
+      return false
+    }
+  })
+}
+
+function dontSaved() {
+  $(".dont_saved").click(function () {
+    if (!confirm(`保存されていません。\n戻ってよろしいですか？`)) {
+      return false
+    }
+  })
+}
+
 // 全イベントのセット
 function eventSet(drinkIds, editShowOnly, showOnly) {
   let times = 0;
@@ -112,6 +128,8 @@ function eventSet(drinkIds, editShowOnly, showOnly) {
   saleFinish();
   change();
   keyup();
+  saleDelete();
+  dontSaved()
   // ドリンクのボタンを押した時にフォーム増やすか数を増やすか判断
   $(".sales__drink").click(function () {
     length = drinkIds.length

@@ -1,19 +1,22 @@
-= stylesheet_link_tag 'member_edit', media: 'all'
+= javascript_include_tag 'members.js'
+= stylesheet_link_tag 'members_edit', media: 'all'
 .membersEdit
   = link_to members_path do
     メンバー一覧へ戻る
   %h2.membersEdit__title
-    = "#{@member.name}の編集"
+    = "#{@member.name}のグレード編集"
   = form_with model: @member, local: true, class: "membersEdit__form" do |f|
-    .membersEdit__form__content
-      %h3
-        Email
-      = f.email_field :email
     .membersEdit__form__content
       %h3
         グレード
       = f.select :grade, [*1..3], prompt: "選択してください"
     .membersEdit__form__submits
-      = link_to custumDelete_member_path(@member.id), method: :put, class: "membersEdit__form__submit membersEdit__form__resignation", data:{confirm: "#{@member.name}さんを\n退社処理してよろしいですか？"} do
+      = link_to custumDelete_member_path(@member.id), method: :put, class: "membersEdit__form__submits__submit membersEdit__form__resignation", data:{confirm: "#{@member.name}さんを\n退社処理してよろしいですか？"} do
         退社
-      = f.submit "保存", class: "membersEdit__form__submit", data:{confirm: "保存してよろしいですか？"}
+      = f.submit "保存", class: "membersEdit__form__submits__submit", id: "member_save"
+  -# 今後使うかもしれないので一応残し
+  -# - if @member.errors.any?
+  -#   %ul
+  -#     - @member.errors.full_messages.each do |m|
+  -#       %li
+  -#         = m

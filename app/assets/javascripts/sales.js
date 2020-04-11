@@ -87,13 +87,13 @@ function eventSet(drinkIds, editShowOnly, showOnly) {
       drinkPrice = $(`#saledrink${i}`)[0].dataset.price
       if (showOnly) {
         $(".saleNewEdit__result__content__drinks").append(`<div id="drink-wrapper${drinkId}">
-        <div class="saleNewEdit__result__content__name">${drinkName}</div> <div class="saleNewEdit__result__content__price">${drinkPrice}</div>
+        <div class="saleNewEdit__result__content__name">${drinkName}<dix class="saleNewEdit__result__content__name__mask"></dix></div> <div class="saleNewEdit__result__content__price">${drinkPrice}</div>
         <input type="hidden" name="sale[sales_drinks_attributes][${times}][drink_id]" id="sale_sales_drinks_attributes_${times}_drink_id" value="${drinkId}">
         <div" class="drink_number saleNewEdit__result__content__number" id="sale_sales_drinks_attributes_${times}_number" data-drinkid=${drinkId} data-drinkprice=${drinkPrice}>${drinkNumber}</div>
         </div>`)
       } else {
         $(".saleNewEdit__result__content__drinks").append(`<div id="drink-wrapper${drinkId}">
-        <div class="saleNewEdit__result__content__name">${drinkName}</div> <div class="saleNewEdit__result__content__price">${drinkPrice}</div>
+        <div class="saleNewEdit__result__content__name">${drinkName}<dix class="saleNewEdit__result__content__name__mask"></dix></div> <div class="saleNewEdit__result__content__price">${drinkPrice}</div>
         <input type="hidden" name="sale[sales_drinks_attributes][${times}][drink_id]" id="sale_sales_drinks_attributes_${times}_drink_id" value="${drinkId}">
         <input type="number" class="drink_number saleNewEdit__result__content__number" name="sale[sales_drinks_attributes][${times}][number]" id="sale_sales_drinks_attributes_${times}_number" data-drinkid=${drinkId} data-drinkprice=${drinkPrice} min=0 value=${drinkNumber}>
         <div class="delete_drink" data-deletedrinkid=${drinkId}>削除</div>
@@ -117,7 +117,7 @@ function eventSet(drinkIds, editShowOnly, showOnly) {
     drinkPrice = $(this).data("price")
     if ($.inArray(Number(drinkId), drinkIds) < 0) {
       $(".saleNewEdit__result__content__drinks").append(`<div class="drink-wrapper" id="drink-wrapper${drinkId}">
-          <div class="saleNewEdit__result__content__name">${drinkName}</div><div class="saleNewEdit__result__content__price">${drinkPrice}</div>
+          <div class="saleNewEdit__result__content__name">${drinkName}<dix class="saleNewEdit__result__content__name__mask"></dix></div><div class="saleNewEdit__result__content__price">${drinkPrice}</div>
           <input type="hidden" name="sale[sales_drinks_attributes][${times}][drink_id]" id="sale_sales_drinks_attributes_${times}_drink_id" value="${drinkId}">
           <input type="number" class="drink_number saleNewEdit__result__content__number" name="sale[sales_drinks_attributes][${times}][number]" id="sale_sales_drinks_attributes_${times}_number" data-drinkid=${drinkId} data-drinkprice=${drinkPrice} min=0 value=1>
           <div class="delete_drink" data-deletedrinkid=${drinkId}>削除</div>
@@ -161,6 +161,7 @@ $(function () {
   if (location.pathname.match("sales/new")) {
     let drinkIds = []
     let editShowOnly = false;
+    let showOnly = false;
     eventSet(drinkIds, editShowOnly, showOnly);
     setFirstDrinkCategory();
   }
@@ -168,6 +169,7 @@ $(function () {
   if (location.pathname.match(/sales\/\d{1,3}\/edit/)) {
     let drinkIds = []
     let editShowOnly = true;
+    let showOnly = false;
     eventSet(drinkIds, editShowOnly, showOnly);
     setFirstDrinkCategory()
     // もともと保存されていたものは全て削除

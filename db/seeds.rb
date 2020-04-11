@@ -209,7 +209,7 @@ room_length = Room.all.length
 kaiseki_length = Kaiseki.all.length
 minute = [0, 15, 30, 45]
 addDeleted = [1,1,1,0]
-
+addDeleted_length = addDeleted.length
 
 20.times do
   Reservation.create(
@@ -222,7 +222,7 @@ addDeleted = [1,1,1,0]
       number_of_guest: rand(2..10),
       memo: Faker::Food.description,
       date: Date.today + rand(0..4) - rand(0..2),
-      status: addDeleted[rand(0..1)],
+      status: addDeleted[rand(addDeleted_length)],
       start_hour: rand(16..19),
       start_minute: minute[rand(0..2)]
     }
@@ -240,7 +240,7 @@ end
       number_of_guest: rand(2..10),
       memo: Faker::Food.description,
       date: Date.today + rand(0..4) - rand(0..2),
-      status: addDeleted[rand(0..1)],
+      status: addDeleted[rand(addDeleted_length)],
       start_hour: rand(11..18),
       start_minute: minute[rand(0..3)]
     }
@@ -258,7 +258,7 @@ end
       number_of_guest: rand(2..10),
       memo: Faker::Food.description,
       date: Date.today + rand(0..20) - rand(0..10),
-      status: addDeleted[rand(0..1)],
+      status: addDeleted[rand(addDeleted_length)],
       start_hour: rand(11..18),
       start_minute: minute[rand(0..3)]
     }
@@ -296,7 +296,7 @@ client_length = Client.all.length
       number_of_guest: rand(2..10),
       memo: Faker::Food.description,
       date: Date.today + rand(0..20) - rand(0..10),
-      status: addDeleted[rand(0..1)],
+      status: addDeleted[rand(addDeleted_length)],
       start_hour: rand(11..18),
       start_minute: minute[rand(0..3)]
     }

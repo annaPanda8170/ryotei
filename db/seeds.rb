@@ -81,69 +81,122 @@ Room.create(
   ]
 )
 
-Drink.create(
-  [
+
+
+beers = ["ヱビスビール","ザ・プレミアムモルツ","熟撰","ハートランドビール","クラシックラガー","一番搾り","スーパードライ","サッポロ生ビール黒ラベル","モルツ"]
+beers.each_with_index do |b, i|
+  Drink.create(
     {
-      name: "アサヒスーパードライ",
-      price: 1200,
-      category: 0
-    },{
-      name: "エビス",
-      price: 1300,
-      category: 0
-    },{
-      name: "シャトーマルゴー",
-      price: 120000,
-      category: 1
-    },{
-      name: "オーパスワン",
-      price: 35000,
-      category: 1
-    },{
-      name: "シャブリ",
-      price: 11500,
-      category: 2
-    },{
-      name: "あさつゆ",
-      price: 16000,
-      category: 2
-    },{
-      name: "魔王",
-      price: 2300,
-      category: 3
-    },{
-      name: "森伊蔵",
-      price: 6100,
-      category: 3
-    },{
-      name: "山崎18年",
-      price: 4100,
-      category: 4
-    },{
-      name: "I.W.ハーパー",
-      price: 2200,
-      category: 4
-    },{
-      name: "烏龍茶",
-      price: 900,
-      category: 5
-    },{
-      name: "オレンジジュース",
-      price: 900,
-      category: 5
-    },{
-      name: "コーラ",
-      price: 900,
-      category: 5
-    },{
-      name: "あらごし梅酒",
-      price: 1000,
-      category: 6
+      name: beers[i],
+      price: rand(10..23)*100,
+      category: 0,
+      discription: Faker::Food.description
     }
-  ]
-)
+  )
+end
 
+champanges = ["クリュッグ・グランド・キュヴェ","ビルカール・サルモン","モエ・エ・シャンドン","ドン・ペリニヨン"]
+champanges.each_with_index do |b, i|
+  Drink.create(
+    {
+      name: champanges[i],
+      price: rand(15..63)*1000,
+      category: 1,
+      discription: Faker::Food.description
+    }
+  )
+end
 
+red_wines = ["シャトー・コス・デストゥルネル 2008",
+  "シャトー・ブラネール・デュクリュ 2011",
+  "メーヌ・ダヴィド・デュバン ニュイ・サン・ジョルジュ プルミエ・クリュ レ・プリュリエ 2017",
+  "ドメーヌ・ジャン・マルク・ボワイヨ ポマール・プルミエ・クリュ・ジャロリエール 2014",
+  "ドメーヌ・ジャン・マルク・ボワイヨ ヴォルネイ・ピチュール プルミエ・クリュ 2016",
+  "マルケージ・アンティノリ・ティニャネロ 2015",
+  "紫鈴（りんどう） 2016",
+  "ルニア",
+  "ジュヴレ･シャンベルタン ラ･ジュスティス ドメーヌ・アルベール・ビショー 2015",
+  "アヴィニョネージ ヴィーノ・ノビレ・ディ・モンテプルチャーノ 2015",
+  "アメイナ・シラー 2015",
+  "ベッツ・ファミリー・ワイナリー ポッシビリティー2016",
+  "ソラリス 信州千曲川産メルロー2016"]
+red_wines.each_with_index do |b, i|
+  Drink.create(
+    {
+      name: red_wines[i],
+      price: rand(15..230)*1000,
+      category: 2,
+      discription: Faker::Food.description
+    }
+  )
+end
+
+white_wines = ["ブシャール・ペール・エ・フィス ボーヌ・デュ・シャトー プルミエ・クリュ 2017",
+  "アクスティック・ブラン 2017",
+  "テーラ・テール 2015",
+  "ファン・フォルクセン・ロートシーファー・リースリング・カビネット 2016",
+  "オーボン・クリマ ニュイ・ブランシュ・ オ・ブージュ 2014",
+  "ボット・フレール リースリング・グラン・クリュ・オスターベルク 2017",
+  "ノリア・シャルドネ・サンジャコモ・ヴィンヤード 2017",
+  "アルガ・ブランカ・イセハラ 2017 "]
+white_wines.each_with_index do |b, i|
+  Drink.create(
+    {
+      name: white_wines[i],
+      price: rand(15..230)*1000,
+      category: 3,
+      discription: Faker::Food.description
+    }
+  )
+end
+
+shochu = ["百年の孤独", "八幡 ろかせず", "三岳", "鳥飼", "伊佐美", "十四代", "佐藤 黒", "村尾", "魔王", "森伊蔵"]
+shochu.each_with_index do |b, i|
+  Drink.create(
+    {
+      name: shochu[i],
+      price: rand(13..65)*100,
+      category: 4,
+      discription: Faker::Food.description
+    }
+  )
+end
+
+whisky = ["山崎12年,竹鶴17年,カナディアンクラブ20年,レッドブレスト21年,ブラントンゴールド,ブッカーズ2019,ジョニーウォーカー青ラベル,スプリングバンク18年,ロイヤルサルート21年ダイヤモンドジュビリー,ザ・マッカラン18年"]
+whisky.each_with_index do |b, i|
+  Drink.create(
+    {
+      name: whisky[i],
+      price: rand(13..65)*100,
+      category: 5,
+      discription: Faker::Food.description
+    }
+  )
+end
+
+soft = ["烏龍茶","緑茶","コーラ","ジンジャエール","オレンジ","リンゴ","グレープフルーツ","ブドウ","トマト"]
+soft.each_with_index do |b, i|
+  Drink.create(
+    {
+      name: soft[i],
+      price: 85,
+      category: 6,
+      discription: Faker::Food.description
+    }
+  )
+end
+
+other = ["あらごし梅酒","マンハッタン","ダイキリ","ドライ・マティーニ","ウイスキーサワー","マルガリータ","サゼラック","モスコミュール","モヒート"]
+other.each_with_index do |b, i|
+  Drink.create(
+    {
+      name: other[i],
+      price: rand(12..21)*100,
+      category: 7,
+      discription: Faker::Food.description
+    }
+  )
+end
 
 member_length = Member.all.length
 grade3_member = []
@@ -159,6 +212,7 @@ minute = [0, 15, 30, 45]
 addDeleted = [1,1,1,0]
 addDeleted_length = addDeleted.length
 
+# 今日
 6.times do
   Reservation.create(
     {
@@ -170,7 +224,7 @@ addDeleted_length = addDeleted.length
       number_of_guest: rand(2..10),
       memo: Faker::Food.description,
       date: Date.today,
-      status: 1,
+      status: rand(0..1),
       start_hour: rand(13..18),
       start_minute: minute[rand(0..2)]
     }
@@ -303,6 +357,8 @@ today_reservations.each do |r|
     end
     sale.save!
     # いくつか会計済みにする
+    mean = [nil, 0, 1]
+    which = rand(0..2)
     if mean[which] != nil
       sale.update(mean: mean[which], status: 2)
       if mean[which] == 1

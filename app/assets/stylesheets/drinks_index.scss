@@ -8,9 +8,14 @@
     margin: 20px 0;
     display: inline-block;
   }
-  &__new{
+  &__new, &__csv{
+    background-color: $color3;
+    color: $color4;
+    display: inline-block;
     font-size: 21px;
     margin: 20px 0 20px 30px;
+    padding: 6px 12px;
+    border-radius: 10px;
   }
 }
 

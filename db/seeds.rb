@@ -250,3 +250,78 @@ client_length = Client.all.length
   )
 end
 
+grade2or3_members = Member.where(grade: [2,3])
+members_length = grade2or3_members.length
+today_reservations = Reservation.where(date: Date.today)
+today_reservations.each do |r|
+  # 会計中でないのも欲しい
+  if rand(0..2) > 0
+    sale = Sale.new(
+      {
+        reservation_id: r.id,
+        member_id: grade2or3_members[rand(0..(members_length-1))].id,
+        mean: nil,
+        from: nil
+      }
+    )
+    # ドリンク追加
+    rand(0..10).times do
+      sale.sales_drinks.build(
+        {
+          drink_id: Drink.find(1).id,
+          number: rand(1..12)
+        }
+      )
+    end
+    sale.save!
+    # いくつか会計済みにする
+    mean = [nil, 0, 1]
+    which = rand(0..2)
+    puts mean[which]
+    if mean[which] != nil
+      sale.update(mean: mean[which], status: 2)
+      if mean[which] == 1
+        salesdrinks = SalesDrink.where(sale_id: sale.id)
+        drink_total = 0
+        salesdrinks.each do |d|
+          drink_total += d.drink.price
+        end
+        sale.update(from: (r.kaiseki.price * r.number_of_guest + r.room.price + drink_total + rand(9999)))
+      end
+    end
+  end
+end
+
+# 過去会計データ。まだ表示出来ないのでコメントアウト
+
+# past_reservations = Reservation.where("date<?", Date.today)
+# grade2or3_members = Member.where(grade: [2,3])
+# members_length = grade2or3_members.length
+# past_reservations.each do |r|
+#   # mean = rand(0..1)
+#   # mean_from_set = []
+#   # mean_from_set < mean
+#   # if mean == 0
+#   #   mean_from_set < nil
+#   # else
+#   #   mean_from_set < r.
+#   # end
+#   sale = Sale.new(
+#     {
+#       reservation_id: r.id,
+#       member_id: grade2or3_members[rand(0..(members_length-1))].id,
+#       # status: 1,
+#       mean: nil,
+#       from: nil
+#     }
+#   )
+#   rand(0..10).times do
+#     sale.sales_drinks.build(
+#       {
+#         drink_id: Drink.find(1).id,
+#         number: rand(1..12)
+#       }
+#     )
+#   end
+#   sale.save!
+# end

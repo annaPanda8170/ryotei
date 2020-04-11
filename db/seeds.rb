@@ -205,18 +205,39 @@ Member.all.each do |m|
     grade3_member << m.id
   end
 end
+grade3_member_length = grade3_member.length
 room_length = Room.all.length
 kaiseki_length = Kaiseki.all.length
 minute = [0, 15, 30, 45]
 addDeleted = [1,1,1,0]
 addDeleted_length = addDeleted.length
 
+# 今日
+6.times do
+  Reservation.create(
+    {
+      client_id: nil,
+      guest: Faker::Company.name,
+      member_id: grade3_member[rand(grade3_member_length)],
+      room_id: rand(room_length),
+      kaiseki_id: rand(kaiseki_length),
+      number_of_guest: rand(2..10),
+      memo: Faker::Food.description,
+      date: Date.today,
+      status: rand(0..1),
+      start_hour: rand(13..18),
+      start_minute: minute[rand(0..2)]
+    }
+  )
+end
+
+# 期近の夜に企業名で
 20.times do
   Reservation.create(
     {
       client_id: nil,
       guest: Faker::Company.name,
-      member_id: grade3_member[rand(0..((grade3_member.length) -1))],
+      member_id: grade3_member[rand(grade3_member_length)],
       room_id: rand(room_length),
       kaiseki_id: rand(kaiseki_length),
       number_of_guest: rand(2..10),
@@ -229,30 +250,33 @@ addDeleted_length = addDeleted.length
   )
 end
 
+
+# 期近の昼に個人名で
 20.times do
   Reservation.create(
     {
       client_id: nil,
       guest: Faker::Name.name,
-      member_id: grade3_member[rand(0..((grade3_member.length) -1))],
+      member_id: grade3_member[rand(grade3_member_length)],
       room_id: rand(room_length),
       kaiseki_id: rand(kaiseki_length),
       number_of_guest: rand(2..10),
       memo: Faker::Food.description,
       date: Date.today + rand(0..4) - rand(0..2),
       status: addDeleted[rand(addDeleted_length)],
-      start_hour: rand(11..18),
+      start_hour: rand(11..17),
       start_minute: minute[rand(0..3)]
     }
   )
 end
 
+# 個人名
 45.times do
   Reservation.create(
     {
       client_id: nil,
       guest: Faker::Name.name,
-      member_id: grade3_member[rand(0..((grade3_member.length) -1))],
+      member_id: grade3_member[rand(grade3_member_length)],
       room_id: rand(room_length),
       kaiseki_id: rand(kaiseki_length),
       number_of_guest: rand(2..10),
@@ -265,17 +289,19 @@ end
   )
 end
 
+# ポケモン
 14.times do
   Reservation.create(
     {
       client_id: nil,
       guest: Faker::Games::Pokemon.name,
-      member_id: grade3_member[rand(0..((grade3_member.length) -1))],
+      member_id: grade3_member[rand(grade3_member_length)],
       room_id: rand(room_length),
       kaiseki_id: rand(kaiseki_length),
       number_of_guest: rand(2..10),
       memo: Faker::Food.description,
       date: Date.today + rand(0..20) - rand(0..10),
+      # ポケモンは半分キャンセルでいい
       status: rand(0..1),
       start_hour: rand(11..18),
       start_minute: minute[rand(0..3)]
@@ -283,14 +309,14 @@ end
   )
 end
 
+# クライアント
 client_length = Client.all.length
-
 45.times do
   Reservation.create(
     {
       client_id: rand(client_length),
       guest: nil,
-      member_id: grade3_member[rand(0..((grade3_member.length) -1))],
+      member_id: grade3_member[rand(grade3_member_length)],
       room_id: rand(room_length),
       kaiseki_id: rand(kaiseki_length),
       number_of_guest: rand(2..10),
@@ -305,10 +331,13 @@ end
 
 grade2or3_members = Member.where(grade: [2,3])
 members_length = grade2or3_members.length
-today_reservations = Reservation.where(date: Date.today)
+today_reservations = Reservation.where(date: Date.today, status: 1)
+mean = [100, nil, nil, 0, 1]
+mean_length = mean.length
+which = 0
 today_reservations.each do |r|
   # 会計中でないのも欲しい
-  if rand(0..2) > 0
+  if mean[which] != 100
     sale = Sale.new(
       {
         reservation_id: r.id,
@@ -342,6 +371,8 @@ today_reservations.each do |r|
       end
     end
   end
+  which += 1
+  which = 0 if which > mean_length-1
 end
 
 # 過去会計データ。まだ表示出来ないのでコメントアウト

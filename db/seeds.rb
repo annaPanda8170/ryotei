@@ -179,7 +179,7 @@ soft.each_with_index do |b, i|
   Drink.create(
     {
       name: soft[i],
-      price: rand(85..11)*100,
+      price: rand(9..11)*100,
       category: 6,
       discription: Faker::Food.description
     }

@@ -233,12 +233,14 @@
       appearance: none;
       font-size: 15px;
       border: 2px solid $color3;
+      background-color: $color4;
     }
     & textarea{
       font-size: 15px;
       border: 2px solid $color3;
       height: 234px;
       width: 400px;
+      background-color: $color4;
     }
     &__left{
       float: left;
@@ -253,6 +255,7 @@
         font-size: 15px;
         border: 2px solid $color3;
         vertical-align: bottom;
+        background-color: $color4;
       }
     }
     &__right{
@@ -263,6 +266,9 @@
         color: $color4;
         padding: 5px 0;
       } 
+      &>textarea{
+        background-color: $color4;
+      }
       &__submit{
         display: inline-block;
         vertical-align: bottom;

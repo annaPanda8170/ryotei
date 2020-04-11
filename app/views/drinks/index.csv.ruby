@@ -6,7 +6,8 @@ CSV.generate do |csv|
   @drinks.each do |d|
     column_values = [
       d.name,
-      d.price
+      d.price,
+      d.discription
     ]
     csv << column_values
   end

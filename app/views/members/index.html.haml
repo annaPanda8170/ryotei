@@ -24,7 +24,13 @@
         = m.name
       .member__content
         = m.email
-      .member__content
-        = m.grade
+      - if m.grade 
+        .member__grade
+          %span
+            Grade
+          = m.grade
+      - else
+        .member__noGrade
+          No Grade
       .member__edit
         編集

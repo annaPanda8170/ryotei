@@ -2,8 +2,9 @@
 .drinksIndex
   %h2
     ドリンク一覧
-  = link_to new_drink_path, class: "drinksIndex__new" do
-    新規登録
+  - if current_member.grade != 1
+    = link_to new_drink_path, class: "drinksIndex__new" do
+      新規登録
   = link_to drinks_path(format: :csv), class: "drinksIndex__csv" do
     csv出力
   - @drinks.each do |d|

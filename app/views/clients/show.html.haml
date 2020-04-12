@@ -10,11 +10,12 @@
       メモ
     .clientsShow__content__info
       = @client.memo
-  .clientsShow__content
-    = link_to edit_client_path(@client.id) do
-      編集
-    = link_to client_path(@client.id), method: :delete, id: "client_delete" do
-      削除
+  - if current_member.grade != 1
+    .clientsShow__content
+      = link_to edit_client_path(@client.id) do
+        編集
+      = link_to client_path(@client.id), method: :delete, id: "client_delete" do
+        削除
       
   -# - @reservation.each do |r|
   -#   = link_to reservation_path(r.id) do

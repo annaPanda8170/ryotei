@@ -341,83 +341,57 @@ client_length = Client.all.length
   )
 end
 
-grade2or3_members = Member.where(grade: [2,3])
-members_length = grade2or3_members.length
-today_reservations = Reservation.where(date: Date.today, status: 1)
-mean = [100, nil, nil, 0, 1]
-mean_length = mean.length
-which = 0
-drink_length = Drink.all.length
-today_reservations.each do |r|
-  # 会計中でないのも欲しい
-  if mean[which] != 100
-    sale = Sale.new(
-      {
-        reservation_id: r.id,
-        member_id: grade2or3_members[rand(0..(members_length-1))].id,
-        mean: nil,
-        from: nil
-      }
-    )
-    # ドリンク追加
-    rand(0..10).times do
-      sale.sales_drinks.build(
+def add_sale(reservations, mean)
+  mean_length = mean.length
+  grade2or3_members = Member.where(grade: [2,3])
+  members_length = grade2or3_members.length 
+  drink_length = Drink.all.length
+  which = 0
+  reservations.each do |r|
+    # 会計中でないのも欲しい
+    if mean[which] != 100
+      sale = Sale.new(
         {
-          drink_id: Drink.find(rand(drink_length)).id,
-          number: rand(1..12)
+          reservation_id: r.id,
+          member_id: grade2or3_members[rand(members_length)].id,
+          mean: nil,
+          from: nil
         }
       )
-    end
-    sale.save!
-    # いくつか会計済みにする
-    mean = [nil, 0, 1]
-    which = rand(0..2)
-    if mean[which] != nil
-      sale.update(mean: mean[which], status: 2)
-      if mean[which] == 1
-        salesdrinks = SalesDrink.where(sale_id: sale.id)
-        drink_total = 0
-        salesdrinks.each do |d|
-          drink_total += d.drink.price
+      # ドリンク追加
+      rand(0..10).times do
+        sale.sales_drinks.build(
+          {
+            drink_id: Drink.find(rand(drink_length)).id,
+            number: rand(1..12)
+          }
+        )
+      end
+      sale.save!
+      if mean[which] != nil
+        sale.update(mean: mean[which], status: 2)
+        if mean[which] == 1
+          salesdrinks = SalesDrink.where(sale_id: sale.id)
+          drink_total = 0
+          salesdrinks.each do |d|
+            drink_total += d.drink.price * d.number
+          end
+          sale.update(from: (r.kaiseki.price * r.number_of_guest + r.room.price + drink_total + rand(9999)))
         end
-        sale.update(from: (r.kaiseki.price * r.number_of_guest + r.room.price + drink_total + rand(9999)))
       end
     end
+    which += 1
+    which = 0 if which > mean_length-1
   end
-  which += 1
-  which = 0 if which > mean_length-1
 end
 
-# 過去会計データ。まだ表示出来ないのでコメントアウト
 
-# past_reservations = Reservation.where("date<?", Date.today)
-# grade2or3_members = Member.where(grade: [2,3])
-# members_length = grade2or3_members.length
-# past_reservations.each do |r|
-#   # mean = rand(0..1)
-#   # mean_from_set = []
-#   # mean_from_set < mean
-#   # if mean == 0
-#   #   mean_from_set < nil
-#   # else
-#   #   mean_from_set < r.
-#   # end
-#   sale = Sale.new(
-#     {
-#       reservation_id: r.id,
-#       member_id: grade2or3_members[rand(0..(members_length-1))].id,
-#       # status: 1,
-#       mean: nil,
-#       from: nil
-#     }
-#   )
-#   rand(0..10).times do
-#     sale.sales_drinks.build(
-#       {
-#         drink_id: Drink.find(1).id,
-#         number: rand(1..12)
-#       }
-#     )
-#   end
-#   sale.save!
-# end
+
+today_reservations = Reservation.where(date: Date.today, status: 1)
+# ランダムではなく一定の確率で仕分けしたいのでこの配列を循環させる。100は適当。nilが先に使われたので
+mean = [100, nil, nil, 0, 1]
+add_sale(today_reservations, mean)
+
+past_reservations = Reservation.where("date<?", Date.today)
+mean = [1, 0, nil, 0, 1]
+add_sale(past_reservations, mean)

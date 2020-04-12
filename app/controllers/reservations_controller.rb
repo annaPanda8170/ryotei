@@ -9,6 +9,7 @@ class ReservationsController < ApplicationController
     @rooms = Room.all
     # 今日か判定してsaleへのリンクを表示
     @today = @this_date.to_date == Date.today
+    @past = @this_date.to_date < Date.today
     flash[:this_date_for_new] = @this_date
 
     # new

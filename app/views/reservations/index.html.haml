@@ -88,18 +88,20 @@
           = r.memo 
       .reservationOne__showButton{data: {id: r.id}}
         詳細
-      - if @today
-        - if !Sale.find_by(reservation_id: r.id)
-          - if current_member.grade != 1
-            = link_to new_sale_path(r.id), class: "reservationOne__sale" do
-              未会計
-        - elsif Sale.find_by(reservation_id: r.id).status == 2
+      -# - if @today
+      - if !Sale.find_by(reservation_id: r.id)
+        - if current_member.grade != 1 && @today
+          = link_to new_sale_path(r.id), class: "reservationOne__sale" do
+            未会計
+      - elsif Sale.find_by(reservation_id: r.id).status == 2
+        -# 未来はそもそも会計出来ないという意味ではいらない
+        -if @today || @past
           = link_to sale_path(Sale.find_by(reservation_id: r.id)), class: "reservationOne__sale" do
             %span
               会計済
-        - elsif current_member.grade != 1
-          = link_to edit_sale_path(Sale.find_by(reservation_id: r.id)), class: "reservationOne__sale" do
-            会計中
+      - elsif current_member.grade != 1 && @today
+        = link_to edit_sale_path(Sale.find_by(reservation_id: r.id)), class: "reservationOne__sale" do
+          会計中
 
       -# 以下3要素デバック用あとで消す
       -# .tttttt

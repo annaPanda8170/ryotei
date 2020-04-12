@@ -1,10 +1,22 @@
 Member.create(
-  {
-    name: "annaPanda",
-    email: "a@a",
-    grade: 3,
-    password: "123123123"
-  }
+  [
+    {
+      name: "Grade3Member",
+      email: "a@a",
+      grade: 3,
+      password: "123123123"
+    },{
+      name: "Grade2Member",
+      email: "b@b",
+      grade: 2,
+      password: "123123123"
+    },{
+      name: "Grade1Member",
+      email: "c@c",
+      grade: 1,
+      password: "123123123"
+    }
+  ]
 )
 
 grades = [nil, 1, 2, 3]

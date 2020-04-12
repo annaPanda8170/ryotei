@@ -1,4 +1,5 @@
 class DrinksController < ApplicationController
+  before_action :except_1member, except: [:index, :show]
   before_action :set_drink, except: [:new, :create, :index]
   def index
     @drinks = Drink.all
@@ -38,6 +39,11 @@ class DrinksController < ApplicationController
   private
   def set_drink
     @drink = Drink.find(params[:id])
+  end
+  def except_1member
+    if current_member.grade == 1
+      redirect_to drinks_path
+    end
   end
   def drink_params
     params[:drink][:price] = params[:drink][:price].to_i*100

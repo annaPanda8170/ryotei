@@ -243,7 +243,8 @@ function revival() {
     }).done(function (data) {
       $(`[data-roomid="${data.roomid}"]` + `[data-hour="${data.past_hour}"]` + `[data-minute="${data.past_minute}"]`).empty();
       if (data.same_date || data.message) {
-        createSet(data);
+        let grade = $("#current_member_info").data("grade");
+        createSet(data, grade);
       }
       if (!data.message) {
         $(`div.rsvDeleted[data-id=${data.id}]`).remove();
@@ -267,7 +268,7 @@ function reservationOneHover() {
 
 // ##########登録・変更・復活時の予約を表に当てはめるか、エラー文を出す関数######################################
 
-function createSet(data) {
+function createSet(data, grade) {
   // エラーの場合
   if (data.message) {
     $(".rsvNewEdit__errorMessages").text("")
@@ -277,13 +278,18 @@ function createSet(data) {
     $('.form_submit').prop('disabled', false);
   // エラーじゃない場合
   } else {
-    let html = `<div class="reservationOne ui-draggable ui-draggable-handle" data-hour=${data.hour} data-id=${data.id} data-minute=${data.minute} data-room=${data.room} style="top: 0px; left: 0px;">
+    let html1 = `<div class="reservationOne ui-draggable ui-draggable-handle" data-hour=${data.hour} data-id=${data.id} data-minute=${data.minute} data-room=${data.room} style="top: 0px; left: 0px;">
     <div class="reservationOne__clientGuest">${data.clientGuest} 様</div>
     <div class="reservationOne__numberOfGuest">${data.numOfGuest} 名</div>
     <div class="reservationOne__memo">${data.memo}</div>
-    <div class="reservationOne__showButton" data-id=${data.id}>詳細</div>
-    <a class="reservationOne__sale" href="/sales/new.${data.id}">未会計</a>
-    </div>`
+    <div class="reservationOne__showButton" data-id=${data.id}>詳細</div>`
+    let html2 = "";
+    if (grade == 2 || grade == 3) {
+      html2 = `<a class="reservationOne__sale" href="/sales/new.${data.id}">未会計</a></div>`
+    } else {
+      html2 = `</div>`
+    }
+    html = html1 + html2;
     $table = $(`[data-roomname="${data.room}"]`+`[data-hour="${data.hour}"]`+`[data-minute="${data.minute}"]`);
     $table.prepend(html);
     for (let i = 1; i < 10; i++){
@@ -405,7 +411,8 @@ $(function () {
         processData: false,
         contentType: false
       }).done(function (data) {
-        createSet(data);
+        let grade = $("#current_member_info").data("grade");
+        createSet(data, grade);
       }).fail(function (data) {
       })
     })
@@ -428,7 +435,8 @@ $(function () {
       }).done(function (data) {
         $(`[data-roomid="${data.roomid}"]` + `[data-hour="${data.past_hour}"]` + `[data-minute="${data.past_minute}"]`).empty();
         if (data.same_date || data.message) {
-          createSet(data);
+          let grade = $("#current_member_info").data("grade");
+          createSet(data, grade);
         }
       }).fail(function (data) {
       })

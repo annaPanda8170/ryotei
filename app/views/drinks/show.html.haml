@@ -20,8 +20,9 @@
       その他メモ
     .drinksShow__content__info
       = @drink.memo
-  .drinksShow__content
-    = link_to edit_drink_path(@drink.id) do
-      編集
-    = link_to drink_path(@drink.id), method: :delete, id: "drink_delete" do
-      削除
+  - if current_member.grade != 1
+    .drinksShow__content
+      = link_to edit_drink_path(@drink.id) do
+        編集
+      = link_to drink_path(@drink.id), method: :delete, id: "drink_delete" do
+        削除

@@ -1,4 +1,5 @@
 class SalesController < ApplicationController
+  before_action :except_1member, except: [:show, :index]
   before_action :submit_branch_create, only: :create
   before_action :submit_branch_update, only: :update
   def index
@@ -48,6 +49,11 @@ class SalesController < ApplicationController
     redirect_to reservations_path
   end
   private
+  def except_1member
+    if current_member.grade == 1
+      redirect_to drinks_path
+    end
+  end
   def submit_branch_create
     case params["ボタン"]
     when "保存" then

@@ -32,5 +32,6 @@
       - else
         .member__noGrade
           No Grade
-      .member__edit
-        編集
+      - if current_member.grade == 3
+        .member__edit
+          編集

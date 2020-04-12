@@ -1,4 +1,5 @@
 class ClientsController < ApplicationController
+  before_action :except_1member, except: [:index, :show]
   def index
     @clients = Client.all
     # 各クライアントに対する予約の日々を新しい順に並べ替えしたものとidのセット
@@ -36,6 +37,11 @@ class ClientsController < ApplicationController
     redirect_to clients_path
   end
   private
+  def except_1member
+    if current_member.grade == 1
+      redirect_to drinks_path
+    end
+  end
   def client_params
     params.require(:client).permit(:name, :memo)
   end

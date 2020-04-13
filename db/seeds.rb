@@ -362,7 +362,7 @@ def add_sale(reservations, mean)
       rand(0..10).times do
         sale.sales_drinks.build(
           {
-            drink_id: Drink.find(rand(drink_length)).id,
+            drink_id: Drink.find(rand(1..drink_length)).id,
             number: rand(1..12)
           }
         )

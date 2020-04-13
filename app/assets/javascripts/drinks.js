@@ -6,6 +6,8 @@ function drinkDelete() {
   })
 }
 
+// 今選択されているカテゴリーの全てのドリンクから、今のページで表示すべきドリンク以外を選別
+// この値を変えれば1ページでの項目数を変更できる
 let onePageNumber = 16;
 let page = 1;
 function pagination(onePageNumber, page) {
@@ -16,13 +18,20 @@ function pagination(onePageNumber, page) {
   })
 }
 
+// 今のページの数字の色を赤くする関数
 function pageColorChange(nowPage, nowTotalPage) {
   $(".pageLinks__link").css({color: "rgb(28,51,76)"})
   $(`.pageLinks__link`).eq(nowPage-1).css({color: "rgb(155, 59, 59)"})
   $(`.pageLinks__link`).eq(nowPage-1+nowTotalPage).css({color: "rgb(155, 59, 59)"})
 }
 
+// ##########以下実行部######################################################################
+
 $(function () {
+  drinkDelete();
+
+  // #####以下index#############################################################
+  // 最初のセッティング
   pagination(onePageNumber, page)
   let count = $(".drink").length;
   let nowTotalPage = Math.ceil(count / onePageNumber);
@@ -33,18 +42,12 @@ $(function () {
     }
     html += `<div class="pageLinks__next" data-page="next">次</div>`;
   }
-  
   $(".pageLinks").html(html);
   $(`.pageLinks__link`).eq(0).css({ color: "rgb(155, 59, 59)" })
   $(`.pageLinks__link`).eq(nowTotalPage).css({color: "rgb(155, 59, 59)"})
-  drinkDelete();
-
   
-  
-  
-
-
   let nowPage = 1;
+  // 以下２つ「前」「次」が表示されているか記録用
   let preved = false;
   let nexted = true;
   $("#category").change(function () {
@@ -62,6 +65,7 @@ $(function () {
     })
     $(".nowCategory:even").css({backgroundColor: "rgb(170, 197, 188)"})
     $(".nowCategory:odd").css({ backgroundColor: "rgb(245,243,242)" })
+    // 初期化
     nowPage = 1
     preved = false;
     pagination(onePageNumber, page)
@@ -77,7 +81,7 @@ $(function () {
     $(`.pageLinks__link`).eq(0).css({ color: "rgb(155, 59, 59)" })
     $(`.pageLinks__link`).eq(nowTotalPage).css({color: "rgb(155, 59, 59)"})
   })
-
+  // ページ数クリックイベント 
   $(document).on("click", ".pageLinks__link", function () {
     $(".pageLinks__link").css({color: "rgb(28,51,76)"})
     $(".nowCategory").css({ display: "block" })
@@ -104,8 +108,8 @@ $(function () {
     }
     pagination(onePageNumber, nowPage)
   })
+  // 「前」クリックイベント 
   $(document).on("click", ".pageLinks__prev", function () {
-    
     $(".nowCategory").css({ display: "block" })
     nowPage--
     pageColorChange(nowPage, nowTotalPage)
@@ -129,6 +133,7 @@ $(function () {
     }
     pagination(onePageNumber, nowPage)
   })
+  // 「次」クリックイベント 
   $(document).on("click", ".pageLinks__next", function () {
     $(".nowCategory").css({ display: "block" })
     nowPage++
@@ -153,10 +158,5 @@ $(function () {
       nexted = false;
     }
     pagination(onePageNumber, nowPage)
-    console.log(nowPage)
-    console.log(nowTotalPage)
-    console.log(preved)
-    console.log(nexted)
-    console.log("=----------------")
   })
 })

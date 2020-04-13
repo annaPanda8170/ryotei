@@ -26,6 +26,7 @@
   &__result{
     width: 460px;
     float: left;
+    margin-right: 50px;
     &__content{
       font-size: 0;
       &:nth-of-type(1){
@@ -117,6 +118,7 @@
     overflow: hidden;
     float: right;
     width: 500px;
+    margin-left: 50px;
     text-align: center;
     &__categorys{
       white-space: normal;

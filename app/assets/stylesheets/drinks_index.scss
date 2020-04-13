@@ -83,3 +83,19 @@
     }
   }
 }
+
+.pagination{
+  margin: 35px 0 25px;
+  font-size: 18px;
+  & > .current{
+    color: $color10;
+  }
+  & > .page{
+    display: inline-block;
+    margin: 0 5px;
+  }
+  & > .first,> .prev, > .next, > .last{
+    display: inline-block;
+    margin: 0 10px;
+  }
+}

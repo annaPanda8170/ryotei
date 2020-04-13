@@ -18,6 +18,7 @@
   - else
     %h2
       メンバー一覧
+  = paginate @members
   - @members.each do |m|
     = link_to edit_member_path(m.id), class: "member" do
       .member__content
@@ -35,3 +36,4 @@
       - if current_member.grade == 3
         .member__edit
           編集
+  = paginate @members

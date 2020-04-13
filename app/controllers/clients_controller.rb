@@ -1,7 +1,7 @@
 class ClientsController < ApplicationController
   before_action :except_1member, except: [:index, :show]
   def index
-    @clients = Client.all
+    @clients = Client.page(params[:page]).per(30)
     # 各クライアントに対する予約の日々を新しい順に並べ替えしたものとidのセット
     @clients_dates = Client.dates_set(@clients)
   end

@@ -2,7 +2,7 @@ class DrinksController < ApplicationController
   before_action :except_1member, except: [:index, :show]
   before_action :set_drink, except: [:new, :create, :index]
   def index
-    @drinks = Drink.page(params[:page]).per(30)
+    @drinks = Drink.all.order(name: "ASC")
   end
   def show
     @drink = Drink.find(params[:id])

@@ -109,4 +109,22 @@ html{
       }
     }
   }
+  &__signinLogin{
+    text-align: center;
+    width: 99vw;
+    margin: 20vh auto 15px;
+    &__link{
+      display: inline-block;
+      border-radius: 40px/22.5px;
+      line-height: 45px;
+      padding: 0 24px;
+      margin: 0 15px;
+      font-size: 19px;
+      background-color: $color4-5;
+      color: $color4;
+      &__now{
+        background-color: $color10;
+      }
+    }
+  }
 }

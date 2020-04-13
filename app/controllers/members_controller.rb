@@ -6,7 +6,7 @@ class MembersController < ApplicationController
       @members = Member.where(grade: nil)
       @gradelessIndex = true
     else
-      @members = Member.all
+      @members = Member.page(params[:page]).per(30)
       @gradeLess = Member.where(grade: nil).length
     end
   end

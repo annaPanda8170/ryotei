@@ -10,17 +10,7 @@
     csv出力
   = form_with id: "drinksIndex_category" do |f|
     = f.select :category, Drink.categories.keys.to_a, prompt: "全カテゴリー"
-
-  -# = paginate @drinks
-
   .pageLinks
-    -# - page_link = 1
-    -# - page_number = @drinks.length / 20 + 1
-    -# - page_number.times do
-    -#   .page_link{data: {page: page_link}}
-    -#     = page_link
-    -#   - page_link += 1
-
   - @drinks.each do |d|
     = link_to drink_path(d.id), class: "drink nowCategory", data: {category: d.category} do
       .drink__name
@@ -29,6 +19,4 @@
         = "#{d.price} 円"
       .drink__show
         詳細
-
   .pageLinks
-  -# = paginate @drinks

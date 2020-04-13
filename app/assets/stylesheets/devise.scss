@@ -1,0 +1,71 @@
+@import "colors";
+
+.signinLogin{
+  margin: 30px auto 0;
+  width: 600px;
+  &__content{
+    padding: 11px 0;
+    & > label{
+      padding: 7px 5px;
+      display: inline-block;
+      font-size: 22px;
+    }
+    &__text{
+      padding: 0 10px;
+      height: 37px;
+      border-radius: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      font-size: 22px;
+      border: 2px solid $color3;
+      background-color: $color4;
+      width: 600px;
+    }
+    & input[type="submit"]{
+      float: right;
+      border-radius: 10px;
+      line-height: 35px;
+      padding: 0 24px;
+      font-size: 19px;
+      background-color: $color3;
+      color:  $color4;
+    }
+  }
+  &__contentCheck{
+    position: relative;
+    &__check{
+      display: none;
+    }
+    & input[type="checkbox"]+label{
+      margin-left: 50px;
+    }
+    & input[type="checkbox"]+label:before{
+      content: "";
+      transform: translateY(-50%);
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      border-radius: 5px;
+      width: 22px;
+      height: 22px;
+      border: 2px solid $color3;
+      vertical-align: bottom;
+    }
+    & input[type="checkbox"]:checked+label:before{
+      position: absolute;
+      height: 13px;
+      top: 30%;
+      transform: rotate(-45deg);
+      border-top: none;
+      border-right: none;
+      border-radius: 0;
+    }
+  }
+}
+
+input:-webkit-autofill {
+  animation-name: onAutoFillStart;
+  transition: background-color 50000s ease-in-out 0s;
+}
+
+@keyframes onAutoFillStart { from {} to {}}

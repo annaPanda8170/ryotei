@@ -1,25 +1,25 @@
-%h2 Sign up
-= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
-  = render "devise/shared/error_messages", resource: resource
-  .field
-    = f.label :name
-    %br/
-    = f.text_field :name, autofocus: true
-  .field
-    = f.label :email
-    %br/
-    = f.email_field :email, autocomplete: "email"
-  .field
-    = f.label :password
-    - if @minimum_password_length
-      %em
-        (#{@minimum_password_length} characters minimum)
-    %br/
-    = f.password_field :password, autocomplete: "new-password"
-  .field
-    = f.label :password_confirmation
-    %br/
-    = f.password_field :password_confirmation, autocomplete: "new-password"
-  .actions
-    = f.submit "Sign up"
-= render "devise/shared/links"
+= stylesheet_link_tag 'devise', media: 'all'
+.signinLogin
+  = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+    = render "devise/shared/error_messages", resource: resource
+    .signinLogin__content
+      = f.label :name, "名前"
+      %br/
+      = f.text_field :name, autofocus: true, class: "signinLogin__content__text"
+    .signinLogin__content
+      = f.label :email
+      %br/
+      = f.email_field :email, autocomplete: "email", class: "signinLogin__content__text"
+    .signinLogin__content
+      = f.label :password
+      - if @minimum_password_length
+        %em
+          (#{@minimum_password_length} characters minimum)
+      %br/
+      = f.password_field :password, autocomplete: "new-password", class: "signinLogin__content__text"
+    .signinLogin__content
+      = f.label :password_confirmation
+      %br/
+      = f.password_field :password_confirmation, autocomplete: "new-password", class: "signinLogin__content__text"
+    .signinLogin__content
+      = f.submit "Sign up"

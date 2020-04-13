@@ -44,7 +44,12 @@
             %li.header__account__hover__li
               = link_to "ログアウト", destroy_member_session_path, method: :delete, class: "header__name__logout"
       
-      - else
-        = link_to "ログイン", new_member_session_path
-        = link_to "会員登録", new_member_registration_path
+      - elsif request.path == new_member_session_path
+        .header__signinLogin
+          = link_to "ログイン", new_member_session_path, class: "header__signinLogin__link header__signinLogin__link__now"
+          = link_to "会員登録", new_member_registration_path, class: "header__signinLogin__link"
+      - elsif request.path == new_member_registration_path
+        .header__signinLogin
+          = link_to "ログイン", new_member_session_path, class: "header__signinLogin__link"
+          = link_to "会員登録", new_member_registration_path, class: "header__signinLogin__link header__signinLogin__link__now"
     = yield

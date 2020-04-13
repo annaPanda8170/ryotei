@@ -1,4 +1,5 @@
 = stylesheet_link_tag 'drinks_index', media: 'all'
+= javascript_include_tag 'drinks.js'
 .drinksIndex
   %h2
     ドリンク一覧
@@ -7,13 +8,27 @@
       新規登録
   = link_to drinks_path(format: :csv), class: "drinksIndex__csv" do
     csv出力
-  = paginate @drinks
+  = form_with id: "drinksIndex_category" do |f|
+    = f.select :category, Drink.categories.keys.to_a, prompt: "全カテゴリー"
+
+  -# = paginate @drinks
+
+  .pageLinks
+    -# - page_link = 1
+    -# - page_number = @drinks.length / 20 + 1
+    -# - page_number.times do
+    -#   .page_link{data: {page: page_link}}
+    -#     = page_link
+    -#   - page_link += 1
+
   - @drinks.each do |d|
-    = link_to drink_path(d.id), class: "drink" do
-      .drink__content
+    = link_to drink_path(d.id), class: "drink nowCategory", data: {category: d.category} do
+      .drink__name
         = d.name
-      .drink__content
+      .drink__price
         = "#{d.price} 円"
       .drink__show
         詳細
-  = paginate @drinks
+
+  .pageLinks
+  -# = paginate @drinks

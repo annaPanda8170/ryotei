@@ -27,55 +27,33 @@
   height: 42px;
   &:nth-of-type(odd){
     background-color: $color8-7;
-    & div:nth-of-type(2){
-      padding-left: 30px;
-      transform: translateY(-50%);
-      text-align: right;
-      position: absolute;
-      top: 50%;
-      right: 100px;
-      z-index: 1000;
-      background: -moz-linear-gradient(to right, transparent, $color8-7 10%);
-      background: -webkit-linear-gradient(to right, transparent, $color8-7 10%);
-      background: linear-gradient(to right, transparent, $color8-7 10%); 
-    }
   }
-  &:nth-of-type(even){
-    & div:nth-of-type(2){
-      padding-left: 30px;
-      transform: translateY(-50%);
-      text-align: right;
-      position: absolute;
-      top: 50%;
-      right: 100px;
-      z-index: 1000;
-      background: -moz-linear-gradient(to right, transparent, $color4 10%);
-      background: -webkit-linear-gradient(to right, transparent, $color4 10%);
-      background: linear-gradient(to right, transparent, $color4 10%); 
-    }
-  }
-  &__content{
+  &__name{
     display: inline-block;
     line-height: 34px;
     white-space: nowrap;
     overflow: hidden;
-    &:nth-of-type(1){
-      vertical-align: middle;
-      max-width: calc(100% - 120px);
-    }
+    // 150pxは取り急ぎ、動的にするか検討中
+    max-width: calc(100% - calc(110px + 150px));
   }
-  &__show{
-    width: 60px;
-    height: 32px;
+  &__price, &__show{
     position: absolute;
     top: 50%;
-    right: 10px;
+    right: 90px;
     transform: translateY(-50%);
     display: inline-block;
     padding: 7px 16px;
     line-height: 1.3em;
     border-radius: 13px;
+  }
+  &__price{
+
+  }
+  &__show{
     font-size: 14px;
+    width: 60px;
+    height: 32px;
+    right: 10px;
     background-color: $color8;
     color: $color4;
     &:hover{
@@ -97,5 +75,55 @@
   & > .first,> .prev, > .next, > .last{
     display: inline-block;
     margin: 0 10px;
+  }
+}
+
+#drinksIndex_category{
+  float: right;
+  margin: 20px;
+  & > select{
+    vertical-align: middle;
+    padding-right: 1em;
+    cursor: pointer;
+    padding: 0 15px;
+    -webkit-appearance: none;
+    appearance: none;
+    font-size: 22px;
+    border: 2px solid $color3;
+  }
+}
+
+.pageLinks{
+  &__link{
+    display: inline-block;
+    font-size: 22px;
+    margin-right: 12px;
+    &:nth-of-type(1){
+      color: $color11;
+    }
+  }
+  &:hover{
+    cursor: pointer;
+  }
+  &:nth-of-type(1){
+    margin-top: 23px;
+    margin-bottom: 43px;
+  }
+  &:nth-of-type(2){
+    margin-top: 43px;
+  }
+  &__prev, &__next, &__prevNon{
+    display: inline-block;
+    font-size: 22px;
+  }
+  &__prev{
+    margin-right: 30px;
+  }
+  &__next{
+    margin-left: 30px;
+  }
+  &__prevNon{
+    margin-right: 30px;
+    color: transparent;
   }
 }

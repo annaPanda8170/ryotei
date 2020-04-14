@@ -15,13 +15,18 @@ Member.create(
       email: "c@c",
       grade: 1,
       password: "123123123"
+    },{
+      name: "NoGradeMember",
+      email: "d@d",
+      grade: nil,
+      password: "123123123"
     }
   ]
 )
 
 grades = [nil, 1, 2, 3]
 
-15.times do
+25.times do
   Member.create(
     {
       name: Faker::Name.name,
@@ -53,7 +58,7 @@ Kaiseki.create(
   ]
 )
 
-15.times do
+20.times do
   Client.create(
     {
       name: Faker::Company.name,
@@ -62,7 +67,7 @@ Kaiseki.create(
   )
 end
 
-5.times do
+10.times do
   Client.create(
     {
       name: Faker::Name.name,
@@ -136,7 +141,7 @@ red_wines.each_with_index do |b, i|
   Drink.create(
     {
       name: red_wines[i],
-      price: rand(15..230)*1000,
+      price: rand(15..160)*1000,
       category: 2,
       discription: Faker::Food.description
     }
@@ -155,7 +160,7 @@ white_wines.each_with_index do |b, i|
   Drink.create(
     {
       name: white_wines[i],
-      price: rand(15..230)*1000,
+      price: rand(15..180)*1000,
       category: 3,
       discription: Faker::Food.description
     }
@@ -179,7 +184,7 @@ whisky.each_with_index do |b, i|
   Drink.create(
     {
       name: whisky[i],
-      price: rand(13..65)*100,
+      price: rand(13..45)*100,
       category: 5,
       discription: Faker::Food.description
     }
@@ -323,7 +328,7 @@ end
 
 # クライアント
 client_length = Client.all.length
-45.times do
+55.times do
   Reservation.create(
     {
       client_id: rand(client_length),
@@ -333,7 +338,7 @@ client_length = Client.all.length
       kaiseki_id: rand(kaiseki_length),
       number_of_guest: rand(2..10),
       memo: Faker::Food.description,
-      date: Date.today + rand(0..20) - rand(0..10),
+      date: Date.today + rand(0..20) - rand(0..20),
       status: addDeleted[rand(addDeleted_length)],
       start_hour: rand(11..18),
       start_minute: minute[rand(0..3)]
@@ -393,5 +398,5 @@ mean = [100, nil, nil, 0, 1]
 add_sale(today_reservations, mean)
 
 past_reservations = Reservation.where("date<?", Date.today)
-mean = [1, 0, nil, 0, 1]
+mean = [1, 0, nil, 0, 1, 1]
 add_sale(past_reservations, mean)

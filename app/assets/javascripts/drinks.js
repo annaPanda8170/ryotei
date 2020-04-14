@@ -25,6 +25,30 @@ function pageColorChange(nowPage, nowTotalPage) {
   $(`.pageLinks__link`).eq(nowPage-1+nowTotalPage).css({color: "rgb(155, 59, 59)"})
 }
 
+// 「前」「次」出し入れ用関数
+function check(nowPage, nowTotalPage, preved, nexted) {
+  $(".nowCategory").css({ display: "block" })
+  if (nowPage <= 1) {
+    $(".pageLinks__prev").remove();
+    $(".pageLinks").prepend(`<div class="pageLinks__prevNon">な</div>`)
+    preved = false;
+  }
+  if (nowPage > 1 && !preved) {
+    $(".pageLinks").prepend(`<div class="pageLinks__prev" data-page="prev">前</div>`)
+    $(".pageLinks__prevNon").remove();
+    preved = true;
+  }
+  if (nowPage < nowTotalPage && !nexted){
+    $(".pageLinks").append(`<div class="pageLinks__next" data-page="next">次</div>`)
+    nexted = true;
+  }
+  if (nowPage >= nowTotalPage) {
+    $(".pageLinks__next").remove();
+    nexted = false;
+  }
+  return [nowPage, nowTotalPage, preved, nexted]
+}
+
 // ##########以下実行部######################################################################
 
 $(function () {
@@ -84,79 +108,36 @@ $(function () {
   // ページ数クリックイベント 
   $(document).on("click", ".pageLinks__link", function () {
     $(".pageLinks__link").css({color: "rgb(28,51,76)"})
-    $(".nowCategory").css({ display: "block" })
     nowPage = $(this).data("page")
     pageColorChange(nowPage, nowTotalPage)
-    // 以下が何度も使うので切り出したいが変数の値を共有出来ない
-    if (nowPage <= 1) {
-      $(".pageLinks__prev").remove();
-      $(".pageLinks").prepend(`<div class="pageLinks__prevNon">な</div>`)
-      preved = false;
-    }
-    if (nowPage > 1 && !preved) {
-      $(".pageLinks").prepend(`<div class="pageLinks__prev" data-page="prev">前</div>`)
-      $(".pageLinks__prevNon").remove();
-      preved = true;
-    }
-    if (nowPage < nowTotalPage && !nexted){
-      $(".pageLinks").append(`<div class="pageLinks__next" data-page="next">次</div>`)
-      nexted = true;
-    }
-    if (nowPage >= nowTotalPage) {
-      $(".pageLinks__next").remove();
-      nexted = false;
-    }
+    let checkReturns = check(nowPage, nowTotalPage, preved, nexted)
+    // もう少し効率的な代入方法がありそう
+    nowPage = checkReturns[0]
+    nowTotalPage = checkReturns[1]
+    preved = checkReturns[2]
+    nexted = checkReturns[3]
     pagination(onePageNumber, nowPage)
   })
   // 「前」クリックイベント 
   $(document).on("click", ".pageLinks__prev", function () {
-    $(".nowCategory").css({ display: "block" })
     nowPage--
     pageColorChange(nowPage, nowTotalPage)
-    if (nowPage <= 1) {
-      $(".pageLinks__prev").remove();
-      $(".pageLinks").prepend(`<div class="pageLinks__prevNon">な</div>`)
-      preved = false;
-    }
-    if (nowPage > 1 && !preved) {
-      $(".pageLinks").prepend(`<div class="pageLinks__prev" data-page="prev">前</div>`)
-      $(".pageLinks__prevNon").remove();
-      preved = true;
-    }
-    if (nowPage < nowTotalPage && !nexted){
-      $(".pageLinks").append(`<div class="pageLinks__next" data-page="next">次</div>`)
-      nexted = true;
-    }
-    if (nowPage >= nowTotalPage) {
-      $(".pageLinks__next").remove();
-      nexted = false;
-    }
+    let checkReturns = check(nowPage, nowTotalPage, preved, nexted)
+    nowPage = checkReturns[0]
+    nowTotalPage = checkReturns[1]
+    preved = checkReturns[2]
+    nexted = checkReturns[3]
     pagination(onePageNumber, nowPage)
   })
   // 「次」クリックイベント 
   $(document).on("click", ".pageLinks__next", function () {
-    $(".nowCategory").css({ display: "block" })
     nowPage++
     pageColorChange(nowPage, nowTotalPage)
-    if (nowPage <= 1) {
-      $(".pageLinks__prev").remove();
-      $(".pageLinks").prepend(`<div class="pageLinks__prevNon">な</div>`)
-      preved = false;
-    }
-    if (nowPage > 1 && !preved) {
-      $(".pageLinks").prepend(`<div class="pageLinks__prev" data-page="prev">前</div>`)
-      $(".pageLinks__prevNon").remove();
-      preved = true;
-    }
-    if (nowPage < nowTotalPage && !nexted){
-      $(".pageLinks").append(`<div class="pageLinks__next" data-page="next">次</div>`)
-      
-      nexted = true;
-    }
-    if (nowPage >= nowTotalPage) {
-      $(".pageLinks__next").remove();
-      nexted = false;
-    }
+    let checkReturns = check(nowPage, nowTotalPage, preved, nexted)
+    nowPage = checkReturns[0]
+    nowTotalPage = checkReturns[1]
+    preved = checkReturns[2]
+    nexted = checkReturns[3]
     pagination(onePageNumber, nowPage)
   })
 })

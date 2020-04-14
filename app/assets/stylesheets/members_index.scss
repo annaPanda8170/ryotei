@@ -49,9 +49,9 @@
     & div:nth-of-type(3){
       padding-left: 30px;
       z-index: 1000;
-      background: -moz-linear-gradient(to right, transparent, $color4 20%);
-      background: -webkit-linear-gradient(to right, transparent, $color4 20%);
-      background: linear-gradient(to right, transparent, $color4 20%); 
+      background: -moz-linear-gradient(to right, transparent, $color_background 20%);
+      background: -webkit-linear-gradient(to right, transparent, $color_background 20%);
+      background: linear-gradient(to right, transparent, $color_background 20%); 
     }
   }
 

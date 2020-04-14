@@ -52,7 +52,7 @@
         border-left: 3px solid $color2;
         vertical-align: top;
         height: 40px;
-        background-color: $color4;
+        background-color: $color_background;
         overflow: hidden;
       }
       &__name{
@@ -65,9 +65,9 @@
           position: absolute;
           top: 50%;
           right: 0;
-          background: -moz-linear-gradient(to right, transparent, $color4 60%);
-          background: -webkit-linear-gradient(to right, transparent, $color4 60%);
-          background: linear-gradient(to right, transparent, $color4 60%); 
+          background: -moz-linear-gradient(to right, transparent, $color_background 60%);
+          background: -webkit-linear-gradient(to right, transparent, $color_background 60%);
+          background: linear-gradient(to right, transparent, $color_background 60%); 
         }
       }
       &__price{
@@ -172,7 +172,7 @@
   margin: 0 60px 30px 0;
   border-radius: 4px;
   height: 37px;
-  background-color: $color4;
+  background-color: $color_background;
 }
 
 #sale_cash{

@@ -23,7 +23,7 @@
         appearance: none;
         font-size: 22px;
         border: 2px solid $color3;
-        background-color: $color4;
+        background-color: $color_background;
       }
       & textarea{
         min-height: 300px;
@@ -45,7 +45,7 @@
         appearance: none;
         font-size: 22px;
         border: 2px solid $color3;
-        background-color: $color4;
+        background-color: $color_background;
       }
       & input{
         width: 180px;

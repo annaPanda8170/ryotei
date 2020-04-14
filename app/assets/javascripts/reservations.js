@@ -146,8 +146,6 @@ function droppableEvent() {
         // $id.find(".vvvvvv").text(data.minute);
 
       }).fail(function () {
-        // ui.draggable.css({ top: '0', left: '0' });
-        // return false
       });
     }
   });

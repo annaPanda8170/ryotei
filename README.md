@@ -43,7 +43,7 @@ Pass:123123123
 ## ①ヘッダー
 左上にヘッダーが常に表示されています。Menuと時計の2項目です。
 <div><img src="https://gyazo.com/ea2616373be30b228c15ece044b6c8e2/raw" width="220px" align="left">Menuをホバーすると4項目が出てきます。全てそれぞれの機能へのリンクになっています。<br clear="all"></div>
- 
+ <br>
 <div><img src="https://gyazo.com/63b03bb14d63834b27168d2dfa055f2c/raw" width="500px" align="left">時計をホバーすると2項目が出てきます。メンバー自身の名前とログアウトのリンクです。</div>
 
 

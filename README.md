@@ -69,21 +69,21 @@ Pass:123123123
 
 ## ②予約一覧
 予約が日毎に時間と部屋のチャート表示されます。root画面はここに設定しています。
-<div><img src="https://gyazo.com/5649b418db59c90cc17689082f671006/raw" width="220px" align="left">右上で日付指定できます。日付絶対指定と今表示されている日からの相対指定もできます。<br>予約は削除してもデータベース上は削除せずに区分のみ変更して、下に一覧表示されます。<br>チャート上の予約にhoverすると、詳細と会計へのリンクが表示されます。<br clear="all"></div>
+<div><img src="https://gyazo.com/5649b418db59c90cc17689082f671006/raw" width="350px" align="left">右上で日付指定できます。日付絶対指定と今表示されている日からの相対指定もできます。<br>予約は削除してもデータベース上は削除せずに区分のみ変更して、下に一覧表示されます。<br>チャート上の予約にhoverすると、詳細と会計へのリンクが表示されます。<br clear="all"></div>
  <br>
  <br>
-<div><img src="https://gyazo.com/f1a510dc49ef7aa2c6f3e7ea595868ce/raw" width="500px" align="left">チャート内の予約はドラッグ&ドロップして部屋や時間を変更できます。UI上で変更すればAjaxでデータベースも変更されます。予約が重ならないように<a href="https://github.com/annaPanda8170/ryotei/blob/readme/app/models/reservation.rb">バリデーションを細かく自作</a>していて、さらにUI上もこのバリデーションと一致するようにドラッグ&ドロップの許可不許可を振り分けています。不許可であると元の場所に戻ります。<br clear="all"></div>
+<div><img src="https://gyazo.com/f1a510dc49ef7aa2c6f3e7ea595868ce/raw" width="350px" align="left">チャート内の予約はドラッグ&ドロップして部屋や時間を変更できます。UI上で変更すればAjaxでデータベースも変更されます。予約が重ならないように<a href="https://github.com/annaPanda8170/ryotei/blob/readme/app/models/reservation.rb">バリデーションを細かく自作</a>していて、さらにUI上もこのバリデーションと一致するようにドラッグ&ドロップの許可不許可を振り分けています。不許可であると元の場所に戻ります。<br clear="all"></div>
 
 ## ③予約詳細・登録・編集
 詳細・登録・編集機能はありますが、[show・new・editアクションはありません](https://github.com/annaPanda8170/ryotei/blob/readme/app/controllers/reservations_controller.rb)。全てをindex画面で受け付け、[Ajaxを大量に使用](https://github.com/annaPanda8170/ryotei/blob/readme/app/assets/javascripts/reservations.js)しています。
-<div><img src="https://gyazo.com/6c2b2f34350bffc5affb1ec50069613f/raw" width="220px" align="left">3機能全て下にスライドウインドウが現れます。このような仕様にした理由は、一覧を見ながらこれらの機能を使いたいと思ったからです。スライドウインドウの下に隠れた部分が見えないので、スライドウインドウが現れたときのみ下の画面のmargin-bottomをスライドウインドウの高さ分加えるような細かいこともしています。<br clear="all"></div>
+<div><img src="https://gyazo.com/6c2b2f34350bffc5affb1ec50069613f/raw" width="350px" align="left">3機能全て下にスライドウインドウが現れます。このような仕様にした理由は、一覧を見ながらこれらの機能を使いたいと思ったからです。スライドウインドウの下に隠れた部分が見えないので、スライドウインドウが現れたときのみ下の画面のmargin-bottomをスライドウインドウの高さ分加えるような細かいこともしています。<br clear="all"></div>
 
 ## ④会計
 予約からリンクで移ります。会計できるのは当日のみで、過去は会計が終わっていれば記録を見ることができます。
-<div><img src="https://gyazo.com/5649b418db59c90cc17689082f671006/raw" width="220px" align="left">当日の予約一覧のチャートないの各席には会計の状態が表示されています。未会計であればホバーした時のみ会計へのリンクが表示され、会計中であれば赤丸でリンクが表示され、会計済であれば席全体の色が濃く変わります。<br clear="all"></div>
+<div><img src="https://gyazo.com/5649b418db59c90cc17689082f671006/raw" width="350px" align="left">当日の予約一覧のチャートないの各席には会計の状態が表示されています。未会計であればホバーした時のみ会計へのリンクが表示され、会計中であれば赤丸でリンクが表示され、会計済であれば席全体の色が濃く変わります。<br clear="all"></div>
  <br>
  <br>
-<div><img src="https://gyazo.com/4d67a50beabd87665b1181ed2725dcdd/raw" width="500px" align="left">予約段階で部屋と料理は確定しているので、ドリンクのみ加えます。一旦保存することもそのまま会計することもできます。<br>会計はクレジットか現金かを選び、現金であれば釣りも計算します。このアプリは通販サイトではなく実店舗での利用を想定しているので、クレジットの決済機能はつけていません。<br>ドリンクはこの会計用のテーブルと別テーブルで編集ができないので、<a href="https://github.com/annaPanda8170/ryotei/blob/readme/app/assets/javascripts/sales.js">JSファイル</a>で、編集時はデータを引き出しフォームに入れ込んで元々登録されていたドリンクは消去する処理をしています。<br clear="all"></div>
+<div><img src="https://gyazo.com/4d67a50beabd87665b1181ed2725dcdd/raw" width="350px" align="left">予約段階で部屋と料理は確定しているので、ドリンクのみ加えます。一旦保存することもそのまま会計することもできます。<br>会計はクレジットか現金かを選び、現金であれば釣りも計算します。このアプリは通販サイトではなく実店舗での利用を想定しているので、クレジットの決済機能はつけていません。<br>ドリンクはこの会計用のテーブルと別テーブルで編集ができないので、<a href="https://github.com/annaPanda8170/ryotei/blob/readme/app/assets/javascripts/sales.js">JSファイル</a>で、編集時はデータを引き出しフォームに入れ込んで元々登録されていたドリンクは消去する処理をしています。<br clear="all"></div>
 
 ## ⑤ドリンク
 ドリンク名と価格とメモが登録でき、そのまま会計で利用できます。<br>

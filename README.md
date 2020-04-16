@@ -36,6 +36,8 @@ NoGradeメンバー
 Email:d@d
 Pass:123123123
 ```
+<br>
+<br>
 
 # 言語・デプロイ環境
 - Ruby On Rails
@@ -49,6 +51,14 @@ Pass:123123123
 
 # 仕様・使い方
 <br>
+
+# メンバーのグレード(権限)
+登録時はグレードがついておらず、ログインもできません。Grade3のメンバーにグレードを設定されて初めて利用できるようになります。
+グレードは3段階あり、権限が大きい順からgrade3→grade2→grade1です。
+grade3は、全員のグレード設定と退社処理・編集・閲覧ができます。
+grade2は、編集・閲覧ができます。
+grade1は、閲覧ができます。
+<br>
 <br>
 
 ## ①ヘッダー
@@ -59,13 +69,20 @@ Pass:123123123
 <div><img src="https://gyazo.com/63b03bb14d63834b27168d2dfa055f2c/raw" width="500px" align="left">時計をホバーすると2項目が出てきます。メンバー自身の名前とログアウトのリンクです。<br clear="all"></div>
 
 ## ②ドリンク
-http://restaurant-batch-management.xyz/drinks<br>
-ドリンク名と価格とメモが登録でき、そのまま会計で利用できます。
-<div><img src="https://gyazo.com/e7ed9c64037fee7b00fecbc9f77a4754/raw" width="450px" align="left">一覧表示は、カテゴリー絞り込みができ、ページネーションされています。この2機能を両立させるために、Gem等は使っておらず<a href="https://github.com/annaPanda8170/ryotei/blob/master/app/assets/javascripts/drinks.js" target="_blank" rel="noopener noreferrer">このJSファイル</a>で自作しています。<br clear="all"></div>
+ドリンク名と価格とメモが登録でき、そのまま会計で利用できます。<br>
+http://restaurant-batch-management.xyz/drinks
+
+<div><img src="https://gyazo.com/e7ed9c64037fee7b00fecbc9f77a4754/raw" width="350px" align="left">一覧表示は、カテゴリー絞り込みができ、ページネーションされています。この2機能を両立させるために、Gem等は使っておらず<a href="https://github.com/annaPanda8170/ryotei/blob/master/app/assets/javascripts/drinks.js">このJSファイル</a>で自作しています。<br>ドリンク情報をまとめてcsvファイルとしてダウンロードできます。客用ドリンクメニュー作成等に利用できます。<br clear="all"></div>
  <br>
  <br>
 
+## ③メンバー
+基本的にはメンバーを一覧できるだけで、Grade3の場合のみグレード設定ができます。<br>
+http://restaurant-batch-management.xyz/members
 
+<div><img src="https://gyazo.com/058fa4ed919c7a522304d765f44142d2/raw" width="350px" align="left">Grade3でログインした場合でグレード未登録のメンバーがいる場合、上に赤く警告が出され、グレード未登録のメンバーのみの一覧のリンクが表示されます。<br>編集を押すとグレードの変更ができます。<br clear="all"></div>
+ <br>
+ <br>
 
 
 

@@ -49,7 +49,7 @@ Pass:123123123
 # データベース
 ![restaurant (2)](https://user-images.githubusercontent.com/57531048/79423429-8bf69a00-7ff9-11ea-8a54-846e04ad93b6.jpeg)
 
-# メンバーのグレード(権限)
+# メンバーのグレード(権限)について
 メンバーにはそれぞれグレードがつきます。<br>登録時はグレードがついておらず、ログインもできません。Grade3のメンバーにグレードを設定されて初めて利用できるようになります。
 <br>グレードは3段階あり、権限が大きい順からgrade3→grade2→grade1です。
 <br>grade3は、全員のグレード設定と退社処理・編集・閲覧ができます。
@@ -94,7 +94,7 @@ Pass:123123123
 予約からリンクで移ります。会計できるのは当日のみで、過去は会計が終わっていれば記録を見ることができます。
 <br>
 
-<div><img src="https://gyazo.com/5649b418db59c90cc17689082f671006/raw" width="350px" align="left">当日の予約一覧のチャートないの各席には会計の状態が表示されています。未会計であればホバーした時のみ会計へのリンクが表示され、会計中であれば赤丸でリンクが表示され、会計済であれば席全体の色が濃く変わります。<br clear="all"></div>
+<div><img src="https://gyazo.com/5649b418db59c90cc17689082f671006/raw" width="350px" align="left">当日の予約一覧のチャート内のの各席には会計の状態が表示されています。未会計であればホバーした時のみ会計へのリンクが表示され、会計中であれば赤丸でリンクが表示され、会計済であれば席全体の色が濃く変わります。<br clear="all"></div>
  <br>
  <br>
 <div><img src="https://gyazo.com/4d67a50beabd87665b1181ed2725dcdd/raw" width="350px" align="left">予約段階で部屋と料理は確定しているので、ドリンクのみ加えます。一旦保存することもそのまま会計することもできます。<br>会計はクレジットか現金かを選び、現金であれば釣りも計算します。このアプリは通販サイトではなく実店舗での利用を想定しているので、クレジットの決済機能はつけていません。<br>ドリンクはこの会計用のテーブルと別テーブルで編集ができないので、<a href="https://github.com/annaPanda8170/ryotei/blob/readme/app/assets/javascripts/sales.js">JSファイル</a>で、編集時はデータを引き出しフォームに入れ込んで元々登録されていたドリンクは消去する処理をしています。<br clear="all"></div>
@@ -105,7 +105,7 @@ Pass:123123123
 ドリンク名と価格とメモが登録でき、そのまま会計で利用できます。
 <br>
 
-<div><img src="https://gyazo.com/e7ed9c64037fee7b00fecbc9f77a4754/raw" width="350px" align="left">一覧表示は、カテゴリー絞り込みができ、ページネーションされています。この2機能を両立させるために、Gem等は使っておらず<a href="https://github.com/annaPanda8170/ryotei/blob/master/app/assets/javascripts/drinks.js">このJSファイル</a>で自作しています。<br>ドリンク情報をまとめてcsvファイルとしてダウンロードできます。客用ドリンクメニュー作成等に利用できます。<br clear="all"></div>
+<div><img src="https://gyazo.com/e7ed9c64037fee7b00fecbc9f77a4754/raw" width="350px" align="left">一覧表示は、カテゴリー絞り込みができ、ページネーションされています。この2機能を両立させるために、Gem等は使っておらず<a href="https://github.com/annaPanda8170/ryotei/blob/master/app/assets/javascripts/drinks.js">このJSファイル</a>で自作しています。<br>ドリンク情報をまとめてcsvファイルでダウンロードできます。客用ドリンクメニュー作成等に利用できます。<br clear="all"></div>
  <br>
  <br>
 
@@ -121,6 +121,6 @@ Pass:123123123
 クライアントを一覧できます。
 <br>
 
-<div><img src="https://gyazo.com/ca7435aa14e30aa1c65d5c6fc0e62cbc/raw" width="350px" align="left">予約歴が新しい順に、未来のものは赤、過去のものは黒で表示します。<br clear="all"></div>
+<div><img src="https://gyazo.com/ca7435aa14e30aa1c65d5c6fc0e62cbc/raw" width="350px" align="left">予約歴を新しい順に、未来のものは赤、過去のものは黒で表示します。<br clear="all"></div>
  <br>
  <br>

@@ -122,3 +122,9 @@ Pass:123123123
 <div><img src="https://gyazo.com/ca7435aa14e30aa1c65d5c6fc0e62cbc/raw" width="350px" align="left">予約歴を新しい順に、未来のものは赤、過去のものは黒で表示します。<br clear="all"></div>
  <br>
  <br>
+
+# 今後の拡張予定
+- 営業時間の設定機能
+- 一席の時間設定機能
+- 部屋や席の設定機能
+- シフト管理機能

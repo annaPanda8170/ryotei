@@ -1,24 +1,19 @@
-# README
+#概要
+レストラン管理の全てをここに集約します。
+予約・会計・スタッフ・ドリンク・顧客の管理の機能を担います。
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+#接続にあたって
+- 数日に一回データベースをクリアにしているので、ご自由に保存等なさってください。
+- このアプリのユーザーはメンバーと言います。メンバーにはGradeがありそれぞれ権限が違います(詳しくは後述)。まずは全ての権限があるGrade3のメンバーでログインしてください。
 
-Things you may want to cover:
+#接続
+- URL:http://restaurant-batch-management.xyz/
+- Grade3メンバーログイン情報
+```
+Email:a@a
+Pass:123123123
+```
 
-* Ruby version
 
-* System dependencies
+<img src="https://gyazo.com/dbd924c43688f00c84f9a379721a47dd/raw" width="350px" align="left">あああああああああああああああああああああああいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいllllllllllllllllllllllllllllllllllllllllllooooooooooooooooooooooooooooooooooooooooooあああああああああああああああああああああいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいllllllllllllllllllllllllllllllllllllllllllooooooooooooooooooooooooooooooooooooooooooあああああああああああああああああああああいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいllllllllllllllllllllllllllllllllllllllllllooooooooooooooooooooooooooooooooooooooooooあああああああああああああああああああああいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいlllllllllllllllllllllllllllllllllllllllllloooooooooooooooooooooooooooooooooooooooooo
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...

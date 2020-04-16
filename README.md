@@ -26,4 +26,4 @@ Things you may want to cover:
 
 ![demo](https://gyazo.com/440f4936f7568f50beb55309e3c2d25b/raw)
 
-<img src="/app/assets/images/restaurant.pdf">
+<img src="https://github.com/annaPanda8170/ryotei/blob/N%2B1/app/assets/images/restaurant.pdf">

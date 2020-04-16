@@ -15,6 +15,7 @@ class MembersController < ApplicationController
   end
   def update
     if @member.update(member_params)
+      flash[:gradeless] = 1
       redirect_to members_path
     else
       render :edit

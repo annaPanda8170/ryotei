@@ -24,4 +24,4 @@ Things you may want to cover:
 * ...
 
 
-![demo](https://gyazo.com/440f4936f7568f50beb55309e3c2d25b)]
+![demo](https://gyazo.com/440f4936f7568f50beb55309e3c2d25b)

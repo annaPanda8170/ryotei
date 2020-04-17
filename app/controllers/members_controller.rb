@@ -1,5 +1,5 @@
 class MembersController < ApplicationController
-  before_action :set_member, except: :index
+  before_action :set_member, except: [:index, :wait]
   before_action :change_grade, only: [:edit, :update, :destory]
   def index
     if params[:gradeless] || flash[:gradeless]
@@ -9,6 +9,9 @@ class MembersController < ApplicationController
       @members = Member.page(params[:page]).per(30)
       @gradeLess = Member.where(grade: nil).length
     end
+  end
+  def wait
+
   end
   def edit
     

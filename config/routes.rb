@@ -20,6 +20,9 @@ Rails.application.routes.draw do
     member do
       put "custumDelete"
     end
+    collection do
+      get "wait"
+    end
   end
   root 'reservations#index'
   # シフト機能実装後用

@@ -239,6 +239,7 @@ function revival() {
       dataType: 'json'
     }).done(function (data) {
       $(`[data-roomid="${data.roomid}"]` + `[data-hour="${data.past_hour}"]` + `[data-minute="${data.past_minute}"]`).empty();
+      // あまり綺麗な条件分岐であるが間違ってはいない。messageがある(=復活できなかった)場合はsame_dateでなくても処理したいから
       if (data.same_date || data.message) {
         let grade = $("#current_member_info").data("grade");
         createSet(data, grade);

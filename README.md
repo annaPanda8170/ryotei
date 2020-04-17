@@ -82,7 +82,7 @@ Pass:123123123
 <div><img src="https://gyazo.com/5649b418db59c90cc17689082f671006/raw" width="350px" align="left">右上で日付指定できます。日付絶対指定と今表示されている日からの相対指定ができます。<br>予約は削除してもデータベース上は削除されずに、下に一覧表示されます。<br>チャート上の予約にホバーすると、詳細と会計へのリンクが表示されます。<br clear="all"></div>
  <br>
  <br>
-<div><img src="https://gyazo.com/f1a510dc49ef7aa2c6f3e7ea595868ce/raw" width="350px" align="left">チャート内の予約はドラッグ&ドロップして部屋や時間を変更できます。UI上で変更すればAjaxでデータベースも変更されます。<br>予約が重ならないように<a href="https://github.com/annaPanda8170/ryotei/blob/readme/app/models/reservation.rb">バリデーションを細かく自作</a>していて、さらにUI上もこのバリデーションと一致するようにドラッグ&ドロップの許可不許可を振り分けています。不許可であると元の場所に戻ります。<br clear="all"></div>
+<div><img src="https://gyazo.com/f1a510dc49ef7aa2c6f3e7ea595868ce/raw" width="350px" align="left">チャート内の予約はドラッグ&ドロップして部屋や時間を変更できます。UI上で変更すればAjaxでデータベースも変更されます。<br>予約が重ならないように<a href="https://github.com/annaPanda8170/ryotei/blob/readme/app/models/reservation.rb">バリデーションを細かく自作</a>していて、さらにUI上もこのバリデーションと一致するようにドロップの許可不許可を振り分けています。不許可であると元の場所に戻ります。<br clear="all"></div>
 <br>
 <br>
 
@@ -130,6 +130,7 @@ Pass:123123123
  <br>
 
 # 今後の拡張予定
+- 常時SSL化
 - 営業時間の設定機能
 - 一席の時間設定機能
 - 部屋や席の設定機能

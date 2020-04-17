@@ -163,36 +163,43 @@ function newOpen() {
 
 // ##########予約編集スライドウインドウが開くイベント ######################################################
 
+function editProcessing(dataId, revival) {
+  $(".rsvEdit").animate({ right: 0 }, 300);
+  $(".rsvNew, .rsvShow").animate({ right: "-100vw" }, 300);
+  $(".reservationsDeleted").css({ marginBottom: "300px" })
+  $.ajax({
+    url: `/reservations/${dataId}/takeReservation`,
+    type: "GET",
+    // data: { id: $(this)[0].dataset.id },
+    dataType: 'json'
+  }).done(function (data) {
+    $("#rsvEdit_form").attr("action", `/reservations/${data.id}`)
+    if (data.clientid) {
+      $("#rsvEdit_client").val(data.clientid)
+    } else {
+      $("#rsvEdit_client").prepend(`<option value="">クライアント</option>`)
+      $("#rsvEdit_client").val("")
+    }
+    $("#rsvEdit_guest").val(data.guest)
+    $("#rsvEdit_room").val(data.roomid)
+    $("#rsvEdit_kaiseki").val(data.kaisekiid)
+    $("#rsvEdit_number").val(data.number_of_guest)
+    $("#rsvEdit_hour").val(data.start_hour)
+    $("#rsvEdit_minute").val(data.minute)
+    $("#rsvEdit_memo").val(data.memo)
+    if (revival) {
+      $("#rsvEdit_form").attr("data-deleted", true);
+      $(".rsvNewEdit__form__right__submit").val(`復活`);
+    }
+  }).fail(function () {
+  })
+}
+
 function editOpen() {
   $(".rsvShow__edit").click(function () {
-    $(".rsvEdit").animate({ right: 0 }, 300);
-    $(".rsvNew").animate({ right: "-100vw" }, 300);
-    $(".rsvShow").animate({ right: "-100vw" }, 300);
-    $(".reservationsDeleted").css({ marginBottom: "300px" })
-    $.ajax({
-      url: "/reservations/takeReservation",
-      type: "GET",
-      data: { id: $(this)[0].dataset.id },
-      dataType: 'json'
-    }).done(function (data) {
-      $("#rsvEdit_form").attr("action", `/reservations/${data.id}`)
-      // 以下１行、今回は不要だが今後ヒントになるのでメモ
-      // $("#rsvEdit_form").append(`<input type="hidden" name="_method" value="patch">`)
-      if (data.clientid) {
-        $("#rsvEdit_client").val(data.clientid)
-      } else {
-        $("#rsvEdit_client").prepend(`<option value="">クライアント</option>`)
-        $("#rsvEdit_client").val("")
-      }
-      $("#rsvEdit_guest").val(data.guest)
-      $("#rsvEdit_room").val(data.roomid)
-      $("#rsvEdit_kaiseki").val(data.kaisekiid)
-      $("#rsvEdit_number").val(data.number_of_guest)
-      $("#rsvEdit_hour").val(data.start_hour)
-      $("#rsvEdit_minute").val(data.minute)
-      $("#rsvEdit_memo").val(data.memo)
-    }).fail(function () {
-    })
+    let revival = false;
+    let dataId = $(this)[0].dataset.id;
+    editProcessing(dataId, revival)
   })
 }
 
@@ -239,6 +246,11 @@ function revival() {
       dataType: 'json'
     }).done(function (data) {
       $(`[data-roomid="${data.roomid}"]` + `[data-hour="${data.past_hour}"]` + `[data-minute="${data.past_minute}"]`).empty();
+      if (data.message) {
+        let revival = true;
+        let dataId = data.id;
+        editProcessing(dataId, revival)
+      }
       // あまり綺麗な条件分岐であるが間違ってはいない。messageがある(=復活できなかった)場合はsame_dateでなくても処理したいから
       if (data.same_date || data.message) {
         let grade = $("#current_member_info").data("grade");
@@ -289,10 +301,12 @@ function createSet(data, grade) {
     }
     html = html1 + html2;
     $table = $(`[data-roomname="${data.room}"]`+`[data-hour="${data.hour}"]`+`[data-minute="${data.minute}"]`);
-    $table.prepend(html);
-    for (let i = 1; i < 10; i++){
-      $tableSub = $(`#${Number($table[0].id) +i}`);
-      $tableSub.prepend(`<div class="reservationOne__sub" data-subid="${data.id}"></div>`)
+    if (data.status != 0){
+      $table.prepend(html);
+      for (let i = 1; i < 10; i++){
+        $tableSub = $(`#${Number($table[0].id) +i}`);
+        $tableSub.prepend(`<div class="reservationOne__sub" data-subid="${data.id}"></div>`)
+      }
     }
     // 新規予約のフォームを初期化
     $(".rsvNew__form__left > select:not(.rsvNew__form__left > select:nth-of-type(2)):not(.rsvNew__form__left > select:nth-of-type(3)):not(.rsvNew__form__left > select:nth-of-type(4))").val("");
@@ -418,8 +432,15 @@ $(function () {
     // 編集処理
     $("#rsvEdit_form").on("submit", function (e) {
       e.preventDefault();
-      if (!confirm(`変更してよろしいですか？`)) {
-        return false
+      // datasetの中身があるが使わずにここで条件分岐している
+      if (e.target.dataset) {
+        if (!confirm(`復活してよろしいですか？`)) {
+          return false
+        }
+      } else {
+        if (!confirm(`変更してよろしいですか？`)) {
+          return false
+        }
       }
       let formData = new FormData(this);
       var url = $(this).attr('action');
@@ -435,6 +456,9 @@ $(function () {
         if (data.same_date || data.message) {
           let grade = $("#current_member_info").data("grade");
           createSet(data, grade);
+          if (!data.message) {
+            $(`div.rsvDeleted[data-id=${data.id}]`).remove();
+          }
         }
       }).fail(function (data) {
       })

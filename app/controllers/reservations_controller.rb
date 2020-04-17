@@ -63,7 +63,8 @@ class ReservationsController < ApplicationController
       clientid: clientid,
       roomid: @reservation_show.room.id,
       kaisekiid: @reservation_show.kaiseki.id,
-      minute: minute
+      minute: minute,
+      status: @reservation_show.status
     }
   end
   def create
@@ -93,13 +94,12 @@ class ReservationsController < ApplicationController
       end 
     end
   end
-  def edit
-    @reservation = Reservation.find(params[:id])
-    @date = @reservation.date
-    flash[:this_date] = @reservation.date
-  end
+  # def edit
+  #   @reservation = Reservation.find(params[:id])
+  #   @date = @reservation.date
+  #   flash[:this_date] = @reservation.date
+  # end
   def update
-    # binding.pry
     if params[:id].nil?
       params_id = params[:reservation][:id]
     else
@@ -130,7 +130,8 @@ class ReservationsController < ApplicationController
           roomid: past_room_id,
           past_hour: past_hour,
           past_minute: past_minute,
-          same_date: same_date
+          same_date: same_date,
+          status: @reservation.status
           }}
         format.html {redirect_to reservations_path}
       end 
@@ -163,7 +164,7 @@ class ReservationsController < ApplicationController
         format.html {redirect_to reservations_path}
       end 
     else
-      render :edit
+      # render :edit
     end
   end
   def revival
@@ -202,7 +203,8 @@ class ReservationsController < ApplicationController
       flash[:this_date].present? ? @date = flash[:this_date] : @date = Date.today + 1
       respond_to do |format|
         format.json {render json: 
-          {message: @reservation.errors.full_messages, 
+          {id: @reservation.id,
+            message: @reservation.errors.full_messages, 
           }}
         # format.html {redirect_to reservations_path}
       end 
@@ -210,7 +212,7 @@ class ReservationsController < ApplicationController
   end
   private
   def reservation_params
-    params.require(:reservation).permit(:client_id, :guest,:room_id, :kaiseki_id, :number_of_guest, :date, :start_hour, :start_minute, :memo).merge(member_id: current_member.id)
+    params.require(:reservation).permit(:client_id, :guest,:room_id, :kaiseki_id, :number_of_guest, :date, :start_hour, :start_minute, :memo).merge(member_id: current_member.id, status: 1)
   end
   def before_index
     # createやupdate直後にはその日がflash[:this_date]に入っているのでそれ優先で表示する

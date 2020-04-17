@@ -47,6 +47,7 @@ class ReservationsController < ApplicationController
     else
       start_minute = @reservation_show.start_minute
     end
+    # binding.pry
     render json: {
       id: @reservation_show.id,
       client: client,

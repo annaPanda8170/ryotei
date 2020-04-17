@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   def have_grade?
     path = request.path
     # ログイン・サインイン・ログアウトは無条件で通す。それ以外の場合に対して制限
-    if path != "/members/sign_in" && path != "/members/sign_up" && path != "/members/sign_out"
+    if path != "/members/sign_in" && path != "/members/sign_up" && path != "/members/sign_out" && path != "/members"
       if  current_member
         if path != "/members/wait" && current_member.grade == nil
           redirect_to wait_members_path

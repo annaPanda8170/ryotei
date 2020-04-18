@@ -176,6 +176,7 @@ class ReservationsController < ApplicationController
       flash[:this_date] = @reservation.date
       now_date = @reservation.date
       same_date = nil
+      # 同じ日じゃなければ表には入れない
       if past_date == now_date
         same_date = 1
       end

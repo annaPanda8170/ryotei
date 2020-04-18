@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :drinks
   # , only: []
-  resources :clients
+  resources :clients, except: :destroy
   resources :reservations, only: [:index, :create, :update] do
     member do
       put "custumDelete"

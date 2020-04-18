@@ -206,9 +206,8 @@ function showOpen() {
     
     $(".reservationsDeleted").css({ marginBottom: "300px" })
     $.ajax({
-      url: "/reservations/takeReservation",
+      url: `/reservations/${$(this)[0].dataset.id}/takeReservation`,
       type: "GET",
-      data: { id: $(this)[0].dataset.id },
       dataType: 'json'
     }).done(function (data) {
       for (let key in data) {

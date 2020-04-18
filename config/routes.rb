@@ -6,8 +6,7 @@ Rails.application.routes.draw do
     member do
       put "custumDelete"
       put "revival"
-    end
-    collection do
+      # collectionにして,jsでURLのidを抜いてdataでidを送っても可
       get "takeReservation"
     end
   end

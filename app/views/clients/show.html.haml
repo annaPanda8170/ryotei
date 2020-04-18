@@ -14,8 +14,9 @@
     .clientsShow__content
       = link_to edit_client_path(@client.id) do
         編集
-      = link_to client_path(@client.id), method: :delete, id: "client_delete" do
-        削除
+      -# アソシエーションの問題を解決していないので削除できない
+      -# = link_to client_path(@client.id), method: :delete, id: "client_delete" do
+      -#   削除
       
   -# - @reservation.each do |r|
   -#   = link_to reservation_path(r.id) do

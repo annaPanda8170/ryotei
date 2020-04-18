@@ -31,11 +31,12 @@ class ClientsController < ApplicationController
       render :edit
     end
   end
-  def destroy
-    @client = Client.find(params[:id])
-    @client.delete
-    redirect_to clients_path
-  end
+  # アソシエーションの問題を解決していないので削除できない
+  # def destroy
+  #   @client = Client.find(params[:id])
+  #   @client.delete
+  #   redirect_to clients_path
+  # end
   private
   def except_1member
     if current_member.grade == 1

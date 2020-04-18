@@ -6,7 +6,7 @@ class MembersController < ApplicationController
       @members = Member.where(grade: nil)
       @gradelessIndex = true
     else
-      @members = Member.page(params[:page]).per(30)
+      @members = Member.where("grade IS NULL OR grade <> ?", 0).page(params[:page]).per(30)
       @gradeLess = Member.where(grade: nil).length
     end
   end
@@ -26,7 +26,6 @@ class MembersController < ApplicationController
   end
   def custumDelete
     if @member.update(grade: 0)
-      flash[:gradeless] = 1
       redirect_to members_path
     else
       render :show

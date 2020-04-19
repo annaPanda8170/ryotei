@@ -373,8 +373,10 @@ def add_sale(reservations, mean)
         )
       end
       sale.save!
+      r.update(status: 2)
       if mean[which] != nil
         sale.update(mean: mean[which], status: 2)
+        r.update(status: 3)
         if mean[which] == 1
           salesdrinks = SalesDrink.where(sale_id: sale.id)
           drink_total = 0

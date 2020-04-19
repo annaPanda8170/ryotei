@@ -11,7 +11,7 @@ class ReservationsController < ApplicationController
     @today = @this_date.to_date == Date.today
     @past = @this_date.to_date < Date.today
     flash[:this_date_for_new] = @this_date
-
+    # binding.pry
     # new
     @reservation_new = Reservation.new
   end
@@ -47,7 +47,11 @@ class ReservationsController < ApplicationController
     else
       start_minute = @reservation_show.start_minute
     end
-    # binding.pry
+    if @sale = Sale.find_by(reservation_id: @reservation_show.id)
+      sale_id = @sale.id
+    else
+      sale_id = nil
+    end
     render json: {
       id: @reservation_show.id,
       client: client,
@@ -64,11 +68,12 @@ class ReservationsController < ApplicationController
       roomid: @reservation_show.room.id,
       kaisekiid: @reservation_show.kaiseki.id,
       minute: minute,
-      status: @reservation_show.status
+      status: @reservation_show.status,
+      sale_id: sale_id
     }
   end
   def create
-    @reservation = Reservation.new(reservation_params)
+    @reservation = Reservation.new(reservation_create_params)
     if @reservation.save
       flash[:this_date] = @reservation.date
       @reservation.client.nil? ? clientGuest = @reservation.guest : clientGuest = @reservation.client.name
@@ -80,7 +85,9 @@ class ReservationsController < ApplicationController
           memo: @reservation.memo,
           room: @reservation.room.name, 
           hour:@reservation.start_hour,
-          minute:@reservation.start_minute
+          minute:@reservation.start_minute,
+          status: @reservation.status,
+          sale_id: nil
           }}
         format.html {redirect_to reservations_path}
       end 
@@ -110,7 +117,12 @@ class ReservationsController < ApplicationController
     past_room_id = @reservation.room.id
     past_hour = @reservation.start_hour
     past_minute = @reservation.start_minute
-    if @reservation.update(reservation_params)
+    if @sale = Sale.find_by(reservation_id: @reservation.id)
+      sale_id = @sale.id
+    else
+      sale_id = nil
+    end
+    if @reservation.update(reservation_update_params)
       now_date = @reservation.date
       same_date = nil
       if past_date == now_date
@@ -131,7 +143,8 @@ class ReservationsController < ApplicationController
           past_hour: past_hour,
           past_minute: past_minute,
           same_date: same_date,
-          status: @reservation.status
+          status: @reservation.status,
+          sale_id: sale_id
           }}
         format.html {redirect_to reservations_path}
       end 
@@ -211,8 +224,11 @@ class ReservationsController < ApplicationController
     end
   end
   private
-  def reservation_params
+  def reservation_create_params
     params.require(:reservation).permit(:client_id, :guest,:room_id, :kaiseki_id, :number_of_guest, :date, :start_hour, :start_minute, :memo).merge(member_id: current_member.id, status: 1)
+  end
+  def reservation_update_params
+    params.require(:reservation).permit(:client_id, :guest,:room_id, :kaiseki_id, :number_of_guest, :date, :start_hour, :start_minute, :memo).merge(member_id: current_member.id)
   end
   def before_index
     # createやupdate直後にはその日がflash[:this_date]に入っているのでそれ優先で表示する

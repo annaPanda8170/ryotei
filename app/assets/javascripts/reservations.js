@@ -225,6 +225,8 @@ function showOpen() {
       } else if(data.which == "revival"){
         $(".rsvShow__link").html(`<div class="reservation_revival" data-id=${data.id}>復活</div>`)
         revival()
+      } else {
+        $(".rsvShow__link").remove()
       }
       $(".rsvShow__edit").attr("data-id", `${data.id}`)
     }).fail(function () {
@@ -269,7 +271,7 @@ function reservationOneHover() {
   $(".reservationOne").hover(function () {
     $(this).find(".reservationOne__showButton, .reservationOne__sale").stop().fadeIn();
   }, function () {
-    if (!$(this)[0].dataset.status) {
+    if ($(this)[0].dataset.status == 1) {
       $(this).find(".reservationOne__sale").stop().fadeOut();
     }
     $(this).find(".reservationOne__showButton").stop().fadeOut();
@@ -288,26 +290,41 @@ function createSet(data, grade) {
     $('.form_submit').prop('disabled', false);
   // エラーじゃない場合
   } else {
+    $table = $(`[data-roomname="${data.room}"]`+`[data-hour="${data.hour}"]`+`[data-minute="${data.minute}"]`);
     let html1 = `<div class="reservationOne ui-draggable ui-draggable-handle" data-hour=${data.hour} data-id=${data.id} data-minute=${data.minute} data-room=${data.room} style="top: 0px; left: 0px;">
     <div class="reservationOne__clientGuest">${data.clientGuest} 様</div>
     <div class="reservationOne__numberOfGuest">${data.numOfGuest} 名</div>
     <div class="reservationOne__memo">${data.memo}</div>
     <div class="reservationOne__showButton" data-id=${data.id}>詳細</div>`
     let html2 = "";
-    if (grade == 2 || grade == 3) {
+    if (data.status == 1 && grade != 1 && $("#date_info").data("today") == 1) {
       html2 = `<a class="reservationOne__sale" href="/sales/new.${data.id}">未会計</a></div>`
+      html = html1 + html2;
+      $table.prepend(html);
+    } else if(data.status == 3 && ($("#date_info").data("today") == 1 || $("#date_info").data("past")) == 1){
+      html2 = `<a class="reservationOne__sale" href="/sales/${data.sale_id}"><span>会計済</span></a>`
+      html = html1 + html2;
+      $table.prepend(html);
+      $table.find(".reservationOne__sale").css({ display: "block", backgroundColor: "#b3304d", color: "#cda0c5", borderRadius: "0px", height: "80px", width: "120px", transform: "rotate(-45deg)", bottom: "-32px", right: "-50px" })
+      $table.find(".reservationOne__sale span").css({ display: "inline-block", color: "#cda0c5", transform: "rotate(45deg)" })
+      $table.find(".reservationOne").css({ backgroundColor: "#686d71", color: "#b9beba" })
+    } else if(data.status == 2 && grade != 1 && $("#date_info").data("today") == 1){
+      html2 = `<a class="reservationOne__sale" href="/sales/${data.sale_id}/edit">会計中</a>`
+      html = html1 + html2;
+      $table.prepend(html);
+      $table.find(".reservationOne__sale").css({ display: "block", backgroundColor: "#b3304d", color: "#cda0c5" })
     } else {
       html2 = `</div>`
-    }
-    html = html1 + html2;
-    $table = $(`[data-roomname="${data.room}"]`+`[data-hour="${data.hour}"]`+`[data-minute="${data.minute}"]`);
-    if (data.status != 0){
+      html = html1 + html2;
       $table.prepend(html);
+    }
+    if (data.status != 0){
       for (let i = 1; i < 10; i++){
         $tableSub = $(`#${Number($table[0].id) +i}`);
         $tableSub.prepend(`<div class="reservationOne__sub" data-subid="${data.id}"></div>`)
       }
     }
+
     // 新規予約のフォームを初期化
     $(".rsvNew__form__left > select:not(.rsvNew__form__left > select:nth-of-type(2)):not(.rsvNew__form__left > select:nth-of-type(3)):not(.rsvNew__form__left > select:nth-of-type(4))").val("");
     $(".rsvNew__form__left > select:nth-of-type(5)").val("11")
@@ -352,9 +369,9 @@ $(function () {
       $table = $(`[data-roomname="${$(this)[0].dataset.room}"]`+`[data-hour="${$(this)[0].dataset.hour}"]`+`[data-minute="${$(this)[0].dataset.minute}"]`);
       $(e).prependTo($table).css({ top: '0', left: '0' });
       // 会計の状態によって表示を変える
-      if ($(this)[0].dataset.status == 1) {
+      if ($(this)[0].dataset.status == 2) {
         $(e).find(".reservationOne__sale").css({ display: "block" , backgroundColor: "#b3304d", color: "#cda0c5"})
-      } else if ($(this)[0].dataset.status == 2) {
+      } else if ($(this)[0].dataset.status == 3) {
         $(e).find(".reservationOne__sale").css({ display: "block", backgroundColor: "#b3304d", color: "#cda0c5", borderRadius: "0px", height: "80px", width: "120px", transform: "rotate(-45deg)", bottom: "-32px", right: "-50px" })
         $(e).find(".reservationOne__sale span").css({ display: "inline-block", color: "#cda0c5", transform: "rotate(45deg)" })
         $(this).css({backgroundColor: "#686d71", color: "#b9beba"})

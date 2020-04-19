@@ -21,9 +21,12 @@ class SalesController < ApplicationController
   end
   def create
     @sale = Sale.new(sale_params)
-    if @sale.save!
+    reservation_status = 2
+    @reservation = Reservation.find(@sale.reservation.id)
+    if @sale.save && @reservation.update(status: reservation_status)
       redirect_to reservations_path
     else
+      # @drinks = Drink.all
       render :new
     end
   end
@@ -35,11 +38,15 @@ class SalesController < ApplicationController
     @sales_drinks = SalesDrink.where(sale_id: @sale.id)
   end
   def update
-    # binding.pry
     @sale = Sale.find(params[:id])
+    @reservation = Reservation.find(@sale.reservation.id)
     if @sale.update(edit_sale_params)
-      redirect_to reservations_path
+      @sale.status == 2 ? reservation_status = 3 : reservation_status = 2
+      if @reservation.update(status: reservation_status)
+        redirect_to reservations_path
+      end
     else
+      # @drinks = Drink.all
       render :edit
     end
   end

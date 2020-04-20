@@ -8,9 +8,14 @@
     margin: 20px 0;
     display: inline-block;
   }
-  &__new{
+  &__new, &__csv{
+    background-color: $color3;
+    color: $color4;
+    display: inline-block;
     font-size: 21px;
     margin: 20px 0 20px 30px;
+    padding: 8px 12px;
+    border-radius: 10px;
   }
 }
 
@@ -21,46 +26,104 @@
   position: relative;
   height: 42px;
   &:nth-of-type(odd){
-    background-color: $color8-5;
-    // color: $color4;
+    background-color: $color8-7;
   }
-  &__content{
+  &__name{
     display: inline-block;
     line-height: 34px;
-    vertical-align: middle;
     white-space: nowrap;
     overflow: hidden;
-    &:nth-of-type(1){
-      width: 500px;
-    }
-    &:nth-of-type(2){
-      width: 100px;
-      text-align: right;
-    }
-    & > span{
-      color: $color11;
-    }
+    // 150pxは取り急ぎ、動的にするか検討中
+    max-width: calc(100% - calc(110px + 150px));
   }
-  &__show, &__edit{
-    width: 60px;
-    height: 32px;
+  &__price, &__show{
     position: absolute;
     top: 50%;
-    right: 80px;
+    right: 90px;
     transform: translateY(-50%);
     display: inline-block;
     padding: 7px 16px;
     line-height: 1.3em;
     border-radius: 13px;
+  }
+  &__price{
+
+  }
+  &__show{
     font-size: 14px;
+    width: 60px;
+    height: 32px;
+    right: 10px;
     background-color: $color8;
     color: $color4;
     &:hover{
       cursor: pointer;
     }
   }
-  &__edit{
-    right: 10px;
-    top: 50%;
+}
+
+.pagination{
+  margin: 35px 0 25px;
+  font-size: 18px;
+  & > .current{
+    color: $color10;
+  }
+  & > .page{
+    display: inline-block;
+    margin: 0 5px;
+  }
+  & > .first,> .prev, > .next, > .last{
+    display: inline-block;
+    margin: 0 10px;
+  }
+}
+
+#drinksIndex_category{
+  float: right;
+  margin: 20px;
+  & > select{
+    vertical-align: middle;
+    padding-right: 1em;
+    cursor: pointer;
+    padding: 0 15px;
+    -webkit-appearance: none;
+    appearance: none;
+    font-size: 22px;
+    border: 2px solid $color3;
+  }
+}
+
+.pageLinks{
+  &__link{
+    display: inline-block;
+    font-size: 22px;
+    margin-right: 12px;
+    &:nth-of-type(1){
+      color: $color11;
+    }
+  }
+  &:hover{
+    cursor: pointer;
+  }
+  &:nth-of-type(1){
+    margin-top: 23px;
+    margin-bottom: 43px;
+  }
+  &:nth-of-type(2){
+    margin-top: 43px;
+  }
+  &__prev, &__next, &__prevNon{
+    display: inline-block;
+    font-size: 22px;
+  }
+  &__prev{
+    margin-right: 30px;
+  }
+  &__next{
+    margin-left: 30px;
+  }
+  &__prevNon{
+    margin-right: 30px;
+    color: transparent;
   }
 }

@@ -2,8 +2,10 @@
 .clientsIndex
   %h2
     クライアント一覧
-  = link_to new_client_path, class: "clientsIndex__new" do
-    新規登録
+  - if current_member.grade != 1
+    = link_to new_client_path, class: "clientsIndex__new" do
+      新規登録
+  = paginate @clients
   - @clients.each do |c|
     = link_to client_path(c.id), class: "client" do
       .client__content
@@ -18,3 +20,4 @@
                 = r.strftime("%Y年%m月%d日　")
       .client__show
         詳細
+  = paginate @clients

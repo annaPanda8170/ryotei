@@ -1,6 +1,7 @@
 !!!
 %html
   %head
+    %meta{:content => "width=device-width,initial-scale=1.0,minimum-scale=1.0", :name => "viewport"}/
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title Ryotei
     = csrf_meta_tags
@@ -14,35 +15,45 @@
 
     %header.header
       - if member_signed_in?
-        .header__nav
-          .header__nav__menu
-            Menu
-          %ul.header__nav__hover
-            %li.header__nav__hover__li
-              = link_to root_path do
-                TOP
-            %li.header__nav__hover__li
-              = link_to reservations_path do
-                予約
-            %li.header__nav__hover__li
-              = link_to clients_path do
-                クライアント
-            %li.header__nav__hover__li
-              = link_to members_path do
-                メンバー
-            %li.header__nav__hover__li
-              = link_to drinks_path do
-                ドリンク
-        .header__account
-          .header__account__clock
-          %ul.header__account__hover
-            
-            %li.header__account__hover__li
-              = current_member.name
-            %li.header__account__hover__li
-              = link_to "ログアウト", destroy_member_session_path, method: :delete, class: "header__name__logout"
+        - if current_member.grade == nil
+          .header__signinLogin
+            = link_to "ログイン画面へ", destroy_member_session_path, method: :delete, class: "header__signinLogin__link header__signinLogin__link__now"
+        - else
+          .header__nav
+            .header__nav__menu
+              Menu
+            %ul.header__nav__hover
+              -# シフト機能実装後用
+              -# %li.header__nav__hover__li
+              -#   = link_to root_path do
+              -#     TOP
+              %li.header__nav__hover__li
+                = link_to reservations_path do
+                  予約
+              %li.header__nav__hover__li
+                = link_to clients_path do
+                  クライアント
+              %li.header__nav__hover__li
+                = link_to members_path do
+                  メンバー
+              %li.header__nav__hover__li
+                = link_to drinks_path do
+                  ドリンク
+          .header__account
+            .header__account__clock
+            %ul.header__account__hover
+              
+              %li.header__account__hover__li
+                = current_member.name
+              %li.header__account__hover__li
+                = link_to "ログアウト", destroy_member_session_path, method: :delete, class: "header__name__logout"
       
-      - else
-        = link_to "ログイン", new_member_session_path
-        = link_to "会員登録", new_member_registration_path
+      - elsif request.path == new_member_session_path
+        .header__signinLogin
+          = link_to "ログイン", new_member_session_path, class: "header__signinLogin__link header__signinLogin__link__now"
+          = link_to "会員登録", new_member_registration_path, class: "header__signinLogin__link"
+      - elsif request.path == new_member_registration_path
+        .header__signinLogin
+          = link_to "ログイン", new_member_session_path, class: "header__signinLogin__link"
+          = link_to "会員登録", new_member_registration_path, class: "header__signinLogin__link header__signinLogin__link__now"
     = yield

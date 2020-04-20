@@ -1,13 +1,23 @@
+= javascript_include_tag 'clients.js'
 = stylesheet_link_tag 'clients_show', media: 'all'
 .clientsShow
   = link_to clients_path do
-    一覧に戻る
-  = @client.name
-  = @client.memo
-  = link_to edit_client_path(@client.id) do
-    編集
-  = link_to client_path(@client.id), method: :delete do
-    削除
-  - @reservation.each do |r|
-    = link_to reservation_path(r.id) do
-      = r.date
+    クライアント一覧に戻る
+  %h2.clientsShow__title
+    = "#{@client.name} 様の情報"
+  .clientsShow__content
+    %h3
+      メモ
+    .clientsShow__content__info
+      = @client.memo
+  - if current_member.grade != 1
+    .clientsShow__content
+      = link_to edit_client_path(@client.id) do
+        編集
+      -# アソシエーションの問題を解決していないので削除できない
+      -# = link_to client_path(@client.id), method: :delete, id: "client_delete" do
+      -#   削除
+      
+  -# - @reservation.each do |r|
+  -#   = link_to reservation_path(r.id) do
+  -#     = r.date

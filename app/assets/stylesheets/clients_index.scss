@@ -9,8 +9,13 @@
     display: inline-block;
   }
   &__new{
+    background-color: $color3;
+    color: $color4;
+    display: inline-block;
     font-size: 21px;
     margin: 20px 0 20px 30px;
+    padding: 8px 12px;
+    border-radius: 10px;
   }
 }
 
@@ -51,10 +56,26 @@
     line-height: 1.3em;
     border-radius: 13px;
     font-size: 14px;
-    background-color: $color8;
+    background-color: $color7;
     color: $color4;
     &:hover{
       cursor: pointer;
     }
+  }
+}
+
+.pagination{
+  margin: 35px 0 25px;
+  font-size: 18px;
+  & > .current{
+    color: $color10;
+  }
+  & > .page{
+    display: inline-block;
+    margin: 0 5px;
+  }
+  & > .first,> .prev, > .next, > .last{
+    display: inline-block;
+    margin: 0 10px;
   }
 }

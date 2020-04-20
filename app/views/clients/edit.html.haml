@@ -1,4 +1,2 @@
-= form_with model: @client, local: true do |f|
-  = f.text_field :name
-  = f.text_area :memo
-  = f.submit "保存"
+= stylesheet_link_tag 'clients_newEdit', media: 'all'
+= render partial: "form", locals: {client: @client}

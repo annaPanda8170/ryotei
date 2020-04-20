@@ -1,6 +1,7 @@
 class ClientsController < ApplicationController
+  before_action :except_1member, except: [:index, :show]
   def index
-    @clients = Client.all
+    @clients = Client.page(params[:page]).per(30).includes(:reservations)
     # 各クライアントに対する予約の日々を新しい順に並べ替えしたものとidのセット
     @clients_dates = Client.dates_set(@clients)
   end
@@ -30,12 +31,18 @@ class ClientsController < ApplicationController
       render :edit
     end
   end
-  def destroy
-    @client = Client.find(params[:id])
-    @client.delete
-    redirect_to clients_path
-  end
+  # アソシエーションの問題を解決していないので削除できない
+  # def destroy
+  #   @client = Client.find(params[:id])
+  #   @client.delete
+  #   redirect_to clients_path
+  # end
   private
+  def except_1member
+    if current_member.grade == 1
+      redirect_to drinks_path
+    end
+  end
   def client_params
     params.require(:client).permit(:name, :memo)
   end

@@ -3,7 +3,7 @@ class Drink < ApplicationRecord
   validates :price, presence: true
   validates :category, presence: true
 
-  enum category: {ビール:0,赤ワイン:1,白ワイン:2,焼酎:3,ウイスキー:4,ソフトドリンク:5,その他:6}
+  enum category: {ビール:0,シャンパーニュ:1,赤ワイン:2,白ワイン:3,焼酎:4,ウイスキー:5,ソフトドリンク:6,その他:7}
   
   has_many :sales, through: :sales_drinks
   has_many :sales_drinds

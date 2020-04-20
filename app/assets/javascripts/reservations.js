@@ -146,8 +146,6 @@ function droppableEvent() {
         // $id.find(".vvvvvv").text(data.minute);
 
       }).fail(function () {
-        // ui.draggable.css({ top: '0', left: '0' });
-        // return false
       });
     }
   });
@@ -165,36 +163,43 @@ function newOpen() {
 
 // ##########予約編集スライドウインドウが開くイベント ######################################################
 
+function editProcessing(dataId, revival) {
+  $(".rsvEdit").animate({ right: 0 }, 300);
+  $(".rsvNew, .rsvShow").animate({ right: "-100vw" }, 300);
+  $(".reservationsDeleted").css({ marginBottom: "300px" })
+  $.ajax({
+    url: `/reservations/${dataId}/takeReservation`,
+    type: "GET",
+    // data: { id: $(this)[0].dataset.id },
+    dataType: 'json'
+  }).done(function (data) {
+    $("#rsvEdit_form").attr("action", `/reservations/${data.id}`)
+    if (data.clientid) {
+      $("#rsvEdit_client").val(data.clientid)
+    } else {
+      $("#rsvEdit_client").prepend(`<option value="">クライアント</option>`)
+      $("#rsvEdit_client").val("")
+    }
+    $("#rsvEdit_guest").val(data.guest)
+    $("#rsvEdit_room").val(data.roomid)
+    $("#rsvEdit_kaiseki").val(data.kaisekiid)
+    $("#rsvEdit_number").val(data.number_of_guest)
+    $("#rsvEdit_hour").val(data.start_hour)
+    $("#rsvEdit_minute").val(data.minute)
+    $("#rsvEdit_memo").val(data.memo)
+    if (revival) {
+      $("#rsvEdit_form").attr("data-deleted", true);
+      $(".rsvNewEdit__form__right__submit").val(`復活`);
+    }
+  }).fail(function () {
+  })
+}
+
 function editOpen() {
   $(".rsvShow__edit").click(function () {
-    $(".rsvEdit").animate({ right: 0 }, 300);
-    $(".rsvNew").animate({ right: "-100vw" }, 300);
-    $(".rsvShow").animate({ right: "-100vw" }, 300);
-    $(".reservationsDeleted").css({ marginBottom: "300px" })
-    $.ajax({
-      url: "/reservations/takeReservation",
-      type: "GET",
-      data: { id: $(this)[0].dataset.id },
-      dataType: 'json'
-    }).done(function (data) {
-      $("#rsvEdit_form").attr("action", `/reservations/${data.id}`)
-      // 以下１行、今回は不要だが今後ヒントになるのでメモ
-      // $("#rsvEdit_form").append(`<input type="hidden" name="_method" value="patch">`)
-      if (data.clientid) {
-        $("#rsvEdit_client").val(data.clientid)
-      } else {
-        $("#rsvEdit_client").prepend(`<option value="">クライアント</option>`)
-        $("#rsvEdit_client").val("")
-      }
-      $("#rsvEdit_guest").val(data.guest)
-      $("#rsvEdit_room").val(data.roomid)
-      $("#rsvEdit_kaiseki").val(data.kaisekiid)
-      $("#rsvEdit_number").val(data.number_of_guest)
-      $("#rsvEdit_hour").val(data.start_hour)
-      $("#rsvEdit_minute").val(data.minute)
-      $("#rsvEdit_memo").val(data.memo)
-    }).fail(function () {
-    })
+    let revival = false;
+    let dataId = $(this)[0].dataset.id;
+    editProcessing(dataId, revival)
   })
 }
 
@@ -208,9 +213,8 @@ function showOpen() {
     
     $(".reservationsDeleted").css({ marginBottom: "300px" })
     $.ajax({
-      url: "/reservations/takeReservation",
+      url: `/reservations/${$(this)[0].dataset.id}/takeReservation`,
       type: "GET",
-      data: { id: $(this)[0].dataset.id },
       dataType: 'json'
     }).done(function (data) {
       for (let key in data) {
@@ -221,6 +225,8 @@ function showOpen() {
       } else if(data.which == "revival"){
         $(".rsvShow__link").html(`<div class="reservation_revival" data-id=${data.id}>復活</div>`)
         revival()
+      } else {
+        $(".rsvShow__link").remove()
       }
       $(".rsvShow__edit").attr("data-id", `${data.id}`)
     }).fail(function () {
@@ -232,7 +238,6 @@ function showOpen() {
 
 function revival() {
   $(".reservation_revival").click(function () {
-    console.log("ok")
     if (!confirm(`予約を復活してよろしいですか？`)) {
       return false
     }
@@ -243,8 +248,15 @@ function revival() {
       dataType: 'json'
     }).done(function (data) {
       $(`[data-roomid="${data.roomid}"]` + `[data-hour="${data.past_hour}"]` + `[data-minute="${data.past_minute}"]`).empty();
+      if (data.message) {
+        let revival = true;
+        let dataId = data.id;
+        editProcessing(dataId, revival)
+      }
+      // あまり綺麗な条件分岐であるが間違ってはいない。messageがある(=復活できなかった)場合はsame_dateでなくても処理したいから
       if (data.same_date || data.message) {
-        createSet(data);
+        let grade = $("#current_member_info").data("grade");
+        createSet(data, grade);
       }
       if (!data.message) {
         $(`div.rsvDeleted[data-id=${data.id}]`).remove();
@@ -259,7 +271,7 @@ function reservationOneHover() {
   $(".reservationOne").hover(function () {
     $(this).find(".reservationOne__showButton, .reservationOne__sale").stop().fadeIn();
   }, function () {
-    if (!$(this)[0].dataset.status) {
+    if ($(this)[0].dataset.status == 1) {
       $(this).find(".reservationOne__sale").stop().fadeOut();
     }
     $(this).find(".reservationOne__showButton").stop().fadeOut();
@@ -268,7 +280,7 @@ function reservationOneHover() {
 
 // ##########登録・変更・復活時の予約を表に当てはめるか、エラー文を出す関数######################################
 
-function createSet(data) {
+function createSet(data, grade) {
   // エラーの場合
   if (data.message) {
     $(".rsvNewEdit__errorMessages").text("")
@@ -278,19 +290,41 @@ function createSet(data) {
     $('.form_submit').prop('disabled', false);
   // エラーじゃない場合
   } else {
-    let html = `<div class="reservationOne ui-draggable ui-draggable-handle" data-hour=${data.hour} data-id=${data.id} data-minute=${data.minute} data-room=${data.room} style="top: 0px; left: 0px;">
+    $table = $(`[data-roomname="${data.room}"]`+`[data-hour="${data.hour}"]`+`[data-minute="${data.minute}"]`);
+    let html1 = `<div class="reservationOne ui-draggable ui-draggable-handle" data-hour=${data.hour} data-id=${data.id} data-minute=${data.minute} data-room=${data.room} style="top: 0px; left: 0px;">
     <div class="reservationOne__clientGuest">${data.clientGuest} 様</div>
     <div class="reservationOne__numberOfGuest">${data.numOfGuest} 名</div>
     <div class="reservationOne__memo">${data.memo}</div>
-    <div class="reservationOne__showButton" data-id=${data.id}>詳細</div>
-    <a class="reservationOne__sale" href="/sales/new.${data.id}">未会計</a>
-    </div>`
-    $table = $(`[data-roomname="${data.room}"]`+`[data-hour="${data.hour}"]`+`[data-minute="${data.minute}"]`);
-    $table.prepend(html);
-    for (let i = 1; i < 10; i++){
-      $tableSub = $(`#${Number($table[0].id) +i}`);
-      $tableSub.prepend(`<div class="reservationOne__sub" data-subid="${data.id}"></div>`)
+    <div class="reservationOne__showButton" data-id=${data.id}>詳細</div>`
+    let html2 = "";
+    if (data.status == 1 && grade != 1 && $("#date_info").data("today") == 1) {
+      html2 = `<a class="reservationOne__sale" href="/sales/new.${data.id}">未会計</a></div>`
+      html = html1 + html2;
+      $table.prepend(html);
+    } else if(data.status == 3 && ($("#date_info").data("today") == 1 || $("#date_info").data("past")) == 1){
+      html2 = `<a class="reservationOne__sale" href="/sales/${data.sale_id}"><span>会計済</span></a>`
+      html = html1 + html2;
+      $table.prepend(html);
+      $table.find(".reservationOne__sale").css({ display: "block", backgroundColor: "#b3304d", color: "#cda0c5", borderRadius: "0px", height: "80px", width: "120px", transform: "rotate(-45deg)", bottom: "-32px", right: "-50px" })
+      $table.find(".reservationOne__sale span").css({ display: "inline-block", color: "#cda0c5", transform: "rotate(45deg)" })
+      $table.find(".reservationOne").css({ backgroundColor: "#686d71", color: "#b9beba" })
+    } else if(data.status == 2 && grade != 1 && $("#date_info").data("today") == 1){
+      html2 = `<a class="reservationOne__sale" href="/sales/${data.sale_id}/edit">会計中</a>`
+      html = html1 + html2;
+      $table.prepend(html);
+      $table.find(".reservationOne__sale").css({ display: "block", backgroundColor: "#b3304d", color: "#cda0c5" })
+    } else {
+      html2 = `</div>`
+      html = html1 + html2;
+      $table.prepend(html);
     }
+    if (data.status != 0){
+      for (let i = 1; i < 10; i++){
+        $tableSub = $(`#${Number($table[0].id) +i}`);
+        $tableSub.prepend(`<div class="reservationOne__sub" data-subid="${data.id}"></div>`)
+      }
+    }
+
     // 新規予約のフォームを初期化
     $(".rsvNew__form__left > select:not(.rsvNew__form__left > select:nth-of-type(2)):not(.rsvNew__form__left > select:nth-of-type(3)):not(.rsvNew__form__left > select:nth-of-type(4))").val("");
     $(".rsvNew__form__left > select:nth-of-type(5)").val("11")
@@ -314,7 +348,8 @@ function createSet(data) {
 // #####################################################################################################
 
 $(function () {
-  if (location.pathname.match("/reservations")) {
+  // ここをrootにしたので一時廃止
+  // if (location.pathname.match("/reservations")) {
     // まず行を作る
     for (let i = 0; i < $(".data--room").length; i++){
       $(".rsvTable").append(`<div class="rsvTable__tr"></div>`)
@@ -334,9 +369,9 @@ $(function () {
       $table = $(`[data-roomname="${$(this)[0].dataset.room}"]`+`[data-hour="${$(this)[0].dataset.hour}"]`+`[data-minute="${$(this)[0].dataset.minute}"]`);
       $(e).prependTo($table).css({ top: '0', left: '0' });
       // 会計の状態によって表示を変える
-      if ($(this)[0].dataset.status == 1) {
+      if ($(this)[0].dataset.status == 2) {
         $(e).find(".reservationOne__sale").css({ display: "block" , backgroundColor: "#b3304d", color: "#cda0c5"})
-      } else if ($(this)[0].dataset.status == 2) {
+      } else if ($(this)[0].dataset.status == 3) {
         $(e).find(".reservationOne__sale").css({ display: "block", backgroundColor: "#b3304d", color: "#cda0c5", borderRadius: "0px", height: "80px", width: "120px", transform: "rotate(-45deg)", bottom: "-32px", right: "-50px" })
         $(e).find(".reservationOne__sale span").css({ display: "inline-block", color: "#cda0c5", transform: "rotate(45deg)" })
         $(this).css({backgroundColor: "#686d71", color: "#b9beba"})
@@ -405,7 +440,8 @@ $(function () {
         processData: false,
         contentType: false
       }).done(function (data) {
-        createSet(data);
+        let grade = $("#current_member_info").data("grade");
+        createSet(data, grade);
       }).fail(function (data) {
       })
     })
@@ -413,8 +449,15 @@ $(function () {
     // 編集処理
     $("#rsvEdit_form").on("submit", function (e) {
       e.preventDefault();
-      if (!confirm(`変更してよろしいですか？`)) {
-        return false
+      // datasetの中身があるが使わずにここで条件分岐している
+      if (e.target.dataset) {
+        if (!confirm(`復活してよろしいですか？`)) {
+          return false
+        }
+      } else {
+        if (!confirm(`変更してよろしいですか？`)) {
+          return false
+        }
       }
       let formData = new FormData(this);
       var url = $(this).attr('action');
@@ -428,7 +471,11 @@ $(function () {
       }).done(function (data) {
         $(`[data-roomid="${data.roomid}"]` + `[data-hour="${data.past_hour}"]` + `[data-minute="${data.past_minute}"]`).empty();
         if (data.same_date || data.message) {
-          createSet(data);
+          let grade = $("#current_member_info").data("grade");
+          createSet(data, grade);
+          if (!data.message) {
+            $(`div.rsvDeleted[data-id=${data.id}]`).remove();
+          }
         }
       }).fail(function (data) {
       })
@@ -465,5 +512,6 @@ $(function () {
         // デリート情報順序まだ!!!!!!!!!!!!!!!!!!
       })
     })
-  }
+  // ここをrootにしたので一時廃止
+  // }
 });

@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :member do
     name {"annaPanda"}
-    email {"a@a"}
+    email {"z@z"}
     password {"123456"}
     password_confirmation {"123456"}
   end

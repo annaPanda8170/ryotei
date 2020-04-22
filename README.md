@@ -44,9 +44,15 @@ Pass:123123123
 <br>
 
 # 言語・デプロイ環境
-- Ruby On Rails
+- Ruby On Rails 5.2.4.2
+- Ruby 2.5.1
 - JQuery
+- JQueryUI(draggableとdroppableを使用)
 - EC2
+- MySQL
+- Unicorn
+- Nginx
+- Route53
 <br>
 <br>
 

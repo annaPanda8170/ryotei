@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.feature "Ryoteis", type: :feature do
   # jsが動かないのとボタンやリンク以外をクリックする方法がわからないので未完成
   scenario "", js: true do
-    member = FactoryBot.create(:member)
+    member = FactoryBot.create(:member, grade: 3)
     login_as(member, scope: :member)
     visit reservations_path
     click_on "新規予約"

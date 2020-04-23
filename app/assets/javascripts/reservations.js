@@ -350,168 +350,170 @@ function createSet(data, grade) {
 $(function () {
   // ここをrootにしたので一時廃止
   // if (location.pathname.match("/reservations")) {
-    // まず行を作る
-    for (let i = 0; i < $(".data--room").length; i++){
-      $(".rsvTable").append(`<div class="rsvTable__tr"></div>`)
+  // まず行を作る
+  for (let i = 0; i < $(".data--room").length; i++){
+    $(".rsvTable").append(`<div class="rsvTable__tr"></div>`)
+  }
+  // 行内を整形
+  let i = 0;
+  $(".rsvTable__tr").each(function () {
+    let roomName = $(".data--room")[i].dataset.name
+    let roomId = $(".data--room")[i].dataset.id
+    $(this).append(`<div class="rsvTable__roomName">${roomName}</div>`)
+    tables($(this), roomName, roomId)
+    i++;
+  })
+  // 予約を表に当てはめる
+  $(".reservationOne").each(function (index, e) {
+    // .draggableのテキストから置くべきtableを取得
+    $table = $(`[data-roomname="${$(this)[0].dataset.room}"]`+`[data-hour="${$(this)[0].dataset.hour}"]`+`[data-minute="${$(this)[0].dataset.minute}"]`);
+    $(e).prependTo($table).css({ top: '0', left: '0' });
+    // 会計の状態によって表示を変える
+    if ($(this)[0].dataset.status == 2) {
+      $(e).find(".reservationOne__sale").css({ display: "block" , backgroundColor: "#b3304d", color: "#cda0c5"})
+    } else if ($(this)[0].dataset.status == 3) {
+      $(e).find(".reservationOne__sale").css({ display: "block", backgroundColor: "#b3304d", color: "#cda0c5", borderRadius: "0px", height: "80px", width: "120px", transform: "rotate(-45deg)", bottom: "-32px", right: "-50px" })
+      $(e).find(".reservationOne__sale span").css({ display: "inline-block", color: "#cda0c5", transform: "rotate(45deg)" })
+      $(this).css({backgroundColor: "#686d71", color: "#b9beba"})
     }
-    // 行内を整形
-    let i = 0;
-    $(".rsvTable__tr").each(function () {
-      let roomName = $(".data--room")[i].dataset.name
-      let roomId = $(".data--room")[i].dataset.id
-      $(this).append(`<div class="rsvTable__roomName">${roomName}</div>`)
-      tables($(this), roomName, roomId)
-      i++;
-    })
-    // 予約を表に当てはめる
-    $(".reservationOne").each(function (index, e) {
-      // .draggableのテキストから置くべきtableを取得
-      $table = $(`[data-roomname="${$(this)[0].dataset.room}"]`+`[data-hour="${$(this)[0].dataset.hour}"]`+`[data-minute="${$(this)[0].dataset.minute}"]`);
-      $(e).prependTo($table).css({ top: '0', left: '0' });
-      // 会計の状態によって表示を変える
-      if ($(this)[0].dataset.status == 2) {
-        $(e).find(".reservationOne__sale").css({ display: "block" , backgroundColor: "#b3304d", color: "#cda0c5"})
-      } else if ($(this)[0].dataset.status == 3) {
-        $(e).find(".reservationOne__sale").css({ display: "block", backgroundColor: "#b3304d", color: "#cda0c5", borderRadius: "0px", height: "80px", width: "120px", transform: "rotate(-45deg)", bottom: "-32px", right: "-50px" })
-        $(e).find(".reservationOne__sale span").css({ display: "inline-block", color: "#cda0c5", transform: "rotate(45deg)" })
-        $(this).css({backgroundColor: "#686d71", color: "#b9beba"})
-      }
-      // 予約の入っている表の横9個分を埋める
-      for (let i = 1; i < 10; i++){
-        $tableSub = $(`#${Number($table[0].id) +i}`);
-        $($tableSub).prepend(`<div class="reservationOne__sub" data-subid="${$(this)[0].dataset.id}"></div>`)
-      }
-    })
+    // 予約の入っている表の横9個分を埋める
+    for (let i = 1; i < 10; i++){
+      $tableSub = $(`#${Number($table[0].id) +i}`);
+      $($tableSub).prepend(`<div class="reservationOne__sub" data-subid="${$(this)[0].dataset.id}"></div>`)
+    }
+  })
 
-    // ドラッグ関連イベント 
+  // ドラッグ関連イベント 
+  if ($("#current_member_info").data("grade") != 1) {
     hoverTable()
-    $(".reservationOne").draggable({
+    $(".reservationOne").addClass("reservationOne__hover").draggable({
       revert: "invalid"
     });
     droppableEvent()
+  }
 
-    // ウインドウオープン関連イベント 
-    newOpen()
-    showOpen()
-    editOpen()
+  // ウインドウオープン関連イベント 
+  newOpen()
+  showOpen()
+  editOpen()
 
-    // ウインドウクローズイベント 
-    $(document).click(function (e) {
-      if ($(e.target).closest('.rsvNew').length == 0
-        && $(e.target).closest('.rsvShow').length == 0
-        && $(e.target).closest('.rsvEdit').length == 0
-        && $(e.target)[0].className != "reservationOne__showButton"
-        && $(e.target)[0].classList[0] != "reservationOne__showButton"
-        && $(e.target)[0].classList[0] != "rsvControllers__newButton"
-        && $(e.target)[0].classList[0] != "rsvShow__edit") {
-        $(".rsvNew, .rsvShow, .rsvEdit").animate({ right: "-100vw" }, 300);
-        $(".reservationsDeleted").animate({ marginBottom: "30" }, 500)
-        $(".rsvNewEdit__errorMessages").html("");
-      }
+  // ウインドウクローズイベント 
+  $(document).click(function (e) {
+    if ($(e.target).closest('.rsvNew').length == 0
+      && $(e.target).closest('.rsvShow').length == 0
+      && $(e.target).closest('.rsvEdit').length == 0
+      && $(e.target)[0].className != "reservationOne__showButton"
+      && $(e.target)[0].classList[0] != "reservationOne__showButton"
+      && $(e.target)[0].classList[0] != "rsvControllers__newButton"
+      && $(e.target)[0].classList[0] != "rsvShow__edit") {
+      $(".rsvNew, .rsvShow, .rsvEdit").animate({ right: "-100vw" }, 300);
+      $(".reservationsDeleted").animate({ marginBottom: "30" }, 500)
+      $(".rsvNewEdit__errorMessages").html("");
+    }
+  })
+
+  // その他イベント 
+  reservationOneHover()
+  $(".rsvNewEdit__form__right__clear").click(function () {
+    $(".rsvNew__form__left > select:not(.rsvNew__form__left > select:nth-of-type(2)):not(.rsvNew__form__left > select:nth-of-type(3)):not(.rsvNew__form__left > select:nth-of-type(4))").val("");
+    $("#reservation_date_1i").val($("#_date_1i").val())
+    $("#reservation_date_2i").val($("#_date_2i").val())
+    $("#reservation_date_3i").val($("#_date_3i").val())
+    $(".rsvNew__form__left > select:nth-of-type(5)").val("11")
+    $(".rsvNew__form__left > select:nth-of-type(6)").val("00")
+    $(".rsvNew__form__left > input").val("")
+    $(".rsvNew__form__right > textarea").val("")
+    $(".rsvNew__form__right > select").val("");
+  })
+
+  // 登録処理
+  $("#reservation_new_form").on("submit", function (e) {
+    e.preventDefault();
+    if (!confirm(`登録してよろしいですか？`)) {
+      return false
+    }
+    let formData = new FormData(this);
+    var url = $(this).attr('action');
+    $.ajax({
+      url: url,
+      type: "POST",
+      data: formData,
+      dataType: 'json',
+      processData: false,
+      contentType: false
+    }).done(function (data) {
+      let grade = $("#current_member_info").data("grade");
+      createSet(data, grade);
+    }).fail(function (data) {
     })
-
-    // その他イベント 
-    reservationOneHover()
-    $(".rsvNewEdit__form__right__clear").click(function () {
-      $(".rsvNew__form__left > select:not(.rsvNew__form__left > select:nth-of-type(2)):not(.rsvNew__form__left > select:nth-of-type(3)):not(.rsvNew__form__left > select:nth-of-type(4))").val("");
-      $("#reservation_date_1i").val($("#_date_1i").val())
-      $("#reservation_date_2i").val($("#_date_2i").val())
-      $("#reservation_date_3i").val($("#_date_3i").val())
-      $(".rsvNew__form__left > select:nth-of-type(5)").val("11")
-      $(".rsvNew__form__left > select:nth-of-type(6)").val("00")
-      $(".rsvNew__form__left > input").val("")
-      $(".rsvNew__form__right > textarea").val("")
-      $(".rsvNew__form__right > select").val("");
-    })
-
-    // 登録処理
-    $("#reservation_new_form").on("submit", function (e) {
-      e.preventDefault();
-      if (!confirm(`登録してよろしいですか？`)) {
+  })
+  
+  // 編集処理
+  $("#rsvEdit_form").on("submit", function (e) {
+    e.preventDefault();
+    // datasetの中身があるが使わずにここで条件分岐している
+    if (e.target.dataset) {
+      if (!confirm(`復活してよろしいですか？`)) {
         return false
       }
-      let formData = new FormData(this);
-      var url = $(this).attr('action');
-      $.ajax({
-        url: url,
-        type: "POST",
-        data: formData,
-        dataType: 'json',
-        processData: false,
-        contentType: false
-      }).done(function (data) {
+    } else {
+      if (!confirm(`変更してよろしいですか？`)) {
+        return false
+      }
+    }
+    let formData = new FormData(this);
+    var url = $(this).attr('action');
+    $.ajax({
+      url: url,
+      type: "PATCH",
+      data: formData,
+      dataType: 'json',
+      processData: false,
+      contentType: false
+    }).done(function (data) {
+      $(`[data-roomid="${data.roomid}"]` + `[data-hour="${data.past_hour}"]` + `[data-minute="${data.past_minute}"]`).empty();
+      if (data.same_date || data.message) {
         let grade = $("#current_member_info").data("grade");
         createSet(data, grade);
-      }).fail(function (data) {
-      })
-    })
-    
-    // 編集処理
-    $("#rsvEdit_form").on("submit", function (e) {
-      e.preventDefault();
-      // datasetの中身があるが使わずにここで条件分岐している
-      if (e.target.dataset) {
-        if (!confirm(`復活してよろしいですか？`)) {
-          return false
-        }
-      } else {
-        if (!confirm(`変更してよろしいですか？`)) {
-          return false
+        if (!data.message) {
+          $(`div.rsvDeleted[data-id=${data.id}]`).remove();
         }
       }
-      let formData = new FormData(this);
-      var url = $(this).attr('action');
-      $.ajax({
-        url: url,
-        type: "PATCH",
-        data: formData,
-        dataType: 'json',
-        processData: false,
-        contentType: false
-      }).done(function (data) {
-        $(`[data-roomid="${data.roomid}"]` + `[data-hour="${data.past_hour}"]` + `[data-minute="${data.past_minute}"]`).empty();
-        if (data.same_date || data.message) {
-          let grade = $("#current_member_info").data("grade");
-          createSet(data, grade);
-          if (!data.message) {
-            $(`div.rsvDeleted[data-id=${data.id}]`).remove();
-          }
-        }
-      }).fail(function (data) {
-      })
+    }).fail(function (data) {
     })
+  })
 
-    // 削除処理
-    $(document).on("click", ".reservation_delete", function () {
-      if (!confirm(`予約を削除してよろしいですか？`)) {
-        return false
+  // 削除処理
+  $(document).on("click", ".reservation_delete", function () {
+    if (!confirm(`予約を削除してよろしいですか？`)) {
+      return false
+    }
+    $.ajax({
+      url: `/reservations/${$(this).data("id")}/custumDelete`,
+      type: "PUT",
+      data: { id: $(this).data("id"), status: 0 },
+      dataType: 'json'
+    }).done(function (data) {
+      $(`[data-roomid="${data.roomid}"]` + `[data-hour="${data.hour}"]` + `[data-minute="${data.minute}"]`).empty();
+      $(".rsvShow").animate({ right: "-100vw" }, 300);
+      $(".reservationsDeleted").animate({ marginBottom: "30" }, 500)
+      let minute = 0;
+      if (data.minute == 0){
+        minute = "00"
+      } else {
+        minute = data.minute
       }
-      $.ajax({
-        url: `/reservations/${$(this).data("id")}/custumDelete`,
-        type: "PUT",
-        data: { id: $(this).data("id"), status: 0 },
-        dataType: 'json'
-      }).done(function (data) {
-        $(`[data-roomid="${data.roomid}"]` + `[data-hour="${data.hour}"]` + `[data-minute="${data.minute}"]`).empty();
-        $(".rsvShow").animate({ right: "-100vw" }, 300);
-        $(".reservationsDeleted").animate({ marginBottom: "30" }, 500)
-        let minute = 0;
-        if (data.minute == 0){
-          minute = "00"
-        } else {
-          minute = data.minute
-        }
-        $(".reservationsDeleted>h2").after(`<div class="rsvDeleted" data-id=${data.id}>
-        <div class="rsvDeleted__content">${data.clientGuest} 様</div>
-        <div class="rsvDeleted__content">${data.numOfGuest} 名</div>
-        <div class="rsvDeleted__content">${data.hour} : ${minute}</div>
-        <div class="rsvDeleted__content">${data.memo}</div>
-        <div class="reservationOne__showButton rsvDeleted__show" data-id=${data.id}>詳細</div>
-        </div>`)
-        showOpen()
-        // デリート情報順序まだ!!!!!!!!!!!!!!!!!!
-      })
+      $(".reservationsDeleted>h2").after(`<div class="rsvDeleted" data-id=${data.id}>
+      <div class="rsvDeleted__content">${data.clientGuest} 様</div>
+      <div class="rsvDeleted__content">${data.numOfGuest} 名</div>
+      <div class="rsvDeleted__content">${data.hour} : ${minute}</div>
+      <div class="rsvDeleted__content">${data.memo}</div>
+      <div class="reservationOne__showButton rsvDeleted__show" data-id=${data.id}>詳細</div>
+      </div>`)
+      showOpen()
+      // デリート情報順序まだ!!!!!!!!!!!!!!!!!!
     })
+  })
   // ここをrootにしたので一時廃止
   // }
 });

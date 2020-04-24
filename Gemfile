@@ -62,7 +62,7 @@ end
 group :test do
   gem 'selenium-webdriver'
   gem 'chromedriver-helper'
-  gem 'capybara', '~> 2.15.4'
+  gem 'capybara'
   gem 'webdrivers'
   gem 'launchy', '~> 2.4.3'
 end

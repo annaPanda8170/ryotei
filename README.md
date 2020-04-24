@@ -17,7 +17,7 @@
 - このアプリのユーザーはメンバーと言います。メンバーにはグレードがありそれぞれ権限が違います(詳しくは後述)。まずは全ての権限があるGrade3のメンバーでログインしてください。
 
 ## ②URL
-http://restaurant-batch-management.xyz/
+https://restaurant-batch-management.xyz/
 
 ## ③メンバーログイン情報
 Grade3メンバー

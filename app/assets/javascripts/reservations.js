@@ -270,6 +270,7 @@ function revival() {
 function reservationOneHover() {
   $(".reservationOne").hover(function () {
     $(this).find(".reservationOne__showButton, .reservationOne__sale").stop().fadeIn();
+    $(this).css({ cursor: "move" });
   }, function () {
     if ($(this)[0].dataset.status == 1) {
       $(this).find(".reservationOne__sale").stop().fadeOut();

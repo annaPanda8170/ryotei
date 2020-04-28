@@ -62,7 +62,7 @@ class Reservation < ApplicationRecord
     end
   end
   def out_of_opening
-    if start_hour == 19 || start_minute == 45
+    if start_hour == 19 && start_minute == 45
       errors.add(:start_hour, "時間外です")
     end
   end

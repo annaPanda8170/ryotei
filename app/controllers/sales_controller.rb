@@ -23,10 +23,12 @@ class SalesController < ApplicationController
     @sale = Sale.new(sale_params)
     reservation_status = 2
     @reservation = Reservation.find(@sale.reservation.id)
-    if @sale.save && @reservation.update(status: reservation_status)
-      redirect_to reservations_path
+    if @sale.save
+      @sale.status == 2 ? reservation_status = 3 : reservation_status = 2
+      if @reservation.update(status: reservation_status)
+        redirect_to reservations_path
+      end
     else
-      # @drinks = Drink.all
       render :new
     end
   end
@@ -46,7 +48,6 @@ class SalesController < ApplicationController
         redirect_to reservations_path
       end
     else
-      # @drinks = Drink.all
       render :edit
     end
   end

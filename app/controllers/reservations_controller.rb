@@ -208,7 +208,8 @@ class ReservationsController < ApplicationController
           roomid: past_room_id,
           past_hour: past_hour,
           past_minute: past_minute,
-          same_date: same_date
+          same_date: same_date,
+          status: @reservation.status
           }}
         format.html {redirect_to reservations_path}
       end 

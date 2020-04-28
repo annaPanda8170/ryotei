@@ -53,7 +53,9 @@ class SalesController < ApplicationController
   end
   def destroy
     @sale = Sale.find(params[:id])
+    @reservation = Reservation.find(@sale.reservation.id)
     @sale.delete
+    @reservation.update(status: 1)
     redirect_to reservations_path
   end
   private
